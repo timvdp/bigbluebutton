@@ -48,7 +48,10 @@ package org.bigbluebutton.common
 	
 	[Embed(source="assets/images/hand_new.png")]
 	public var hand_new:Class;
-	
+
+	[Embed(source="assets/images/hand_new_on.png")]
+	public var hand_new:Class;
+
 	[Embed(source="assets/images/moderator.png")]
 	public var moderator:Class;
 	
@@ -175,10 +178,6 @@ package org.bigbluebutton.common
         [Embed(source="assets/images/hand.png")]
         public var hand_icon:Class; 
         
-
-		[Embed(source="assets/images/hand_on.png")]
-		public var hand_on:Class; 
-
 		[Embed(source="assets/images/marker.png")]
         public var scribble_icon:Class; 
 
