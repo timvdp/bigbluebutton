@@ -20,7 +20,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" icon="{handIcon}" 
+<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" icon="{images.hand_new}" 
 		   click="raiseHandClick(event)" creationComplete="init()" 
 		   toolTip="{ResourceUtil.getInstance().getString('bbb.toolbar.hand.toolTip')}" xmlns:mate="http://mate.asfusion.com/"
 		   implements="org.bigbluebutton.common.IBbbToolbarComponent">
@@ -35,11 +35,8 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			import org.bigbluebutton.main.views.MainToolbar;
 			import org.bigbluebutton.util.i18n.ResourceUtil;
 			
-			[Embed(source="images/hand.png")]
-			public var hand:Class;
-			
-			
-			[Bindable] public var handIcon:Class = hand;
+			[Bindable]
+			private var images:Images = new Images();
 			
 			private var dispatcher:Dispatcher;
 			
