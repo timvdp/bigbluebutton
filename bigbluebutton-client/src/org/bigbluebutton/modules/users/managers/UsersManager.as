@@ -26,7 +26,6 @@ package org.bigbluebutton.modules.users.managers
 	import org.bigbluebutton.core.BBB;
 	import org.bigbluebutton.main.events.MadePresenterEvent;
 	import org.bigbluebutton.modules.users.events.StartUsersModuleEvent;
-	import org.bigbluebutton.modules.users.managers.ToolbarButtonManager;
 	import org.bigbluebutton.modules.users.model.UsersOptions;
 	import org.bigbluebutton.modules.users.views.UsersWindow;
 	
