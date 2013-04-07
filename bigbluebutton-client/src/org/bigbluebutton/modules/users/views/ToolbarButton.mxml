@@ -21,7 +21,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 -->
 
 <mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" icon="{images.hand_new}" 
-		   click="raiseHandClick(event)" creationComplete="init()" 
+		   click="raiseHandClick(event)"
 		   toolTip="{ResourceUtil.getInstance().getString('bbb.toolbar.hand.toolTip')}" xmlns:mate="http://mate.asfusion.com/"
 		   implements="org.bigbluebutton.common.IBbbToolbarComponent">
 	
@@ -45,9 +45,6 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			
 			private var dispatcher:Dispatcher;
 			
-			private function init():void{
-
-			}
 			
 			public function getAlignment():String{
 				return MainToolbar.ALIGN_LEFT;

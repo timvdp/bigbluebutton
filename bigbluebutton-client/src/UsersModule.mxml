@@ -67,19 +67,8 @@
 				var startEvent:StartUsersModuleEvent = new StartUsersModuleEvent(StartUsersModuleEvent.START_USERS_MODULE);
 				startEvent.module = this;
 				dispatcher.dispatchEvent(startEvent);
-				
-				addToolbarButton();
 			}
-			
-			public function addToolbarButton():void{
-				var button:ToolbarButton = new ToolbarButton();	   	
-				var event:ToolbarButtonEvent = new ToolbarButtonEvent(ToolbarButtonEvent.ADD);
-				event.button = button;
-				dispatcher.dispatchEvent(event);
 				
-				LogUtil.debug("Add raise hand button event dispatch");
-			}
-			
 			public function stop():void {
 				LogUtil.debug("UsersModule is stopping");
 				

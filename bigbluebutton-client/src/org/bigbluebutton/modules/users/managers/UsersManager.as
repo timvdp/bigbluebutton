@@ -24,7 +24,9 @@ package org.bigbluebutton.modules.users.managers
 	import org.bigbluebutton.common.events.CloseWindowEvent;
 	import org.bigbluebutton.common.events.OpenWindowEvent;
 	import org.bigbluebutton.core.BBB;
+	import org.bigbluebutton.main.events.MadePresenterEvent;
 	import org.bigbluebutton.modules.users.events.StartUsersModuleEvent;
+	import org.bigbluebutton.modules.users.managers.ToolbarButtonManager;
 	import org.bigbluebutton.modules.users.model.UsersOptions;
 	import org.bigbluebutton.modules.users.views.UsersWindow;
 	
@@ -33,9 +35,11 @@ package org.bigbluebutton.modules.users.managers
 	{		
 		private var dispatcher:Dispatcher;
 		private var usersWindow:UsersWindow;
+		private var toolbarButtonManager:ToolbarButtonManager;
 		
 		public function UsersManager(){
 			dispatcher = new Dispatcher();
+			toolbarButtonManager = new ToolbarButtonManager();		
 		}
 		
 		public function moduleStarted(event:StartUsersModuleEvent):void{
@@ -53,6 +57,21 @@ package org.bigbluebutton.modules.users.managers
 			var event:CloseWindowEvent = new CloseWindowEvent(CloseWindowEvent.CLOSE_WINDOW_EVENT);
 			event.window = usersWindow;
 			dispatcher.dispatchEvent(event);
+		}
+		
+		public function handleMadePresenterEvent(e:MadePresenterEvent):void {
+			LogUtil.debug("UsersManager :: Got MadePresenterEvent ");
+
+			toolbarButtonManager.removeToolbarButton();
+		}
+		
+		public function handleMadeViewerEvent(e:MadePresenterEvent):void{
+			LogUtil.debug("UsersManager :: Got MadeViewerEvent ");
+			
+			//if(option.showButton)
+			{
+				toolbarButtonManager.addToolbarButton();
+			}
 		}
 
 	}

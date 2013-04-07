@@ -71,7 +71,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
     }
 
     private function configLoadedEventHandler(e:Event):void {
-      LogUtil.debug("***** Config Loaded ****");
+      LogUtil.debug("***** Config Loaded tim ****");
       mainShell.initOptions(null);
     }
       
