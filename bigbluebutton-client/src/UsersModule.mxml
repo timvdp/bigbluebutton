@@ -29,10 +29,12 @@
 	<mx:Script>
 		<![CDATA[
 			import com.asfusion.mate.events.Dispatcher;
-			import org.bigbluebutton.common.LogUtil;
 			
+			import org.bigbluebutton.common.LogUtil;
+			import org.bigbluebutton.common.events.ToolbarButtonEvent;
 			import org.bigbluebutton.modules.users.events.StartUsersModuleEvent;
 			import org.bigbluebutton.modules.users.events.StopUsersModuleEvent;
+			import org.bigbluebutton.modules.users.views.ToolbarButton;
 			
 			private var _moduleName:String = "Users Module";
 			private var _attributes:Object;
@@ -65,6 +67,17 @@
 				var startEvent:StartUsersModuleEvent = new StartUsersModuleEvent(StartUsersModuleEvent.START_USERS_MODULE);
 				startEvent.module = this;
 				dispatcher.dispatchEvent(startEvent);
+				
+				addToolbarButton();
+			}
+			
+			public function addToolbarButton():void{
+				var button:ToolbarButton = new ToolbarButton();	   	
+				var event:ToolbarButtonEvent = new ToolbarButtonEvent(ToolbarButtonEvent.ADD);
+				event.button = button;
+				dispatcher.dispatchEvent(event);
+				
+				LogUtil.debug("Add raise hand button event dispatch");
 			}
 			
 			public function stop():void {

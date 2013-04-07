@@ -20,14 +20,13 @@ package org.bigbluebutton.modules.users.managers
 {
 	import com.asfusion.mate.events.Dispatcher;
 	
+	import org.bigbluebutton.common.LogUtil;
 	import org.bigbluebutton.common.events.CloseWindowEvent;
 	import org.bigbluebutton.common.events.OpenWindowEvent;
 	import org.bigbluebutton.core.BBB;
 	import org.bigbluebutton.modules.users.events.StartUsersModuleEvent;
 	import org.bigbluebutton.modules.users.model.UsersOptions;
 	import org.bigbluebutton.modules.users.views.UsersWindow;
-	import org.bigbluebutton.modules.users.views.ToolbarButton;
-	import org.bigbluebutton.common.events.ToolbarButtonEvent;
 	
 
 	public class UsersManager
@@ -48,8 +47,6 @@ package org.bigbluebutton.modules.users.managers
 				e.window = usersWindow;
 				dispatcher.dispatchEvent(e);
 			}
-			
-			addToolbarButton();
 		}
 		
 		public function moduleEnded():void{
@@ -57,12 +54,6 @@ package org.bigbluebutton.modules.users.managers
 			event.window = usersWindow;
 			dispatcher.dispatchEvent(event);
 		}
-		
-		public function addToolbarButton():void{
-			var button:ToolbarButton = new ToolbarButton();	   	
-			var event:ToolbarButtonEvent = new ToolbarButtonEvent(ToolbarButtonEvent.ADD);
-			event.button = button;
-			dispatcher.dispatchEvent(event);
-		}
+
 	}
 }

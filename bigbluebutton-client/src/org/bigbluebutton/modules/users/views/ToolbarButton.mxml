@@ -31,12 +31,17 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			
 			import org.bigbluebutton.common.IBbbModuleWindow;
 			import org.bigbluebutton.common.Images;
+			import org.bigbluebutton.common.Role;
 			import org.bigbluebutton.common.events.OpenWindowEvent;
+			import org.bigbluebutton.core.managers.UserManager;
+			import org.bigbluebutton.main.model.users.events.RaiseHandEvent;
 			import org.bigbluebutton.main.views.MainToolbar;
 			import org.bigbluebutton.util.i18n.ResourceUtil;
 			
 			[Bindable]
 			private var images:Images = new Images();
+			
+			private var handRaised:Boolean = false;
 			
 			private var dispatcher:Dispatcher;
 			
@@ -50,8 +55,12 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			
 			protected function raiseHandClick(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				if (UserManager.getInstance().getConference().getMyRole() == Role.VIEWER) {
+					handRaised = !handRaised;
+					var e:RaiseHandEvent = new RaiseHandEvent(RaiseHandEvent.RAISE_HAND);
+					e.raised = handRaised;
+					dispatchEvent(e);
+				}
 			}
 			
 		]]>

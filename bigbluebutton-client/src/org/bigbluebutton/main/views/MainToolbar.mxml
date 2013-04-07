@@ -157,6 +157,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 					//(localButton as Button).tabIndex = baseIndex + numButtons;
 					//addedBtns.addChild(localButton);*/
 					
+					LogUtil.debug("Received add toolbar button event : " + event.module);
 					
 					addedBtns.addChild(event.button as UIComponent);
 					// Won't work quite like this: addedBtns.addChildAt(event.button as UIComponent, index);					
