@@ -67,7 +67,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 				{
 					handRaised = !handRaised;
 					
-					this.selected = handRaised;
+					//this.selected = handRaised;
 					
 					if(handRaised)
 						handIcon = images.hand_new_on;

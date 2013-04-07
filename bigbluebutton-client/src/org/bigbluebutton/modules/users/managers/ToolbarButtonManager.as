@@ -22,12 +22,14 @@ package org.bigbluebutton.modules.users.managers
 	import com.asfusion.mate.events.Dispatcher;
 	
 	import org.bigbluebutton.common.IBbbModuleWindow;
+	import org.bigbluebutton.common.LogUtil;
+	import org.bigbluebutton.common.Role;
 	import org.bigbluebutton.common.events.CloseWindowEvent;
 	import org.bigbluebutton.common.events.OpenWindowEvent;
-	import org.bigbluebutton.main.events.MadePresenterEvent;
 	import org.bigbluebutton.common.events.ToolbarButtonEvent;
+	import org.bigbluebutton.core.managers.UserManager;
+	import org.bigbluebutton.main.events.MadePresenterEvent;
 	import org.bigbluebutton.modules.users.views.ToolbarButton;
-	import org.bigbluebutton.common.LogUtil;
 			
 	public class ToolbarButtonManager {		
 		private var button:ToolbarButton;
@@ -35,16 +37,19 @@ package org.bigbluebutton.modules.users.managers
 		private var globalDispatcher:Dispatcher;
 		
 		private var buttonShownOnToolbar:Boolean = false;
+		private var isRoleViewer:Boolean = false;
 		
 		public function ToolbarButtonManager() {
 			globalDispatcher = new Dispatcher();
 			button = new ToolbarButton();			
+
+			isRoleViewer = (UserManager.getInstance().getConference().getMyRole() == Role.VIEWER);
 		}
 													
 		public function addToolbarButton():void {
 			LogUtil.debug("Users::addToolbarButton");
 			
-			if ((button != null) && (!buttonShownOnToolbar)) {
+			if ((button != null) && (!buttonShownOnToolbar) && isRoleViewer) {
 				button = new ToolbarButton();
 				var event:ToolbarButtonEvent = new ToolbarButtonEvent(ToolbarButtonEvent.ADD);
 				event.button = button;
