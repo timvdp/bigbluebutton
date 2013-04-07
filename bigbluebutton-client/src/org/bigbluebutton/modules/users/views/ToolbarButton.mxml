@@ -70,9 +70,9 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 					this.selected = handRaised;
 					
 					if(handRaised)
-						handIcon = images.hand_on
+						handIcon = images.hand_new_on;
 					else
-						handIcon = images.hand_icon;
+						handIcon = images.hand_new;
 					
 					var e:RaiseHandEvent = new RaiseHandEvent(RaiseHandEvent.RAISE_HAND);
 					e.raised = handRaised;

@@ -50,7 +50,7 @@ package org.bigbluebutton.common
 	public var hand_new:Class;
 
 	[Embed(source="assets/images/hand_new_on.png")]
-	public var hand_new:Class;
+	public var hand_new_on:Class;
 
 	[Embed(source="assets/images/moderator.png")]
 	public var moderator:Class;
