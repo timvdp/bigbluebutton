@@ -175,7 +175,11 @@ package org.bigbluebutton.common
         [Embed(source="assets/images/hand.png")]
         public var hand_icon:Class; 
         
-        [Embed(source="assets/images/marker.png")]
+
+		[Embed(source="assets/images/hand_on.png")]
+		public var hand_on:Class; 
+
+		[Embed(source="assets/images/marker.png")]
         public var scribble_icon:Class; 
 
         [Embed(source="assets/images/text.png")]

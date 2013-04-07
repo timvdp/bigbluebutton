@@ -20,14 +20,19 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" icon="{images.hand_new}" 
+<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" icon="{handIcon}" 
 		   click="raiseHandClick(event)"
+		   mouseOver="mouseOverHandler(event)"
+		   mouseOut="mouseOutHandler(event)"
+		   creationComplete="init(event)"
 		   toolTip="{ResourceUtil.getInstance().getString('bbb.toolbar.hand.toolTip')}" xmlns:mate="http://mate.asfusion.com/"
 		   implements="org.bigbluebutton.common.IBbbToolbarComponent">
 	
 	<mx:Script>
 		<![CDATA[
 			import com.asfusion.mate.events.Dispatcher;
+			
+			import mx.events.FlexEvent;
 			
 			import org.bigbluebutton.common.IBbbModuleWindow;
 			import org.bigbluebutton.common.Images;
@@ -38,13 +43,19 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			import org.bigbluebutton.main.views.MainToolbar;
 			import org.bigbluebutton.util.i18n.ResourceUtil;
 			
-			[Bindable]
 			private var images:Images = new Images();
-			
+			[Bindable] private var handIcon:Class = images.hand_new;
+
 			private var handRaised:Boolean = false;
 			
-			private var dispatcher:Dispatcher;
-			
+			private var dispatcher:Dispatcher;		
+
+			protected function init(event:FlexEvent):void
+			{
+				dispatcher = new Dispatcher();
+
+				this.selected = false;
+			}
 			
 			public function getAlignment():String{
 				return MainToolbar.ALIGN_LEFT;
@@ -52,13 +63,36 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			
 			protected function raiseHandClick(event:MouseEvent):void
 			{
-				if (UserManager.getInstance().getConference().getMyRole() == Role.VIEWER) {
+				if (UserManager.getInstance().getConference().getMyRole() == Role.VIEWER) 
+				{
 					handRaised = !handRaised;
+					
+					this.selected = handRaised;
+					
+					if(handRaised)
+						handIcon = images.hand_on
+					else
+						handIcon = images.hand_icon;
+					
 					var e:RaiseHandEvent = new RaiseHandEvent(RaiseHandEvent.RAISE_HAND);
 					e.raised = handRaised;
 					dispatchEvent(e);
 				}
 			}
+			
+			protected function mouseOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function mouseOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+
 			
 		]]>
 	</mx:Script>
