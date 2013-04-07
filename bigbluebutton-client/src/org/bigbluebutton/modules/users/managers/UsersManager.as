@@ -26,6 +26,9 @@ package org.bigbluebutton.modules.users.managers
 	import org.bigbluebutton.modules.users.events.StartUsersModuleEvent;
 	import org.bigbluebutton.modules.users.model.UsersOptions;
 	import org.bigbluebutton.modules.users.views.UsersWindow;
+	import org.bigbluebutton.modules.users.views.ToolbarButton;
+	import org.bigbluebutton.common.events.ToolbarButtonEvent;
+	
 
 	public class UsersManager
 	{		
@@ -45,11 +48,20 @@ package org.bigbluebutton.modules.users.managers
 				e.window = usersWindow;
 				dispatcher.dispatchEvent(e);
 			}
+			
+			addToolbarButton();
 		}
 		
 		public function moduleEnded():void{
 			var event:CloseWindowEvent = new CloseWindowEvent(CloseWindowEvent.CLOSE_WINDOW_EVENT);
 			event.window = usersWindow;
+			dispatcher.dispatchEvent(event);
+		}
+		
+		public function addToolbarButton():void{
+			var button:ToolbarButton = new ToolbarButton();	   	
+			var event:ToolbarButtonEvent = new ToolbarButtonEvent(ToolbarButtonEvent.ADD);
+			event.button = button;
 			dispatcher.dispatchEvent(event);
 		}
 	}
