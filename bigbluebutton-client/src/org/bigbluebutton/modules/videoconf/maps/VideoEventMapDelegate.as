@@ -23,6 +23,7 @@ package org.bigbluebutton.modules.videoconf.maps
   import mx.collections.ArrayCollection;
   
   import org.bigbluebutton.common.LogUtil;
+  import org.bigbluebutton.common.Role;
   import org.bigbluebutton.common.events.CloseWindowEvent;
   import org.bigbluebutton.common.events.OpenWindowEvent;
   import org.bigbluebutton.common.events.ToolbarButtonEvent;
@@ -151,7 +152,12 @@ package org.bigbluebutton.modules.videoconf.maps
           closeWindow(userID);
         }
         trace("VideoEventMapDelegate:: [" + me + "] openWebcamWindowFor:: View user's = [" + userID + "] webcam.");
-        openViewWindowFor(userID);
+        
+		//add all window for moderator and only presenter for viewer
+		if (UserManager.getInstance().getConference().getMyRole() == Role.MODERATOR || UserManager.getInstance().getConference().isUserPresenter(userID)) 
+			openViewWindowFor(userID);
+	
+		
       } else {
         if (UsersUtil.isMe(userID) && options.autoStart) {
           trace("VideoEventMapDelegate:: [" + me + "] openWebcamWindowFor:: It's ME and AutoStart. Start publishing.");
