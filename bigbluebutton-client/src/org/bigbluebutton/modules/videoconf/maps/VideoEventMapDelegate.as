@@ -153,9 +153,15 @@ package org.bigbluebutton.modules.videoconf.maps
         }
         trace("VideoEventMapDelegate:: [" + me + "] openWebcamWindowFor:: View user's = [" + userID + "] webcam.");
         
+		LogUtil.debug("OpenWebcamWindowFor : Id=" + userID + " Name=" + UserManager.getInstance().getConference().getUser(userID).name);
+		
 		//add all window for moderator and only presenter for viewer
-		if (UserManager.getInstance().getConference().getMyRole() == Role.MODERATOR || UserManager.getInstance().getConference().isUserPresenter(userID)) 
-			openViewWindowFor(userID);
+		if ( (UserManager.getInstance().getConference().getMyRole() == Role.MODERATOR) || 
+				UserManager.getInstance().getConference().isUserPresenter(userID)) 
+		{
+			LogUtil.debug("Open Webcam window for : Id=" + userID + " IsPresenter=" + UserManager.getInstance().getConference().isUserPresenter(userID));
+			openViewWindowFor(userID);		
+		}
 	
 		
       } else {
