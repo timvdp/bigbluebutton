@@ -93,8 +93,6 @@ package org.bigbluebutton.modules.videoconf.maps
       if (!_ready) return;
       trace("VideoEventMapDelegate:: [" + me + "] Viewing [" + userID + " stream [" + stream + "]");
 	  
-	  LogUtil.debug("ViewCamera : Id=" + userID + " IsPresenter=" + UserManager.getInstance().getConference().isUserPresenter(userID));
-
       if (! UserManager.getInstance().getConference().amIThisUser(userID)) {
         openViewWindowFor(userID);			
       }      
@@ -357,8 +355,12 @@ package org.bigbluebutton.modules.videoconf.maps
     }
     
     public function switchToPresenter(event:MadePresenterEvent):void{
-		LogUtil.debug("VideoEventMapDelegate:: [" + me + "] Got Switch to presenter event. ready = [" + _ready + "]");
-	  
+	
+		LogUtil.debug("VideoEventMapDelegate::switchToPresenter [" + me + "] Got Switch to presenter event. New presenter = [" + event.userID + "]");
+		
+		//if user is switch to presenter, add his feed to client
+	  	openWebcamWindowFor(event.userID);
+		
       if (!_ready) return;
            
       if (options.presenterShareOnly){
@@ -367,8 +369,14 @@ package org.bigbluebutton.modules.videoconf.maps
     }
     
     public function switchToViewer(event:MadePresenterEvent):void{
-		LogUtil.debug("VideoEventMapDelegate:: [" + me + "] Got Switch to viewer event. ready = [" + _ready + "]");
+		LogUtil.debug("VideoEventMapDelegate::switchToViewer [" + me + "] Got Switch to viewer event. New viewer = [" + event.userID + "]");
       
+		//if user is switch to viewer, remove his feed from client
+		if (webcamWindows.hasWindow(event.userID)) {
+			trace("VideoEventMapDelegate::switchToViewer [" + me + "] user = [" + event.userID + "] has a window open. Close it.");
+			closeWindow(event.userID);
+		}
+		
       if (!_ready) return;
             
       if (options.presenterShareOnly){
