@@ -92,6 +92,9 @@ package org.bigbluebutton.modules.videoconf.maps
       
       if (!_ready) return;
       trace("VideoEventMapDelegate:: [" + me + "] Viewing [" + userID + " stream [" + stream + "]");
+	  
+	  LogUtil.debug("ViewCamera : Id=" + userID + " IsPresenter=" + UserManager.getInstance().getConference().isUserPresenter(userID));
+
       if (! UserManager.getInstance().getConference().amIThisUser(userID)) {
         openViewWindowFor(userID);			
       }      
@@ -151,18 +154,9 @@ package org.bigbluebutton.modules.videoconf.maps
           trace("VideoEventMapDelegate:: [" + me + "] openWebcamWindowFor:: user = [" + userID + "] has a window open. Close it.");
           closeWindow(userID);
         }
-        trace("VideoEventMapDelegate:: [" + me + "] openWebcamWindowFor:: View user's = [" + userID + "] webcam.");
+		LogUtil.debug("VideoEventMapDelegate:: [" + me + "] openWebcamWindowFor:: View user's = [" + userID + "] webcam.");
         
-		LogUtil.debug("OpenWebcamWindowFor : Id=" + userID + " Name=" + UserManager.getInstance().getConference().getUser(userID).name);
-		
-		//add all window for moderator and only presenter for viewer
-		if ( (UserManager.getInstance().getConference().getMyRole() == Role.MODERATOR) || 
-				UserManager.getInstance().getConference().isUserPresenter(userID)) 
-		{
-			LogUtil.debug("Open Webcam window for : Id=" + userID + " IsPresenter=" + UserManager.getInstance().getConference().isUserPresenter(userID));
-			openViewWindowFor(userID);		
-		}
-	
+		openViewWindowFor(userID);		
 		
       } else {
         if (UsersUtil.isMe(userID) && options.autoStart) {
@@ -236,8 +230,17 @@ package org.bigbluebutton.modules.videoconf.maps
     }
     
     private function openViewWindowFor(userID:String):void {
-      trace("VideoEventMapDelegate:: [" + me + "] openViewWindowFor:: Opening VIEW window for [" + userID + "] [" + UsersUtil.getUserName(userID) + "]");
-      
+		LogUtil.debug("VideoEventMapDelegate:: [" + me + "] openViewWindowFor:: Opening VIEW window for [" + userID + "] [" + UsersUtil.getUserName(userID) + "] [IsPresenter=" + UserManager.getInstance().getConference().isUserPresenter(userID) + "]");
+
+	  //add all window for moderator and only presenter for viewer
+	  //TODO : add option
+	  if ( (UserManager.getInstance().getConference().getMyRole() != Role.MODERATOR) && 
+ 			  ! UserManager.getInstance().getConference().isUserPresenter(userID)) 
+	  {
+		  LogUtil.debug("VideoEventMapDelegate:: [" + me + "] openViewWindowFor:: video window ignored");
+		  return;
+	  }
+
       var window:VideoWindow = new VideoWindow();
       window.userID = userID;
       window.videoOptions = options;       
@@ -354,8 +357,8 @@ package org.bigbluebutton.modules.videoconf.maps
     }
     
     public function switchToPresenter(event:MadePresenterEvent):void{
-      trace("VideoEventMapDelegate:: [" + me + "] Got Switch to presenter event. ready = [" + _ready + "]");
-      
+		LogUtil.debug("VideoEventMapDelegate:: [" + me + "] Got Switch to presenter event. ready = [" + _ready + "]");
+	  
       if (!_ready) return;
            
       if (options.presenterShareOnly){
@@ -364,7 +367,7 @@ package org.bigbluebutton.modules.videoconf.maps
     }
     
     public function switchToViewer(event:MadePresenterEvent):void{
-      trace("VideoEventMapDelegate:: [" + me + "] Got Switch to viewer event. ready = [" + _ready + "]");
+		LogUtil.debug("VideoEventMapDelegate:: [" + me + "] Got Switch to viewer event. ready = [" + _ready + "]");
       
       if (!_ready) return;
             
