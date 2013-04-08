@@ -381,7 +381,19 @@ package org.bigbluebutton.modules.videoconf.maps
       
 		if (options.moderatorViewAllOnly && !UsersUtil.amIModerator())
 		{
-			if(!webcamWindows.hasWindow(event.userID) && UsersUtil.getPresenterUserID() == event.userID)
+			//Close old presenter window
+			var uids:ArrayCollection = UsersUtil.getUserIDs();
+			
+			for (var i:int = 0; i < uids.length; i++) 
+			{
+				var u:String = uids.getItemAt(i) as String;
+				
+				if(webcamWindows.hasWindow(u) && (UsersUtil.getPresenterUserID() != u) && !UsersUtil.isMe(u))
+					closeWindow(u);				 
+			}
+
+			//Open new presenter window
+			if(UsersUtil.getPresenterUserID() == event.userID && !UsersUtil.isMe(event.userID))
 				openWebcamWindowFor(event.userID);			
 		}
 			
