@@ -387,13 +387,7 @@ package org.bigbluebutton.modules.videoconf.maps
 			if(!webcamWindows.hasWindow(event.userID) && UsersUtil.getPresenterUserID() == event.userID)
 				openWebcamWindowFor(event.userID);			
 		}
-		
-		//if user is switch to viewer, remove his feed from client
-		if (webcamWindows.hasWindow(event.userID)) {
-			trace("VideoEventMapDelegate::switchToViewer [" + me + "] user = [" + event.userID + "] has a window open. Close it.");
-			closeWindow(event.userID);
-		}
-		
+			
       if (!_ready) return;
             
       if (options.presenterShareOnly){
