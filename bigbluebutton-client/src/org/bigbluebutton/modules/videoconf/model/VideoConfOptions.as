@@ -90,6 +90,9 @@ package org.bigbluebutton.modules.videoconf.model
 		public var presenterShareOnly:Boolean = false; 
 		
 		[Bindable]
+		public var moderatorViewAllOnly:Boolean = true; 
+		
+		[Bindable]
 		public var controlsForPresenter:Boolean = false; 
 		
 		[Bindable]
@@ -134,6 +137,9 @@ package org.bigbluebutton.modules.videoconf.model
 				}		       
 				if (vxml.@presenterShareOnly != undefined) {
 					presenterShareOnly = (vxml.@presenterShareOnly.toString().toUpperCase() == "TRUE") ? true : false;
+				}
+				if (vxml.@moderatorViewAllOnly != undefined) {
+					moderatorViewAllOnly = (vxml.@moderatorViewAllOnly.toString().toUpperCase() == "TRUE") ? true : false;
 				}
 				if (vxml.@controlsForPresenter != undefined) {
 					controlsForPresenter = (vxml.@controlsForPresenter.toString().toUpperCase() == "TRUE") ? true : false;

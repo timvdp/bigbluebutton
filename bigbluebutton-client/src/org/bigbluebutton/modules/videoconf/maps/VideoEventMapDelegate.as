@@ -70,10 +70,7 @@ package org.bigbluebutton.modules.videoconf.maps
     private var _dispatcher:IEventDispatcher;
     private var _ready:Boolean = false;
     private var _isPublishing:Boolean = false;
-	
-	//TODO read option from config file
-	private var _ModeratorViewAllOnly = true;
-    
+	 
     public function VideoEventMapDelegate(dispatcher:IEventDispatcher)
     {
       _dispatcher = dispatcher;
@@ -234,7 +231,7 @@ package org.bigbluebutton.modules.videoconf.maps
     private function openViewWindowFor(userID:String):void {
 		LogUtil.debug("VideoEventMapDelegate:: openViewWindowFor:: Opening VIEW window for [" + userID + "] [" + UsersUtil.getUserName(userID) + "] [IsPresenter=" + (UsersUtil.getPresenterUserID() == userID) + "]");
 
-	  if (_ModeratorViewAllOnly && !UsersUtil.amIModerator() && (UsersUtil.getPresenterUserID() != userID))
+	  if (options.moderatorViewAllOnly && !UsersUtil.amIModerator() && (UsersUtil.getPresenterUserID() != userID))
 	  {
 		  LogUtil.debug("VideoEventMapDelegate::  openViewWindowFor:: video window ignored");
 		  return;
@@ -359,7 +356,7 @@ package org.bigbluebutton.modules.videoconf.maps
 	
 		LogUtil.debug("VideoEventMapDelegate::switchToPresenter Got Switch to presenter event. New presenter = [" + UsersUtil.getUserName(event.userID) + "]");
 
-		if (_ModeratorViewAllOnly && !UsersUtil.amIModerator())
+		if (options.moderatorViewAllOnly && !UsersUtil.amIModerator())
 		{
 			var uids:ArrayCollection = UsersUtil.getUserIDs();
 			
@@ -382,7 +379,7 @@ package org.bigbluebutton.modules.videoconf.maps
     public function switchToViewer(event:MadePresenterEvent):void{
 		LogUtil.debug("VideoEventMapDelegate::switchToViewer Got Switch to viewer event. New viewer = [" + UsersUtil.getUserName(event.userID) + "]");
       
-		if (_ModeratorViewAllOnly && !UsersUtil.amIModerator())
+		if (options.moderatorViewAllOnly && !UsersUtil.amIModerator())
 		{
 			if(!webcamWindows.hasWindow(event.userID) && UsersUtil.getPresenterUserID() == event.userID)
 				openWebcamWindowFor(event.userID);			
