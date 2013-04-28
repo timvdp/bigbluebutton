@@ -61,6 +61,8 @@ package org.bigbluebutton.modules.videoconf.maps
   public class VideoEventMapDelegate
   {
     private var options:VideoConfOptions = new VideoConfOptions();
+    private var uri:String;
+    
     private var webcamWindows:WindowManager = new WindowManager();
     
     private var button:ToolbarButton;
@@ -80,8 +82,9 @@ package org.bigbluebutton.modules.videoconf.maps
       return UsersUtil.getMyUsername();
     }
     
-    public function start():void {
+    public function start(uri:String):void {
       trace("VideoEventMapDelegate:: [" + me + "] Video Module Started.");
+      this.uri = uri;
     }
     
     public function stop():void {
@@ -173,6 +176,8 @@ package org.bigbluebutton.modules.videoconf.maps
     }
     
     private function openAvatarWindowFor(userID:String):void {      
+      if (! UsersUtil.hasUser(userID)) return;
+      
       var window:AvatarWindow = new AvatarWindow();
       window.userID = userID;
       window.title = UsersUtil.getUserName(userID);
@@ -267,7 +272,7 @@ package org.bigbluebutton.modules.videoconf.maps
     }
     
     public function connectToVideoApp():void {
-      proxy = new VideoProxy(options.uri + "/" + UsersUtil.getInternalMeetingID());
+      proxy = new VideoProxy(uri + "/" + UsersUtil.getInternalMeetingID());
       proxy.connect();
     }
     
@@ -432,8 +437,8 @@ package org.bigbluebutton.modules.videoconf.maps
     public function handleStoppedViewingWebcamEvent(event:StoppedViewingWebcamEvent):void {
       closeWindow(event.webcamUserID);
             
-      if (options.displayAvatar) {
-        trace("VideoEventMapDelegate:: [" + me + "] Opening avatar");
+      if (options.displayAvatar && UsersUtil.hasUser(event.webcamUserID)) {
+        trace("VideoEventMapDelegate:: [" + me + "] Opening avatar for user [" + event.webcamUserID + "]");
         openAvatarWindowFor(event.webcamUserID);              
       }        
     }
