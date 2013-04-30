@@ -44,6 +44,8 @@ package org.bigbluebutton.modules.users.managers
 			button = new ToolbarButton();			
 
 			isRoleViewer = (UserManager.getInstance().getConference().getMyRole() == Role.VIEWER);
+
+			LogUtil.debug("Users::Create ToolbarButtonManager (IsViewer = " + isRoleViewer + ")");
 		}
 													
 		public function addToolbarButton():void {
