@@ -78,6 +78,16 @@ Author: Jesus Federico <jesus@123it.ca>
                 </li>
             </ul>
         </fieldset>
+        <fieldset>
+            <legend>Parameters</legend>
+
+		<label for="Recording">Record meeting ?</label>
+			<select id="recording" name="Recording">
+			  <option value="false">No</option>
+			  <option value="true">Yes</option>
+			</select><br><br>			
+
+        </fieldset>
 
 		
 		<input type="submit" name="joinStudent" value="Join as Student" >
@@ -121,7 +131,7 @@ Author: Jesus Federico <jesus@123it.ca>
 		// This is the URL for to join the meeting as moderator
 		//
 		String url = BigBlueButtonURL.replace("bigbluebutton/","demo/");
-		String joinURL = getJoinURLConfigXMLPassword(username, confname, password, configXML);
+		String joinURL = getJoinURLConfigXMLPassword(username, confname, password, request.getParameter("Recording"), configXML);
 
 		if (joinURL.startsWith("http://")) { 
 %>
