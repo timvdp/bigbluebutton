@@ -90,6 +90,12 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 				
 			}
 			
+			protected function mouseOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
 			protected function lowerHandHandler(event:LowerHandEvent):void
 			{
 				if(event.userid == UserManager.getInstance().getConference().getMyUserId())
