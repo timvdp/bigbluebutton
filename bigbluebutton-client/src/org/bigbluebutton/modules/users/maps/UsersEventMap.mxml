@@ -31,6 +31,8 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			import org.bigbluebutton.modules.users.events.StopUsersModuleEvent;
 			import org.bigbluebutton.modules.users.managers.UsersManager;
 			import org.bigbluebutton.main.events.MadePresenterEvent;
+			import org.bigbluebutton.main.model.users.events.LowerHandEvent;
+			
 			
 		]]>
 	</mx:Script>
