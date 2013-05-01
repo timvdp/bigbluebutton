@@ -330,7 +330,109 @@ public String getJoinURLwithDynamicConfigXML(String username, String meetingID, 
 
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+public String getJoinURLConfigXMLPassword(String username, String meetingID, String password, String xml) {
+    
+    String base_url_create = BigBlueButtonURL + "api/create?";
+    String base_url_join = BigBlueButtonURL + "api/join?";
+    String base_url_setConfigXML = BigBlueButtonURL + "api/setConfigXML.xml";
 
+    Random random = new Random();
+    String voiceBridge_param = "&voiceBridge=" + (70000 + random.nextInt(9999));
+    
+    String url;
+    //
+    // When creating a meeting, the 'name' parameter is the name of the meeting (not to be confused with
+    // the username).  For example, the name could be "Fred's meeting" and the meetingID could be "ID-1234312".
+    //
+    // While name and meetingID should be different, we'll keep them the same.  Why?  Because calling api/create? 
+    // with a previously used meetingID will return same meetingToken (regardless if the meeting is running or not).
+    //
+    // This means the first person to call getJoinURL with meetingID="Demo Meeting" will actually create the
+    // meeting.  Subsequent calls will return the same meetingToken and thus subsequent users will join the same
+    // meeting.
+    //
+    // Note: We're hard-coding the password for moderator and attendee (viewer) for purposes of demo.
+    //
+
+    String create_parameters = "name=" + urlEncode(meetingID)
+        + "&meetingID=" + urlEncode(meetingID) + voiceBridge_param
+        + "&attendeePW=ap&moderatorPW=mp";
+
+
+    // Attempt to create a meeting using meetingID
+    Document doc = null;
+    url = "";
+    try {
+        url = base_url_create + create_parameters
+            + "&checksum="
+            + checksum("create" + create_parameters + salt); 
+        doc = parseXml( postURL( url, "" ) );
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    if (!doc.getElementsByTagName("returncode").item(0).getTextContent().trim().equals("SUCCESS")) {
+        //
+        // Someting went wrong, return the error 
+        //  
+        return " " + url + "<br>" + doc.getElementsByTagName("messageKey").item(0).getTextContent()
+                .trim()
+                + ": " 
+                + doc.getElementsByTagName("message").item(0).getTextContent()
+                .trim();
+    }
+
+    
+    //
+    // Looks good, now Attempt to send the ConfigXML file and get the token 
+    //  
+    
+    String xml_param = "";
+    if ((xml != null) && !xml.equals("")) {
+        xml_param = xml;
+        xml_param = xml_param.replace("\n", "");
+        xml_param = xml_param.replace("\t", "");
+        xml_param = xml_param.replace(">  <", "><");
+        xml_param = xml_param.replace(">    <", "><");
+    }
+
+    String setConfigXML_parameters = "meetingID=" + urlEncode(meetingID) + 
+            "&checksum=" + checksum(meetingID + encodeURIComponent(xml_param) + salt) +"&configXML=" + urlEncode(encodeURIComponent(xml_param));
+    
+    url = "";
+    try {
+        url = base_url_setConfigXML + "?"; // + setConfigXML_parameters; 
+        doc = parseXml( postURL( url, setConfigXML_parameters, "application/x-www-form-urlencoded" ) );
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    String configToken = "";
+    if (!doc.getElementsByTagName("returncode").item(0).getTextContent().trim().equals("SUCCESS")) {
+        //
+        // Someting went wrong, return the error 
+        //  
+        return " " + url + "<br>" + doc.getElementsByTagName("messageKey").item(0).getTextContent().trim()
+                + ": " 
+                + doc.getElementsByTagName("message").item(0).getTextContent().trim() + "<br>" + encodeURIComponent(xml_param);
+    } else {
+        configToken = doc.getElementsByTagName("configToken").item(0).getTextContent().trim();
+    }
+    
+    //
+    // And finally return a URL to join that meeting
+    //  
+    String join_parameters = "meetingID=" + urlEncode(meetingID)
+        + "&fullName=" + urlEncode(username) + "&password=" + urlEncode(password) + "&configToken=" + configToken;
+
+    return base_url_join + join_parameters + "&checksum="
+        + checksum("join" + join_parameters + salt);
+
+}
 
 //
 //Create a meeting and return a URL to join it as moderator
