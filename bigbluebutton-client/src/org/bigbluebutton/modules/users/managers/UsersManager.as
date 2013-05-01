@@ -88,7 +88,7 @@ package org.bigbluebutton.modules.users.managers
 			}
 		}
 		
-		public function handleLowerHandEvent(e:RaiseHandEvent):void{
+		public function handleRaiseHandEvent(e:RaiseHandEvent):void{
 			
 			LogUtil.debug("UsersManager :: Got RaiseHandEvent");
 			
