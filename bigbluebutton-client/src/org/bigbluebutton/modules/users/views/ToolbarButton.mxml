@@ -39,6 +39,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			
 			import org.bigbluebutton.common.IBbbModuleWindow;
 			import org.bigbluebutton.common.Images;
+			import org.bigbluebutton.common.LogUtil;
 			import org.bigbluebutton.common.Role;
 			import org.bigbluebutton.common.events.OpenWindowEvent;
 			import org.bigbluebutton.core.managers.UserManager;
@@ -98,14 +99,20 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			
 			protected function lowerHandHandler(event:LowerHandEvent):void
 			{
-				if(event.userid == UserManager.getInstance().getConference().getMyUserId())
-					
-				handRaised = false;
-							
-				if(handRaised)
-					handIcon = images.hand_new_on;
-				else
-					handIcon = images.hand_new;
+				
+				var myUserId:String = UserManager.getInstance().getConference().getMyUserId();
+
+				LogUtil.debug("Users::ToolbarButton catch LowerHandEvent (UserId=" + event.userid + ", MyUserId="+ myUserId + ")");
+
+				if(event.userid == myUserId)
+				{
+					handRaised = false;
+								
+					if(handRaised)
+						handIcon = images.hand_new_on;
+					else
+						handIcon = images.hand_new;
+				}
 			}
 			
 
