@@ -269,7 +269,7 @@ package org.bigbluebutton.main.model.users {
 			{
 				LogUtil.debug("Dispatch Lower hand event for user [" + userID + "]");			
 						
-				//dispatcher.dispatchEvent(new LowerHandEvent(userID));
+				dispatcher.dispatchEvent(new LowerHandEvent(userID,true));
 			}
 			
 			if (status == "presenter"){

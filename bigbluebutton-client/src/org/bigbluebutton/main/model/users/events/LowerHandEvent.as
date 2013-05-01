@@ -25,11 +25,13 @@ package org.bigbluebutton.main.model.users.events
 		public static const LOWER_HAND_EVENT:String = "LOWER_HAND_EVENT";
 		
 		public var userid:String;
+		public var isRemoteEvent:Boolean = false;
 
-		public function LowerHandEvent(userid:String)
+		public function LowerHandEvent(userid:String, isRemoteEvent:Boolean = false)
 		{
 			super(LOWER_HAND_EVENT,true);
 			this.userid = userid;
+			this.isRemoteEvent = isRemoteEvent;
 		}
 		
 	}

@@ -158,7 +158,8 @@ package org.bigbluebutton.main.model.users
 		}
 		
 		public function lowerHand(e:LowerHandEvent):void {
-			if (this.isModerator()) _userSOService.raiseHand(e.userid, false);
+			if (this.isModerator() && !e.isRemoteEvent) 
+				_userSOService.raiseHand(e.userid, false);
 		}
 		
 		public function kickUser(e:KickUserEvent):void{
