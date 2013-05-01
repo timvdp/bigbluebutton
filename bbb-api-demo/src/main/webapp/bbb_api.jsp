@@ -334,7 +334,7 @@ public String getJoinURLwithDynamicConfigXML(String username, String meetingID, 
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
-public String getJoinURLConfigXMLPassword(String username, String meetingID, String password, String xml) {
+public String getJoinURLConfigXMLPassword(String username, String meetingID, String password, String record, String xml) {
     
     String base_url_create = BigBlueButtonURL + "api/create?";
     String base_url_join = BigBlueButtonURL + "api/join?";
@@ -360,7 +360,7 @@ public String getJoinURLConfigXMLPassword(String username, String meetingID, Str
 
     String create_parameters = "name=" + urlEncode(meetingID)
         + "&meetingID=" + urlEncode(meetingID) + voiceBridge_param
-        + "&attendeePW=ap&moderatorPW=mp";
+        + "&attendeePW=ap&moderatorPW=mp" + "&record=" + record;
 
 
     // Attempt to create a meeting using meetingID
