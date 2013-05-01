@@ -25,8 +25,11 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 		   mouseOver="mouseOverHandler(event)"
 		   mouseOut="mouseOutHandler(event)"
 		   creationComplete="init(event)"
-		   toolTip="{ResourceUtil.getInstance().getString('bbb.toolbar.hand.toolTip')}" xmlns:mate="http://mate.asfusion.com/"
+		   toolTip="{ResourceUtil.getInstance().getString('bbb.toolbar.hand.toolTip')}" 
+		   xmlns:mate="http://mate.asfusion.com/"
 		   implements="org.bigbluebutton.common.IBbbToolbarComponent">
+	
+	<mate:Listener type="{LowerHandEvent.LOWER_HAND_EVENT}" method="lowerHandHandler" />
 	
 	<mx:Script>
 		<![CDATA[
@@ -39,6 +42,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			import org.bigbluebutton.common.Role;
 			import org.bigbluebutton.common.events.OpenWindowEvent;
 			import org.bigbluebutton.core.managers.UserManager;
+			import org.bigbluebutton.main.model.users.events.LowerHandEvent;
 			import org.bigbluebutton.main.model.users.events.RaiseHandEvent;
 			import org.bigbluebutton.main.views.MainToolbar;
 			import org.bigbluebutton.util.i18n.ResourceUtil;
@@ -86,10 +90,16 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 				
 			}
 			
-			protected function mouseOutHandler(event:MouseEvent):void
+			protected function lowerHandHandler(event:LowerHandEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				if(event.userid == UserManager.getInstance().getConference().getMyUserId())
+					
+				handRaised = false;
+							
+				if(handRaised)
+					handIcon = images.hand_new_on;
+				else
+					handIcon = images.hand_new;
 			}
 			
 
