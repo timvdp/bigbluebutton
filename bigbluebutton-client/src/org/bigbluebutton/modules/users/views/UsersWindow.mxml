@@ -86,6 +86,7 @@
 			[Bindable]
 			private var users:ArrayCollection = new ArrayCollection();
 			
+			[Bindable]
 			private var handRaised:Boolean = false;
 			private var amIModerator:Boolean = false;
 			
