@@ -33,6 +33,8 @@
 	<mate:Listener type="{ShortcutEvent.RAISE_HAND}" method="remoteRaiseHand" />
 	<mate:Listener type="{ShortcutEvent.FOCUS_USERS_WINDOW}" method="focusWindow" />
 	<mate:Listener type="{UsersEvent.ROOM_MUTE_STATE}" method="setRoomMute" />
+	<mate:Listener type="{LowerHandEvent.LOWER_HAND_EVENT}" method="lowerHandHandler" />
+
 	<mx:Script>
 		<![CDATA[
 			import com.asfusion.mate.events.Dispatcher;
@@ -49,8 +51,10 @@
 			import mx.events.MenuEvent;
 			
 			import org.bigbluebutton.common.Images;
+			import org.bigbluebutton.common.LogUtil;
 			import org.bigbluebutton.common.Role;
 			import org.bigbluebutton.common.events.LocaleChangeEvent;
+			import org.bigbluebutton.core.events.VoiceConfEvent;
 			import org.bigbluebutton.core.managers.UserManager;
 			import org.bigbluebutton.main.events.ShortcutEvent;
 			import org.bigbluebutton.main.model.users.BBBUser;
@@ -60,9 +64,8 @@
 			import org.bigbluebutton.main.model.users.events.RaiseHandEvent;
 			import org.bigbluebutton.main.model.users.events.RoleChangeEvent;
 			import org.bigbluebutton.main.views.MainCanvas;
-			import org.bigbluebutton.modules.users.events.UsersRollEvent;
-			import org.bigbluebutton.core.events.VoiceConfEvent;
 			import org.bigbluebutton.modules.users.events.UsersEvent;
+			import org.bigbluebutton.modules.users.events.UsersRollEvent;
 			import org.bigbluebutton.modules.users.model.UsersOptions;
 			import org.bigbluebutton.util.i18n.ResourceUtil;		
 			
@@ -364,6 +367,18 @@
 				usersGrid.drawFocus(true);
 			}
 			
+			protected function lowerHandHandler(event:LowerHandEvent):void
+			{
+				var myUserId:String = UserManager.getInstance().getConference().getMyUserId();
+
+				LogUtil.debug("Users::lowerHandHandler catch LowerHandEvent (UserId=" + event.userid + ", MyUserId="+ myUserId + ")");
+
+				if(event.userid == myUserId)
+				{
+					handRaised = false;
+				}
+			}
+			
 		]]>
 	</mx:Script>
 	
@@ -387,7 +402,7 @@
 		<mx:Button id="settingsBtn" icon="{images.users_settings}" width="30" height="30"
 					toolTip="{ResourceUtil.getInstance().getString('bbb.users.settings.buttonTooltip')}" click="openSettings()" visible="true" tabIndex="{partOptions.baseTabIndex+10}"/>
 		<mx:Button id="raiseHandBtn" toggle="true" icon="{images.hand_new}"
-					width="30" height="30" toolTip="Raise Hand" click="raiseHand()"
+					width="30" height="30" toolTip="Raise Hand" click="raiseHand()" selected="{handRaised}"
 					visible="false" includeInLayout="{raiseHandBtn.visible}" tabIndex="{partOptions.baseTabIndex+15}" />
 		<mx:Spacer width="100%"/>
 	</mx:ControlBar>
