@@ -17,12 +17,14 @@
 *
 */
 package org.bigbluebutton.main.model.users {
-	import com.asfusion.mate.events.Dispatcher;	
+	import com.asfusion.mate.events.Dispatcher;
+	
 	import flash.events.AsyncErrorEvent;
 	import flash.events.NetStatusEvent;
 	import flash.net.NetConnection;
 	import flash.net.Responder;
-	import flash.net.SharedObject;	
+	import flash.net.SharedObject;
+	
 	import org.bigbluebutton.common.LogUtil;
 	import org.bigbluebutton.common.Role;
 	import org.bigbluebutton.core.BBB;
@@ -39,6 +41,7 @@ package org.bigbluebutton.main.model.users {
 	import org.bigbluebutton.main.events.UserLeftEvent;
 	import org.bigbluebutton.main.model.ConferenceParameters;
 	import org.bigbluebutton.main.model.users.events.ConnectionFailedEvent;
+	import org.bigbluebutton.main.model.users.events.LowerHandEvent;
 	import org.bigbluebutton.main.model.users.events.RoleChangeEvent;
 
 	public class UsersSOService {
@@ -261,6 +264,11 @@ package org.bigbluebutton.main.model.users {
 		public function participantStatusChange(userID:String, status:String, value:Object):void {
 			LogUtil.debug("Received status change [" + userID + "," + status + "," + value + "]")			
 			UserManager.getInstance().getConference().newUserStatus(userID, status, value);
+			
+			if(status == "raiseHand" && value == "false")
+			{
+				dispatcher.dispatchEvent(new LowerHandEvent(userID))
+			}
 			
 			if (status == "presenter"){
 				var e:PresenterStatusEvent = new PresenterStatusEvent(PresenterStatusEvent.PRESENTER_NAME_CHANGE);
