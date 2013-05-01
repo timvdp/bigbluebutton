@@ -24,7 +24,9 @@ package org.bigbluebutton.modules.users.managers
 	import org.bigbluebutton.common.events.CloseWindowEvent;
 	import org.bigbluebutton.common.events.OpenWindowEvent;
 	import org.bigbluebutton.core.BBB;
+	import org.bigbluebutton.core.managers.UserManager;
 	import org.bigbluebutton.main.events.MadePresenterEvent;
+	import org.bigbluebutton.main.model.users.events.LowerHandEvent;
 	import org.bigbluebutton.modules.users.events.StartUsersModuleEvent;
 	import org.bigbluebutton.modules.users.model.UsersOptions;
 	import org.bigbluebutton.modules.users.views.UsersWindow;
@@ -73,5 +75,16 @@ package org.bigbluebutton.modules.users.managers
 			}
 		}
 
+		public function handleLowerHandEvent(e:LowerHandEvent):void{
+			
+			var myUserId:String = UserManager.getInstance().getConference().getMyUserId();
+			
+			LogUtil.debug("UsersManager :: Got LowerHandEvent (UserId=" + e.userid + ", MyUserId="+ myUserId + ")");
+			
+			if(e.userid == myUserId)
+			{
+				toolbarButtonManager.lowerHand();
+			}
+		}
 	}
 }

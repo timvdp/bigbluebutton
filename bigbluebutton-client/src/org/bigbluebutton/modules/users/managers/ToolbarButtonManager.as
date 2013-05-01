@@ -72,5 +72,10 @@ package org.bigbluebutton.modules.users.managers
 				buttonShownOnToolbar = false;			
 			}
 		}
+		
+		public function lowerHand():void {
+			
+			button.lowerHand();
+		}
 	}
 }
