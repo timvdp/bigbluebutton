@@ -265,9 +265,11 @@ package org.bigbluebutton.main.model.users {
 			LogUtil.debug("Received status change [" + userID + "," + status + "," + value + "]")			
 			UserManager.getInstance().getConference().newUserStatus(userID, status, value);
 			
-			if(status == "raiseHand" && value == "false")
+			if(status == "raiseHand" && !(value as Boolean))
 			{
-				dispatcher.dispatchEvent(new LowerHandEvent(userID))
+				LogUtil.debug("Dispatch Lower hand event for user [" + userID + "]");			
+						
+				dispatcher.dispatchEvent(new LowerHandEvent(userID));
 			}
 			
 			if (status == "presenter"){
