@@ -105,6 +105,15 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 					handIcon = images.hand_new;
 			}
 			
+			public function raiseHand():void
+			{
+				handRaised = true;
+				
+				if(handRaised)
+					handIcon = images.hand_new_on;
+				else
+					handIcon = images.hand_new;
+			}
 
 			
 		]]>

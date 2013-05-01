@@ -27,6 +27,7 @@ package org.bigbluebutton.modules.users.managers
 	import org.bigbluebutton.core.managers.UserManager;
 	import org.bigbluebutton.main.events.MadePresenterEvent;
 	import org.bigbluebutton.main.model.users.events.LowerHandEvent;
+	import org.bigbluebutton.main.model.users.events.RaiseHandEvent;
 	import org.bigbluebutton.modules.users.events.StartUsersModuleEvent;
 	import org.bigbluebutton.modules.users.model.UsersOptions;
 	import org.bigbluebutton.modules.users.views.UsersWindow;
@@ -85,6 +86,16 @@ package org.bigbluebutton.modules.users.managers
 			{
 				toolbarButtonManager.lowerHand();
 			}
+		}
+		
+		public function handleLowerHandEvent(e:RaiseHandEvent):void{
+			
+			LogUtil.debug("UsersManager :: Got RaiseHandEvent");
+			
+			if(e.raised)
+				toolbarButtonManager.raiseHand();
+			else
+				toolbarButtonManager.lowerHand();
 		}
 	}
 }

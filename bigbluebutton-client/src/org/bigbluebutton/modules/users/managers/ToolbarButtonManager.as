@@ -77,5 +77,10 @@ package org.bigbluebutton.modules.users.managers
 			
 			button.lowerHand();
 		}
+		
+		public function raiseHand():void {
+			
+			button.raiseHand();
+		}
 	}
 }
