@@ -32,7 +32,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			import org.bigbluebutton.modules.users.managers.UsersManager;
 			import org.bigbluebutton.main.events.MadePresenterEvent;
 			import org.bigbluebutton.main.model.users.events.LowerHandEvent;
-			
+			import org.bigbluebutton.main.model.users.events.RaiseHandEvent;
 			
 		]]>
 	</mx:Script>
@@ -67,6 +67,10 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 	
 	<EventHandlers type="{LowerHandEvent.LOWER_HAND_EVENT}" >
 		<MethodInvoker generator="{UsersManager}" method="handleLowerHandEvent" arguments="{event}" />
+	</EventHandlers>
+	
+	<EventHandlers type="{RaiseHandEvent.RAISE_HAND}" >
+		<MethodInvoker generator="{UsersManager}" method="handleRaiseHandEvent" arguments="{event}" />
 	</EventHandlers>
 	
 	<EventHandlers type="{VoiceConfEvent.EJECT_USER}" >
