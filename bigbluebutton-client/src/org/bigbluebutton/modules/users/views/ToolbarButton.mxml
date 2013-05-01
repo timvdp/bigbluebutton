@@ -29,8 +29,6 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 		   xmlns:mate="http://mate.asfusion.com/"
 		   implements="org.bigbluebutton.common.IBbbToolbarComponent">
 	
-	<mate:Listener type="{LowerHandEvent.LOWER_HAND_EVENT}" method="lowerHandHandler" />
-	
 	<mx:Script>
 		<![CDATA[
 			import com.asfusion.mate.events.Dispatcher;
@@ -97,22 +95,14 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 				
 			}
 			
-			protected function lowerHandHandler(event:LowerHandEvent):void
+			public function lowerHand():void
 			{
-				
-				var myUserId:String = UserManager.getInstance().getConference().getMyUserId();
-
-				LogUtil.debug("Users::ToolbarButton catch LowerHandEvent (UserId=" + event.userid + ", MyUserId="+ myUserId + ")");
-
-				if(event.userid == myUserId)
-				{
-					handRaised = false;
-								
-					if(handRaised)
-						handIcon = images.hand_new_on;
-					else
-						handIcon = images.hand_new;
-				}
+				handRaised = false;
+							
+				if(handRaised)
+					handIcon = images.hand_new_on;
+				else
+					handIcon = images.hand_new;
 			}
 			
 

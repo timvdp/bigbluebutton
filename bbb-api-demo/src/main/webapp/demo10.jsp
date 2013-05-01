@@ -207,7 +207,7 @@ with BigBlueButton; if not, If not, see <http://www.gnu.org/licenses/>.
 			}
 		});
 	}
-	var meetingID="English 101,English 102,English 103,English 104,English 105,English 106,English 107,English 108,English 109,English 110";
+	var meetingID="English 101,English 102,English 103,English 104,English 105,English 106,English 107,English 108,English 109,English 110,Demo Meeting";
 	$(document).ready(function(){
 		isRunningMeeting("English 232");
 		$("#formcreate").validate();

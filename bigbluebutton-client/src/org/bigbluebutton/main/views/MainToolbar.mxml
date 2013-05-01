@@ -152,6 +152,9 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 					else if (event.module == "Webcam"){
 						index = 2;
 					}
+					else if (event.module == "Users"){
+						index = 3;
+					}
 					
 					//localButton = event.button as UIComponent;
 					//(localButton as Button).tabIndex = baseIndex + numButtons;

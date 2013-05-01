@@ -63,6 +63,10 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 		<MethodInvoker generator="{UsersManager}" method="handleMadeViewerEvent" arguments="{event}"/>
 	</EventHandlers>
 	
+	<EventHandlers type="{LowerHandEvent.LOWER_HAND_EVENT}" >
+		<MethodInvoker generator="{UsersManager}" method="handleLowerHandEvent" arguments="{event}" />
+	</EventHandlers>
+	
 	<EventHandlers type="{VoiceConfEvent.EJECT_USER}" >
 		<MethodInvoker generator="{UsersProxy}" method="ejectUser" arguments="{event}" />
 	</EventHandlers>
