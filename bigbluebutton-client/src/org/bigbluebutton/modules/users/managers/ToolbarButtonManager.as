@@ -44,11 +44,10 @@ package org.bigbluebutton.modules.users.managers
 			button = new ToolbarButton();			
 
 			isRoleViewer = (UserManager.getInstance().getConference().getMyRole() == Role.VIEWER);
-
-			LogUtil.debug("Users::Create ToolbarButtonManager (IsViewer = " + isRoleViewer + ")");
 		}
 													
 		public function addToolbarButton():void {
+			/*
 			LogUtil.debug("Users::addToolbarButton");
 			
 			if ((button != null) && (!buttonShownOnToolbar) && isRoleViewer) {
@@ -60,9 +59,11 @@ package org.bigbluebutton.modules.users.managers
 				buttonShownOnToolbar = true;	
 				button.enabled = true;		
 			}
+			*/
 		}
 			
 		public function removeToolbarButton():void {
+			/*
 			LogUtil.debug("Users::removeToolbarButton");
 			
 			if (buttonShownOnToolbar) {
@@ -71,6 +72,7 @@ package org.bigbluebutton.modules.users.managers
 				globalDispatcher.dispatchEvent(event);	
 				buttonShownOnToolbar = false;			
 			}
+			*/
 		}
 		
 		public function lowerHand():void {

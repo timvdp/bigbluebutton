@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+BigBlueButton open source conferencing system - http://www.bigbluebutton.org
+
+Copyright (c) 2010 BigBlueButton Inc. and by respective authors (see below).
+
+BigBlueButton is free software; you can redistribute it and/or modify it under the 
+terms of the GNU Lesser General Public License as published by the Free Software 
+Foundation; either version 2.1 of the License, or (at your option) any later 
+version. 
+
+BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY 
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along 
+with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+
+$Id: $
+--> 
+
+<flc:CanvasButton
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:flc="flexlib.controls.*"
+	xmlns:mate="http://mate.asfusion.com/"
+	visible="false" 
+	creationComplete="onCreationComplete()"
+	toolTip="{ResourceUtil.getInstance().getString('bbb.users.settings.buttonTooltip')}" 
+	click="toggleRaiseHand()" width="100" maxWidth="180"
+	mouseOver="mouseOverHandler()"
+	mouseOut="mouseOutHandler()"
+	paddingTop="0"
+	paddingBottom="0">
+	
+	<mate:Listener type="{LocaleChangeEvent.LOCALE_CHANGED}" method="localeChanged" />
+	<mate:Listener type="{LowerHandEvent.LOWER_HAND_EVENT}" method="lowerHandEventHandler" />
+	<mate:Listener type="{RaiseHandEvent.RAISE_HAND}" method="raiseHandEventHandler" />
+				   
+	<mx:Script>
+		<![CDATA[
+			import com.asfusion.mate.events.Dispatcher;
+			
+			import mx.binding.utils.BindingUtils;
+			
+			import org.bigbluebutton.common.Images;
+			import org.bigbluebutton.common.LogUtil;
+			import org.bigbluebutton.common.Role;
+			import org.bigbluebutton.common.events.LocaleChangeEvent;
+			import org.bigbluebutton.core.EventConstants;
+			import org.bigbluebutton.core.events.CoreEvent;
+			import org.bigbluebutton.core.events.VoiceConfEvent;
+			import org.bigbluebutton.core.managers.UserManager;
+			import org.bigbluebutton.main.events.ShortcutEvent;
+			import org.bigbluebutton.main.model.users.events.LowerHandEvent;
+			import org.bigbluebutton.main.model.users.events.RaiseHandEvent;
+			import org.bigbluebutton.util.i18n.ResourceUtil;
+			
+			[Bindable]
+			private var images:Images = new Images();
+				
+			private var handRaised:Boolean = false;
+			private var raiseHandRolled:Boolean = false;
+		
+			private function onCreationComplete():void 
+			{
+				updateRaiseHandBtn();
+			}
+			
+			private function localeChanged(e:LocaleChangeEvent):void 
+			{
+				updateRaiseHandBtn();
+			}
+			
+			private function updateRaiseHandBtn():void 
+			{
+				if (UserManager.getInstance().getConference().getMyRole() != Role.VIEWER) 
+				{
+					this.visible = false;
+				} 
+				else 
+				{
+					this.visible = true;
+					
+					if (raiseHandRolled) 
+					{
+						if (handRaised) 
+						{
+							raiseHandBtnImg.source = images.hand_new_on;
+							raiseHandBtnTxt.visible = true;
+							raiseHandBtnTxt.includeInLayout = true;
+							raiseHandBtnTxt.text = "Lower hand"; //ResourceUtil.getInstance().getString("bbb.listeners.talk");
+							hboxRaiseHand.setStyle("paddingTop",0);
+						} 
+						else 
+						{
+							raiseHandBtnImg.source = images.hand_new;
+							raiseHandBtnTxt.visible = true;
+							raiseHandBtnTxt.includeInLayout = true;
+							raiseHandBtnTxt.text = "Raise hand"; //ResourceUtil.getInstance().getString("bbb.listeners.mute");
+							hboxRaiseHand.setStyle("paddingTop",0);
+						}
+					} 
+					else 
+					{
+						if (handRaised) 
+						{
+							raiseHandBtnImg.source = images.hand_new_on;
+							raiseHandBtnTxt.visible = true;
+							raiseHandBtnTxt.includeInLayout = true;
+							raiseHandBtnTxt.text = "Hand raised"; //ResourceUtil.getInstance().getString("bbb.users.muteMeBtnTxt.muted");
+							hboxRaiseHand.setStyle("paddingTop",0);
+						} 
+						else 
+						{
+							raiseHandBtnImg.source = images.hand_new;
+							raiseHandBtnTxt.visible = false;
+							raiseHandBtnTxt.includeInLayout = false;
+							hboxRaiseHand.setStyle("paddingTop",2);
+						}
+					}
+				}
+			}
+			
+			private function toggleRaiseHand(event:ShortcutEvent = null):void
+			{
+				if (UserManager.getInstance().getConference().getMyRole() == Role.VIEWER) 
+				{
+					handRaised = !handRaised;
+								
+					var e:RaiseHandEvent = new RaiseHandEvent(RaiseHandEvent.RAISE_HAND);
+					e.raised = handRaised;
+					dispatchEvent(e);
+				}
+			}
+			
+			private function lowerHandEventHandler(event:LowerHandEvent)
+			{
+				handRaised = false;
+				updateRaiseHandBtn();			
+			}
+
+			private function raiseHandEventHandler(event:RaiseHandEvent)
+			{
+				handRaised = event.raised;
+				updateRaiseHandBtn();
+			}
+			
+			private function mouseOverHandler():void {
+				raiseHandRolled = true;
+				updateRaiseHandBtn();
+			}
+			
+			private function mouseOutHandler():void {
+				raiseHandRolled = false;
+				updateRaiseHandBtn();
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:HBox id="hboxRaiseHand" verticalAlign="middle" horizontalAlign="center" horizontalGap="0" paddingLeft="5" paddingTop="0" paddingRight="5" paddingBottom="0" width="100%">
+		<mx:Image id="raiseHandBtnImg" />
+		<mx:Label id="raiseHandBtnTxt" />
+	</mx:HBox>
+</flc:CanvasButton>
