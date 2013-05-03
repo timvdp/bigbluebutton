@@ -93,7 +93,7 @@ $Id: $
 							raiseHandBtnTxt.visible = true;
 							raiseHandBtnTxt.includeInLayout = true;
 							raiseHandBtnTxt.text = ResourceUtil.getInstance().getString("bbb.users.raiseHandBtn.lowerHand");
-							//hboxRaiseHand.setStyle("paddingTop",0);
+							hboxRaiseHand.setStyle("paddingTop",0);
 						} 
 						else 
 						{
@@ -101,7 +101,7 @@ $Id: $
 							raiseHandBtnTxt.visible = true;
 							raiseHandBtnTxt.includeInLayout = true;
 							raiseHandBtnTxt.text = ResourceUtil.getInstance().getString("bbb.users.raiseHandBtn.raiseHand");
-							//hboxRaiseHand.setStyle("paddingTop",0);
+							hboxRaiseHand.setStyle("paddingTop",0);
 						}
 					} 
 					else 
@@ -112,14 +112,14 @@ $Id: $
 							raiseHandBtnTxt.visible = true;
 							raiseHandBtnTxt.includeInLayout = true;
 							raiseHandBtnTxt.text = ResourceUtil.getInstance().getString("bbb.users.raiseHandBtn.handRaised");
-							//hboxRaiseHand.setStyle("paddingTop",0);
+							hboxRaiseHand.setStyle("paddingTop",0);
 						} 
 						else 
 						{
 							raiseHandBtnImg.source = images.hand_new;
 							raiseHandBtnTxt.visible = false;
 							raiseHandBtnTxt.includeInLayout = false;
-							//hboxRaiseHand.setStyle("paddingTop",2);
+							hboxRaiseHand.setStyle("paddingTop",2);
 						}
 					}
 				}
