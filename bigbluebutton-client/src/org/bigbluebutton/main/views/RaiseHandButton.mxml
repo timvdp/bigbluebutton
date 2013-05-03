@@ -26,7 +26,7 @@ $Id: $
 	xmlns:mate="http://mate.asfusion.com/"
 	visible="false" 
 	creationComplete="onCreationComplete()"
-	click="toggleRaiseHand()" width="100" maxWidth="180"
+	click="toggleRaiseHand()" width="125" maxWidth="250"
 	mouseOver="mouseOverHandler()"
 	mouseOut="mouseOutHandler()"
 	paddingTop="0"
@@ -93,7 +93,7 @@ $Id: $
 							raiseHandBtnTxt.visible = true;
 							raiseHandBtnTxt.includeInLayout = true;
 							raiseHandBtnTxt.text = ResourceUtil.getInstance().getString("bbb.users.raiseHandBtn.lowerHand");
-							hboxRaiseHand.setStyle("paddingTop",0);
+							//hboxRaiseHand.setStyle("paddingTop",0);
 						} 
 						else 
 						{
@@ -101,7 +101,7 @@ $Id: $
 							raiseHandBtnTxt.visible = true;
 							raiseHandBtnTxt.includeInLayout = true;
 							raiseHandBtnTxt.text = ResourceUtil.getInstance().getString("bbb.users.raiseHandBtn.raiseHand");
-							hboxRaiseHand.setStyle("paddingTop",0);
+							//hboxRaiseHand.setStyle("paddingTop",0);
 						}
 					} 
 					else 
@@ -112,14 +112,14 @@ $Id: $
 							raiseHandBtnTxt.visible = true;
 							raiseHandBtnTxt.includeInLayout = true;
 							raiseHandBtnTxt.text = ResourceUtil.getInstance().getString("bbb.users.raiseHandBtn.handRaised");
-							hboxRaiseHand.setStyle("paddingTop",0);
+							//hboxRaiseHand.setStyle("paddingTop",0);
 						} 
 						else 
 						{
 							raiseHandBtnImg.source = images.hand_new;
 							raiseHandBtnTxt.visible = false;
 							raiseHandBtnTxt.includeInLayout = false;
-							hboxRaiseHand.setStyle("paddingTop",2);
+							//hboxRaiseHand.setStyle("paddingTop",2);
 						}
 					}
 				}
@@ -167,8 +167,8 @@ $Id: $
 		]]>
 	</mx:Script>
 	
-	<mx:HBox id="hboxRaiseHand" verticalAlign="middle" horizontalAlign="center" horizontalGap="0" paddingLeft="5" paddingTop="0" paddingRight="5" paddingBottom="0" width="100%">
+	<mx:HBox id="hboxRaiseHand" verticalAlign="middle" horizontalAlign="center" horizontalGap="0" paddingLeft="5" paddingTop="2" paddingRight="5" paddingBottom="0" width="100%">
 		<mx:Image id="raiseHandBtnImg" />
-		<mx:Label id="raiseHandBtnTxt" fontSize="8" />
+		<mx:Label id="raiseHandBtnTxt" />
 	</mx:HBox>
 </flc:CanvasButton>
