@@ -26,7 +26,7 @@ $Id: $
 	xmlns:mate="http://mate.asfusion.com/"
 	visible="false" 
 	creationComplete="onCreationComplete()"
-	click="toggleRaiseHand()" width="125" maxWidth="250"
+	click="toggleRaiseHand()" width="130" maxWidth="250"
 	mouseOver="mouseOverHandler()"
 	mouseOut="mouseOutHandler()"
 	paddingTop="0"
@@ -167,8 +167,8 @@ $Id: $
 		]]>
 	</mx:Script>
 	
-	<mx:HBox id="hboxRaiseHand" verticalAlign="middle" horizontalAlign="center" horizontalGap="0" paddingLeft="5" paddingTop="2" paddingRight="5" paddingBottom="0" width="100%">
+	<mx:HBox id="hboxRaiseHand" verticalAlign="middle" horizontalAlign="center" horizontalGap="0" paddingLeft="5" paddingTop="0" paddingRight="5" paddingBottom="0" width="100%">
 		<mx:Image id="raiseHandBtnImg" />
-		<mx:Label id="raiseHandBtnTxt" />
+		<mx:Label id="raiseHandBtnTxt" paddingTop="2"/>
 	</mx:HBox>
 </flc:CanvasButton>
