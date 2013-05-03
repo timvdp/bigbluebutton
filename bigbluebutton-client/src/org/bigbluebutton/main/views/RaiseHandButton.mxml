@@ -26,7 +26,6 @@ $Id: $
 	xmlns:mate="http://mate.asfusion.com/"
 	visible="false" 
 	creationComplete="onCreationComplete()"
-	toolTip="{ResourceUtil.getInstance().getString('bbb.users.settings.buttonTooltip')}" 
 	click="toggleRaiseHand()" width="100" maxWidth="180"
 	mouseOver="mouseOverHandler()"
 	mouseOut="mouseOutHandler()"
@@ -36,6 +35,8 @@ $Id: $
 	<mate:Listener type="{LocaleChangeEvent.LOCALE_CHANGED}" method="localeChanged" />
 	<mate:Listener type="{LowerHandEvent.LOWER_HAND_EVENT}" method="lowerHandEventHandler" />
 	<mate:Listener type="{RaiseHandEvent.RAISE_HAND}" method="raiseHandEventHandler" />
+	<mate:Listener type="{MadePresenterEvent.SWITCH_TO_PRESENTER_MODE}" method="madePresenterEventHandler" />
+	<mate:Listener type="{MadePresenterEvent.SWITCH_TO_VIEWER_MODE}" method="madePresenterEventHandler" />
 				   
 	<mx:Script>
 		<![CDATA[
@@ -51,6 +52,7 @@ $Id: $
 			import org.bigbluebutton.core.events.CoreEvent;
 			import org.bigbluebutton.core.events.VoiceConfEvent;
 			import org.bigbluebutton.core.managers.UserManager;
+			import org.bigbluebutton.main.events.MadePresenterEvent;
 			import org.bigbluebutton.main.events.ShortcutEvent;
 			import org.bigbluebutton.main.model.users.events.LowerHandEvent;
 			import org.bigbluebutton.main.model.users.events.RaiseHandEvent;
@@ -74,7 +76,8 @@ $Id: $
 			
 			private function updateRaiseHandBtn():void 
 			{
-				if (UserManager.getInstance().getConference().getMyRole() != Role.VIEWER) 
+				if (UserManager.getInstance().getConference().amIPresenter || 
+					UserManager.getInstance().getConference().amIModerator()) 
 				{
 					this.visible = false;
 				} 
@@ -89,7 +92,7 @@ $Id: $
 							raiseHandBtnImg.source = images.hand_new_on;
 							raiseHandBtnTxt.visible = true;
 							raiseHandBtnTxt.includeInLayout = true;
-							raiseHandBtnTxt.text = "Lower hand"; //ResourceUtil.getInstance().getString("bbb.listeners.talk");
+							raiseHandBtnTxt.text = ResourceUtil.getInstance().getString("bbb.users.raiseHandBtn.lowerHand");
 							hboxRaiseHand.setStyle("paddingTop",0);
 						} 
 						else 
@@ -97,7 +100,7 @@ $Id: $
 							raiseHandBtnImg.source = images.hand_new;
 							raiseHandBtnTxt.visible = true;
 							raiseHandBtnTxt.includeInLayout = true;
-							raiseHandBtnTxt.text = "Raise hand"; //ResourceUtil.getInstance().getString("bbb.listeners.mute");
+							raiseHandBtnTxt.text = ResourceUtil.getInstance().getString("bbb.users.raiseHandBtn.raiseHand");
 							hboxRaiseHand.setStyle("paddingTop",0);
 						}
 					} 
@@ -108,7 +111,7 @@ $Id: $
 							raiseHandBtnImg.source = images.hand_new_on;
 							raiseHandBtnTxt.visible = true;
 							raiseHandBtnTxt.includeInLayout = true;
-							raiseHandBtnTxt.text = "Hand raised"; //ResourceUtil.getInstance().getString("bbb.users.muteMeBtnTxt.muted");
+							raiseHandBtnTxt.text = ResourceUtil.getInstance().getString("bbb.users.raiseHandBtn.handRaised");
 							hboxRaiseHand.setStyle("paddingTop",0);
 						} 
 						else 
@@ -134,13 +137,18 @@ $Id: $
 				}
 			}
 			
-			private function lowerHandEventHandler(event:LowerHandEvent)
+			private function lowerHandEventHandler(event:LowerHandEvent):void
 			{
 				handRaised = false;
 				updateRaiseHandBtn();			
 			}
 
-			private function raiseHandEventHandler(event:RaiseHandEvent)
+			private function madePresenterEventHandler(event:MadePresenterEvent):void
+			{
+				updateRaiseHandBtn();			
+			}
+			
+			private function raiseHandEventHandler(event:RaiseHandEvent):void
 			{
 				handRaised = event.raised;
 				updateRaiseHandBtn();
@@ -161,6 +169,6 @@ $Id: $
 	
 	<mx:HBox id="hboxRaiseHand" verticalAlign="middle" horizontalAlign="center" horizontalGap="0" paddingLeft="5" paddingTop="0" paddingRight="5" paddingBottom="0" width="100%">
 		<mx:Image id="raiseHandBtnImg" />
-		<mx:Label id="raiseHandBtnTxt" />
+		<mx:Label id="raiseHandBtnTxt" fontSize="8" />
 	</mx:HBox>
 </flc:CanvasButton>
