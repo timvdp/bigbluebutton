@@ -218,14 +218,17 @@ package org.bigbluebutton.main.model.users {
 		public function participantLeft(userID:String):void { 			
 			var user:BBBUser = UserManager.getInstance().getConference().getUser(userID);
 			
-      trace("Notify others that user [" + user.userID + "] has left!!!!");
+      trace("Notify others that user [" + user.userID + ", " + user.name + "] is leaving!!!!");
+      
+      // Flag that the user is leaving the meeting so that apps (such as avatar) doesn't hang
+      // around when the user already left.
+      user.isLeavingFlag = true;
       
 			var joinEvent:UserLeftEvent = new UserLeftEvent(UserLeftEvent.LEFT);
 			joinEvent.userID = user.userID;
 			dispatcher.dispatchEvent(joinEvent);	
       
-      UserManager.getInstance().getConference().removeUser(userID);	
-      
+      UserManager.getInstance().getConference().removeUser(userID);	      
 		}
 		
 		public function participantJoined(joinedUser:Object):void { 
@@ -234,6 +237,7 @@ package org.bigbluebutton.main.model.users {
 			user.name = joinedUser.name;
 			user.role = joinedUser.role;
       user.externUserID = joinedUser.externUserID;
+      user.isLeavingFlag = false;
       
 			LogUtil.debug("User status: " + joinedUser.status.hasStream);
 
