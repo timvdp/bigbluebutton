@@ -55,7 +55,6 @@ package org.bigbluebutton.modules.videoconf.maps
   import org.bigbluebutton.modules.videoconf.views.PublishWindow;
   import org.bigbluebutton.modules.videoconf.views.ToolbarButton;
   import org.bigbluebutton.modules.videoconf.views.VideoWindow;
-  import org.bigbluebutton.modules.viewers.events.ViewCameraEvent;
   import org.flexunit.runner.manipulation.filters.IncludeAllFilter;
   
   public class VideoEventMapDelegate
