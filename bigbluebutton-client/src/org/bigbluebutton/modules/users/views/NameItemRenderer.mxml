@@ -21,11 +21,47 @@
 --> 
 
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
-	backgroundColor="{data.raiseHand ? 0xCC2222 : null}"
+	creationComplete="onCreationCompleteHandler(event)"
 	verticalScrollPolicy="off" horizontalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
+			import mx.binding.utils.ChangeWatcher;
+			import mx.events.FlexEvent;
+			
 			import org.bigbluebutton.util.i18n.ResourceUtil;
+			
+			protected function onCreationCompleteHandler(event:FlexEvent):void
+			{
+				// The next two lines should be listening for the same data to change and be updating at the same 
+				// time, but the FlexEvent.DATA_CHANGE wasn't working consistently.
+				this.addEventListener(FlexEvent.DATA_CHANGE, dataChangeHandler);
+				ChangeWatcher.watch(this, "data", dataChangeHandler);
+				
+				if (data != null) // if data has already been set
+				{
+					updateBackgroundColor();
+				}
+				
+				validateNow();
+			}
+			
+			private function dataChangeHandler(e:Event):void {
+				if (data != null) {
+					updateBackgroundColor();
+				}
+			}
+						
+			private function updateBackgroundColor(unneeded:Object = null):void {
+				if (data != null) {
+					if (data.raiseHand) {
+						this.setStyle("backgroundColor",0xCC2222);
+					} else {
+						this.setStyle("backgroundColor",null);
+					}
+				}
+			}
+
+			
 		]]>
 	</mx:Script>
 	<mx:Label id="nameLabel" textAlign="left" text="{data.name} {data.me ? '(' + ResourceUtil.getInstance().getString('bbb.users.usersGrid.nameItemRenderer.youIdentifier') + ')' : ''}" 
