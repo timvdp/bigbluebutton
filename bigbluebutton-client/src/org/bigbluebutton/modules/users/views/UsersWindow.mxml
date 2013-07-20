@@ -91,7 +91,7 @@
 			[Bindable]
 			private var users:ArrayCollection = new ArrayCollection();
 			
-			/*TVP : HandRaisedEventÂ*/
+			//TVP : HandRaisedEvent
 			
 			[Bindable] 
 			private var handRaised:Boolean = false;
