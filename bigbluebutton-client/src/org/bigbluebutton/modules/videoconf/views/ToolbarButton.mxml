@@ -44,6 +44,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			import org.bigbluebutton.main.views.MainToolbar;
 			import org.bigbluebutton.modules.videoconf.events.ClosePublishWindowEvent;
 			import org.bigbluebutton.modules.videoconf.events.ShareCameraRequestEvent;
+			import org.bigbluebutton.modules.videoconf.model.VideoConfOptions;
 			import org.bigbluebutton.util.i18n.ResourceUtil;
 			
 			[Bindable] public var isPresenter:Boolean;
@@ -51,6 +52,8 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			private var images:Images = new Images();
 			[Bindable] public var camIcon:Class = images.webcam;
 
+			private var confOptions:VideoConfOptions = new VideoConfOptions();
+			
 			public const OFF_STATE:Number = 0;
 			public const ON_STATE:Number = 1;
 			
@@ -122,19 +125,24 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			}
 
 			private function mouseOverHandler(event:MouseEvent):void {
-				if(_currentState == ON_STATE)
-					camIcon = images.webcamClose;
-				else
-					camIcon = images.webcamOn;			
+				if(!confOptions.disableButtonRollOver)
+				{
+					if(_currentState == ON_STATE)
+						camIcon = images.webcamClose;
+					else
+						camIcon = images.webcamOn;								
+				}
 			}
 
 			private function mouseOutHandler(event:MouseEvent):void {
-				if(_currentState == ON_STATE)
-					camIcon = images.webcamOn;
-				else
-					camIcon = images.webcam;			
+				if(!confOptions.disableButtonRollOver)
+				{
+					if(_currentState == ON_STATE)
+						camIcon = images.webcamOn;
+					else
+						camIcon = images.webcam;			
+				}
 			}
-
 
 			public function getAlignment():String{
 				return MainToolbar.ALIGN_LEFT;

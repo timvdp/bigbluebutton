@@ -106,6 +106,9 @@ package org.bigbluebutton.modules.videoconf.model
 		
 		[Bindable]
 		public var glowBlurSize:Number = 30.0;
+
+		[Bindable]
+		public var disableButtonRollOver:Boolean = true;
 		
 		public function VideoConfOptions() {
 			parseOptions();
@@ -215,6 +218,10 @@ package org.bigbluebutton.modules.videoconf.model
 				
 				if (vxml.@glowBlurSize != undefined) {
 					glowBlurSize = Number(vxml.@glowBlurSize.toString());
+				}
+				
+				if (vxml.@disableButtonRollOver != undefined) {
+					disableButtonRollOver = vxml.@disableButtonRollOver;
 				}
 			}
 		}
