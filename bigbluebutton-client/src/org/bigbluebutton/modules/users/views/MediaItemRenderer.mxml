@@ -104,23 +104,35 @@
 			}
 			
 			private function muteMouseOverHandler():void {
-				rolledOverMute = true;
-				updateButtons();
+				if(!options.disableButtonRollOver)
+				{
+					rolledOverMute = true;
+					updateButtons();
+				}
 			}
 			
 			private function muteMouseOutHandler():void {
-				rolledOverMute = false;
-				updateButtons();
+				if(!options.disableButtonRollOver)
+				{
+					rolledOverMute = false;
+					updateButtons();
+				}
 			}
 			
 			private function lockMouseOverHandler():void {
-				rolledOverLock = true;
-				updateButtons();
+				if(!options.disableButtonRollOver)
+				{
+					rolledOverLock = true;
+					updateButtons();
+				}
 			}
 			
 			private function lockMouseOutHandler():void {
-				rolledOverLock = false;
-				updateButtons();
+				if(!options.disableButtonRollOver)
+				{
+					rolledOverLock = false;
+					updateButtons();
+				}
 			}
 			
 			private function viewCamera():void {

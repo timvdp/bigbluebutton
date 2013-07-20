@@ -33,7 +33,10 @@ package org.bigbluebutton.modules.users.model
 		
 		[Bindable]
 		public var allowKickUser:Boolean = false;
-		
+
+		[Bindable]
+		public var disableButtonRollOver:Boolean = true;
+
 		public function UsersOptions() {
 			var vxml:XML = BBB.getConfigForModule("UsersModule");
 			if (vxml != null) {
@@ -47,6 +50,9 @@ package org.bigbluebutton.modules.users.model
 			}
 			if (vxml.@allowKickUser != undefined) {
 				allowKickUser = vxml.@allowKickUser;
+			}
+			if (vxml.@disableButtonRollOver != undefined) {
+				disableButtonRollOver = vxml.@disableButtonRollOver;
 			}
 		}
 
