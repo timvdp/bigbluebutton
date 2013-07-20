@@ -48,7 +48,7 @@
 			private var images:Images = new Images();
   			private var rolledOver:Boolean = false;
   			private var moderator:Boolean = false;
-  			
+				
   			private function onCreationComplete():void {
   				moderator = UserManager.getInstance().getConference().amIModerator();
   				
@@ -76,7 +76,10 @@
   				ChangeWatcher.watch(this, "data", dataChangeHandler);
   				
   				if (data != null) // if data has already been set
-  					updateButton(); //initialize state
+				{
+					updateButton(); //initialize state
+					updateBackgroundColor();
+				}
   					
   				validateNow();
   			}
@@ -84,6 +87,7 @@
   			private function dataChangeHandler(e:Event):void {
   				if (data != null) {
   					updateButton(); //reassess data state on change
+					updateBackgroundColor();
 				}
   			}
   			
@@ -123,6 +127,16 @@
 	  			}
   			}
   			
+			private function updateBackgroundColor(unneeded:Object = null):void {
+				if (data != null) {
+					if (data.raiseHand) {
+						this.setStyle("backgroundColor",0xFF0000);
+					} else {
+						this.setStyle("backgroundColor",null);
+					}
+				}
+			}
+						
   			private function onRollOver(e:UsersRollEvent):void{
 				if (moderator && (e.userID == data.userID) && !data.phoneUser) {
 					rolledOver = true;
