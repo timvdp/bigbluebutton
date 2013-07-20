@@ -135,11 +135,13 @@
   			
 			private function updateBackgroundColor(unneeded:Object = null):void {
 				if (data != null) {
+					/*TVP : do not change this cell bg color, only username
 					if (data.raiseHand) {
 						this.setStyle("backgroundColor",0xFF0000);
 					} else {
 						this.setStyle("backgroundColor",null);
 					}
+					*/
 				}
 			}
 						
