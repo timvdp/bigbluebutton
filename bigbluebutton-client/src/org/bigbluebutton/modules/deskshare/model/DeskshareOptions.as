@@ -25,7 +25,8 @@ package org.bigbluebutton.modules.deskshare.model
 		[Bindable] public var showButton:Boolean = true;
 		[Bindable] public var autoStart:Boolean = false;
 		[Bindable] public var baseTabIndex:int;
-		
+		[Bindable] public var disableButtonRollOver:Boolean = true;
+
 		public function parseOptions():void {
 			var vxml:XML = BBB.getConfigForModule("DeskShareModule");
 			if (vxml != null) {
@@ -40,6 +41,9 @@ package org.bigbluebutton.modules.deskshare.model
 				}
 				if (vxml.@showButton != undefined){
 					showButton = (vxml.@showButton.toString().toUpperCase() == "TRUE") ? true : false; 
+				}
+				if (vxml.@disableButtonRollOver != undefined) {
+					disableButtonRollOver = vxml.@disableButtonRollOver;
 				}
 			}
 		}

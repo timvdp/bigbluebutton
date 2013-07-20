@@ -60,6 +60,7 @@ package org.bigbluebutton.modules.phone.managers {
 				phoneOptions.showButton = (vxml.@showButton.toString().toUpperCase() == "TRUE") ? true : false;
 				phoneOptions.autoJoin = (vxml.@autoJoin.toString().toUpperCase() == "TRUE") ? true : false;
 				phoneOptions.skipCheck = (vxml.@skipCheck.toString().toUpperCase() == "TRUE") ? true : false;
+				phoneOptions.disableButtonRollOver = (vxml.@disableButtonRollOver.toString().toUpperCase() == "TRUE") ? true : false;
 			}
 			
 			if (phoneOptions.autoJoin) {
