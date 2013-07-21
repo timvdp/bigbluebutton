@@ -392,23 +392,24 @@ package org.bigbluebutton.modules.whiteboard
         
     /* called when a user is made presenter, automatically make all the textfields currently on the page editable, so that they can edit it. */
     public function makeTextObjectsEditable(e:MadePresenterEvent):void {
-//      var texts:Array = getAllTexts();
-//      for(var i:int = 0; i < texts.length; i++) {
-//        (texts[i] as TextObject).makeEditable(true);
-//        (texts[i] as TextObject).registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextListener, textObjSpecialListener);
-//      }
+		LogUtil.debug("DisplayModel :: Make Text objects editable");
+		var texts:Array = getAllTexts();
+      for(var i:int = 0; i < texts.length; i++) {
+        (texts[i] as TextObject).makeEditable(true);
+        (texts[i] as TextObject).registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
+      }
     }
     
     /* when a user is made viewer, automatically make all the textfields currently on the page uneditable, so that they cannot edit it any
        further and so that only the presenter can edit it.
     */
     public function makeTextObjectsUneditable(e:MadePresenterEvent):void {
-      LogUtil.debug("MADE PRESENTER IS PRESENTER FALSE");
-//      var texts:Array = getAllTexts();
-//      for(var i:int = 0; i < texts.length; i++) {
-//        (texts[i] as TextObject).makeEditable(false);
-//        (texts[i] as TextObject).deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextListener, textObjSpecialListener);
-//      }
+      LogUtil.debug("DisplayModel :: Make Text objects uneditable");
+      var texts:Array = getAllTexts();
+      for(var i:int = 0; i < texts.length; i++) {
+        (texts[i] as TextObject).makeEditable(false);
+        (texts[i] as TextObject).deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
+      }
     }
   
     private function redrawGraphic(gobj:GraphicObject, objIndex:int):void {
