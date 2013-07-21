@@ -142,13 +142,17 @@ package org.bigbluebutton.modules.whiteboard
           }   
           break;
         case TextObject.TEXT_PUBLISHED:
-          modifyText(o);
           // Inform others that we are done with listening for events and that they should re-listen for keyboard events. 
-          if (isPresenter) {
-            bindToKeyboardEvents(true);
-            wbCanvas.stage.focus = null;
-            currentlySelectedTextObject = null;
-          }
+          if (!isPresenter) 
+		  {
+			  modifyText(o);
+		  }
+		  else
+		  {
+			  bindToKeyboardEvents(true);
+			  wbCanvas.stage.focus = null;
+			  currentlySelectedTextObject = null;			  
+		  }
           break;
       }        
     }
