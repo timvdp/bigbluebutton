@@ -21,6 +21,8 @@ package org.bigbluebutton.main.model.users {
 	
 	import flash.events.AsyncErrorEvent;
 	import flash.events.NetStatusEvent;
+	import flash.external.ExternalInterface;
+	import flash.media.Sound;
 	import flash.net.NetConnection;
 	import flash.net.Responder;
 	import flash.net.SharedObject;
@@ -40,16 +42,11 @@ package org.bigbluebutton.main.model.users {
 	import org.bigbluebutton.main.events.UserJoinedEvent;
 	import org.bigbluebutton.main.events.UserLeftEvent;
 	import org.bigbluebutton.main.model.ConferenceParameters;
-	import org.bigbluebutton.main.model.users.events.ConnectionFailedEvent;
-
-	import org.bigbluebutton.main.model.users.events.RoleChangeEvent;
-	import org.bigbluebutton.util.i18n.ResourceUtil;
-	import flash.external.ExternalInterface;
 	import org.bigbluebutton.main.model.users.BBBUser;
-
-	/*TVP : LowerHandEvent*/
+	import org.bigbluebutton.main.model.users.events.ConnectionFailedEvent;
 	import org.bigbluebutton.main.model.users.events.LowerHandEvent;
 	import org.bigbluebutton.main.model.users.events.RoleChangeEvent;
+	import org.bigbluebutton.util.i18n.ResourceUtil;
 
 
 	public class UsersSOService {
@@ -67,6 +64,10 @@ package org.bigbluebutton.main.model.users {
 		
 		private var dispatcher:Dispatcher;
 				
+		[Embed(source="../assets/NoticeHand.mp3")] 
+		private var noticeSoundClass:Class;
+		private var noticeSound:Sound = new noticeSoundClass() as Sound;
+
 		public function UsersSOService(uri:String) {			
 			_applicationURI = uri;
       _connectionManager = BBB.initConnectionManager();
@@ -298,6 +299,14 @@ package org.bigbluebutton.main.model.users {
 				LogUtil.debug("Dispatch Lower hand event for user [" + userID + "]");			
 						
 				dispatcher.dispatchEvent(new LowerHandEvent(userID,true));
+			}
+			
+			/*TVP : Play sound on raised hand if presenter*/
+			if(status == "raiseHand" && (value as Boolean) && UserManager.getInstance().getConference().amIPresenter)
+			{
+				LogUtil.debug("Play sound because user [" + userID + "] raised his hand");			
+				
+				noticeSound.play();
 			}
 			
 			if (status == "presenter"){
