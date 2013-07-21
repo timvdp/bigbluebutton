@@ -143,11 +143,9 @@ package org.bigbluebutton.modules.whiteboard
           break;
         case TextObject.TEXT_PUBLISHED:
           // Inform others that we are done with listening for events and that they should re-listen for keyboard events. 
-          if (!isPresenter) 
-		  {
-			  modifyText(o);
-		  }
-		  else
+          modifyText(o, isPresenter );
+		  
+		  if (isPresenter) 
 		  {
 			  bindToKeyboardEvents(true);
 			  wbCanvas.stage.focus = null;
@@ -162,61 +160,68 @@ package org.bigbluebutton.modules.whiteboard
     private function addPresenterText(o:Annotation, background:Boolean=false):void {
       if (!isPresenter) return;
             
-            /**
-            * We will not be listening for keyboard events to input texts. Tell others to not listen for these events. For example, the presentation module
-            * listens for Keyboard.ENTER, Keyboard.SPACE to advance the slides. We don't want that while the presenter is typing texts.
-            */
-            bindToKeyboardEvents(false);
-      
-            var tobj:TextObject = shapeFactory.makeTextObject(o);
-            tobj.setGraphicID(o.id);
-            tobj.status = o.status;
-      tobj.multiline = true;
-      tobj.wordWrap = true;
+		/**
+		* We will not be listening for keyboard events to input texts. Tell others to not listen for these events. For example, the presentation module
+		* listens for Keyboard.ENTER, Keyboard.SPACE to advance the slides. We don't want that while the presenter is typing texts.
+		*/
+		bindToKeyboardEvents(false);
+		  
+		var tobj:TextObject = shapeFactory.makeTextObject(o);
+		tobj.setGraphicID(o.id);
+		tobj.status = o.status;
+		tobj.multiline = true;
+		tobj.wordWrap = true;
             
-      if (background) {
-                tobj.makeEditable(true);
-                tobj.border = true;
-        tobj.background = true;
-        tobj.backgroundColor = 0xFFFFFF;                
-      }
+		if (background) 
+		{
+			tobj.makeEditable(true);
+			tobj.border = true;
+			tobj.background = true;
+			tobj.backgroundColor = 0xFFFFFF;                
+		}
       
-      tobj.registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
-      wbCanvas.addGraphic(tobj);
-      wbCanvas.stage.focus = tobj;
-            _annotationsList.push(tobj);
-                       
+		tobj.registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
+		wbCanvas.addGraphic(tobj);
+		wbCanvas.stage.focus = tobj;
+		_annotationsList.push(tobj);                       
     }
     
     /* adds a new TextObject that is suited for a viewer. For example, it will not
     be made editable and no listeners need to be attached because the viewers
     should not be able to edit/modify the TextObject 
     */
-    private function addNormalText(o:Annotation):void {
-            var tobj:TextObject = shapeFactory.makeTextObject(o);
-            tobj.setGraphicID(o.id);
-            tobj.status = o.status;
-      tobj.multiline = true;
-      tobj.wordWrap = true;
-      tobj.background = false;
-      tobj.makeEditable(false);
-      wbCanvas.addGraphic(tobj);
-            _annotationsList.push(tobj);
+    private function addNormalText(o:Annotation, editableText:Boolean = false):void {
+    	var tobj:TextObject = shapeFactory.makeTextObject(o);
+		
+		tobj.setGraphicID(o.id);
+		tobj.status = o.status;
+      	tobj.multiline = true;
+      	tobj.wordWrap = true;
+      	tobj.background = false;
+      	tobj.makeEditable(false);
+      	
+		if(editableText)
+			tobj.registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
+
+		wbCanvas.addGraphic(tobj);
+    
+		_annotationsList.push(tobj);
     }
     
     private function removeText(id:String):void {
-      var tobjData:Array = getGobjInfoWithID(id);
-      var removeIndex:int = tobjData[0];
-      var tobjToRemove:TextObject = tobjData[1] as TextObject;
-      wbCanvas.removeGraphic(tobjToRemove);
-            _annotationsList.splice(removeIndex, 1);
+      	var tobjData:Array = getGobjInfoWithID(id);
+      	var removeIndex:int = tobjData[0];
+      	var tobjToRemove:TextObject = tobjData[1] as TextObject;
+      	
+	  	wbCanvas.removeGraphic(tobjToRemove);
+		_annotationsList.splice(removeIndex, 1);
     }  
     
     /* method to modify a TextObject that is already present on the whiteboard, as opposed to adding a new TextObject to the whiteboard */
-    private function modifyText(o:Annotation):void {
+    private function modifyText(o:Annotation, editableText:Boolean = false):void {
       LogUtil.debug("**** Modify Text *****");
 	  removeText(o.id);
-      addNormalText(o);
+      addNormalText(o, editableText);
     }
     
     /* the following three methods are used to remove any GraphicObjects (and its subclasses) if the id of the object to remove is specified. The latter
@@ -564,7 +569,7 @@ package org.bigbluebutton.modules.whiteboard
       }  
             
             if (status == TextObject.TEXT_PUBLISHED) {
-              	//tobj.deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
+              	tobj.deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
                 var e:GraphicObjectFocusEvent = new GraphicObjectFocusEvent(GraphicObjectFocusEvent.OBJECT_DESELECTED);
                 e.data = tobj;
                 wbCanvas.dispatchEvent(e);   
