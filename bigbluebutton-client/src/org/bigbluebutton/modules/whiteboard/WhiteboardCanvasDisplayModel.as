@@ -467,8 +467,7 @@ package org.bigbluebutton.modules.whiteboard
 					tobj.wordWrap = true;
 					tobj.background = false;
 					tobj.makeEditable(false);
-					tobj.background = false;          
-
+					
 					if(isPresenter)
 					{
 						tobj.makeEditable(true);
@@ -516,20 +515,21 @@ package org.bigbluebutton.modules.whiteboard
     }
     
         public function textObjTextChangeListener(event:Event):void {
-            // The text is being edited. Notify others to update the text.
+			LogUtil.debug("### Text changed ");
+			// The text is being edited. Notify others to update the text.
             var sendStatus:String = TextObject.TEXT_UPDATED;
             var tf:TextObject = event.target as TextObject;  
             sendTextToServer(sendStatus, tf);  
         }
             
     public function textObjGainedFocusListener(event:FocusEvent):void {
-//      LogUtil.debug("### GAINED FOCUS ");
+     		LogUtil.debug("### GAINED FOCUS ");
             // The presenter is ready to type in the text. Maintain focus to this textbox until the presenter hits the ENTER/RETURN key.
             maintainFocusToTextBox(event);
     }
     
     public function textObjLostFocusListener(event:FocusEvent):void {
-//      LogUtil.debug("### LOST FOCUS ");
+			LogUtil.debug("### LOST FOCUS ");
             // The presenter is moving the mouse away from the textbox. Perhaps to change the size and color of the text.
             // Maintain focus to this textbox until the presenter hits the ENTER/RETURN key.
             maintainFocusToTextBox(event);

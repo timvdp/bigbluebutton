@@ -275,4 +275,9 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 	<views:PopUpCombo id="textSizeMenu" creationComplete="initTextSizeMenu()" 
 					  toolTip="{ResourceUtil.getInstance().getString('ltbcustom.bbb.highlighter.texttoolbar.textSizeMenu')}" 
 					   openAlways="true" specificOpenDirection="{PopUpCombo.OPEN_UP}" />
+	
+	<mx:Spacer width="100%"/>
+
+	<mx:ColorPicker width="20" height="20"  change="changeTextBackgroundColor(event)" id="cbgpik" selectedColor="0x000000"
+					toolTip="{ResourceUtil.getInstance().getString('ltbcustom.bbb.highlighter.texttoolbar.textColorPicker')}"/>
 </mx:HBox>
