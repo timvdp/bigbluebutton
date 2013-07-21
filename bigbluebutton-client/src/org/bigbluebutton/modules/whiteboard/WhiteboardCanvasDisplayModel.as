@@ -465,9 +465,9 @@ package org.bigbluebutton.modules.whiteboard
 					tobj.status = origTobj.status;
 					tobj.multiline = true;
 					tobj.wordWrap = true;
-					tobj.background = false;
-					tobj.makeEditable(false);
-					tobj.background = false;          
+					//tobj.background = false;
+					tobj.makeEditable(true);
+					//tobj.background = false;          
 					
 					wbCanvas.addGraphic(tobj);
 					
