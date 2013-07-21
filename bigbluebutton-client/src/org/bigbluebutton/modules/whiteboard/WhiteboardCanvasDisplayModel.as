@@ -201,7 +201,10 @@ package org.bigbluebutton.modules.whiteboard
       	tobj.makeEditable(false);
       	
 		if(editableText)
+		{
+			tobj.makeEditable(true);
 			tobj.registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
+		}
 
 		wbCanvas.addGraphic(tobj);
     
