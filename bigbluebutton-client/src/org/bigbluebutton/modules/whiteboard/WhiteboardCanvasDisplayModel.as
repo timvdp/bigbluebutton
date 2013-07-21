@@ -216,7 +216,9 @@ package org.bigbluebutton.modules.whiteboard
       	var removeIndex:int = tobjData[0];
       	var tobjToRemove:TextObject = tobjData[1] as TextObject;
       	
-	  	wbCanvas.removeGraphic(tobjToRemove);
+		tobjToRemove.deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);	
+
+		wbCanvas.removeGraphic(tobjToRemove);
 		_annotationsList.splice(removeIndex, 1);
     }  
     
@@ -453,8 +455,7 @@ package org.bigbluebutton.modules.whiteboard
                 } 
 				else 
 				{
-					LogUtil.error("Obj with id [" + objIndex + "] is redraw and make not editable");
-
+					tobj.deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);	
 					wbCanvas.removeGraphic(origTobj as DisplayObject);
 					//addNormalText(an);
 					var tobj:TextObject = shapeFactory.redrawTextObject(an, origTobj);
@@ -465,7 +466,12 @@ package org.bigbluebutton.modules.whiteboard
 					tobj.wordWrap = true;
 					tobj.background = false;
 					tobj.makeEditable(false);
-					tobj.background = false;          
+					
+					if(isPresenter)
+					{
+						tobj.makeEditable(true);
+						tobj.registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
+					}
 					
 					wbCanvas.addGraphic(tobj);
 					
