@@ -473,6 +473,8 @@ package org.bigbluebutton.modules.whiteboard
 	        sendStatus = TextObject.TEXT_PUBLISHED;
         }
 		
+		LogUtil.debug("Special listener send html text [" + tobj.htmlText + "]");
+		
         sendTextToServer(sendStatus, tobj);  
       }         
     }
