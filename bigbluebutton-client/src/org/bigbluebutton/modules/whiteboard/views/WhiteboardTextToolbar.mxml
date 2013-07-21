@@ -131,6 +131,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			protected function changeTextBackgroundColor(e:Event):void{
 				enableTextToolbar();
 				this.bgColor = e.target.selectedColor;
+				this.backgroundVisible = true;
 				canvas.modifySelectedTextObject(textColor, backgroundVisible, bgColor, textSize);
 				canvas.stage.focus = currentlySelectedTextObject;
 			}

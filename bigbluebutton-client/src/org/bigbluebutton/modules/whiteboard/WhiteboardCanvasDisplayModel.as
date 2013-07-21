@@ -549,6 +549,8 @@ package org.bigbluebutton.modules.whiteboard
             // The presenter has changed the color or size of the text. Notify others of these change.
       currentlySelectedTextObject.textColor = textColor;
       currentlySelectedTextObject.textSize = textSize;
+	  currentlySelectedTextObject.backgroundColor = backgroundColor;
+	  currentlySelectedTextObject.background = bgColorVisible;
       currentlySelectedTextObject.applyFormatting();
       sendTextToServer(TextObject.TEXT_UPDATED, currentlySelectedTextObject);
     }
