@@ -197,10 +197,10 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			}
 						
 			private function presenterMode(e:MadePresenterEvent):void {
-        if (canvas == null) return;
-        
+		        if (canvas == null) return;
+		        
 				canvas.makeTextObjectsEditable(e);
-        setToolType(WhiteboardConstants.TYPE_ZOOM, null);
+		        setToolType(WhiteboardConstants.TYPE_ZOOM, null);
 			}
 			
 			private function viewerMode(e:MadePresenterEvent):void {

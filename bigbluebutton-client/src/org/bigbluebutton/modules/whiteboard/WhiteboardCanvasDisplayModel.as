@@ -544,11 +544,10 @@ package org.bigbluebutton.modules.whiteboard
       }  
             
             if (status == TextObject.TEXT_PUBLISHED) {
-              tobj.deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
+              	//tobj.deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
                 var e:GraphicObjectFocusEvent = new GraphicObjectFocusEvent(GraphicObjectFocusEvent.OBJECT_DESELECTED);
                 e.data = tobj;
                 wbCanvas.dispatchEvent(e);   
-                             
             }
 
 //      LogUtil.debug("SENDING TEXT: [" + tobj.textSize + "]");
