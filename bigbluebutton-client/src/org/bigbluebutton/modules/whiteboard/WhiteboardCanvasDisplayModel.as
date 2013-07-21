@@ -136,8 +136,9 @@ package org.bigbluebutton.modules.whiteboard
             addNormalText(o);                            
           break;
         case TextObject.TEXT_UPDATED:
-          if (!isPresenter) {
-                        modifyText(o);
+          if (!isPresenter) 
+		  {
+            modifyText(o);
           }   
           break;
         case TextObject.TEXT_PUBLISHED:
@@ -209,7 +210,8 @@ package org.bigbluebutton.modules.whiteboard
     
     /* method to modify a TextObject that is already present on the whiteboard, as opposed to adding a new TextObject to the whiteboard */
     private function modifyText(o:Annotation):void {
-      removeText(o.id);
+      LogUtil.debug("**** Modify Text *****");
+	  removeText(o.id);
       addNormalText(o);
     }
     
@@ -488,6 +490,8 @@ package org.bigbluebutton.modules.whiteboard
 		LogUtil.debug("Special listener send html text [" + tobj.htmlText + "]");
 		
         sendTextToServer(sendStatus, tobj);  
+
+		LogUtil.debug("After sendTextToServer [" + tobj.htmlText + "]");
       }         
     }
     
