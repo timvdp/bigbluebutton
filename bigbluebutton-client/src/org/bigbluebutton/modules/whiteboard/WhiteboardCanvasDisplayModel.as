@@ -465,10 +465,16 @@ package org.bigbluebutton.modules.whiteboard
 					tobj.status = origTobj.status;
 					tobj.multiline = true;
 					tobj.wordWrap = true;
-					//tobj.background = false;
-					tobj.makeEditable(true);
-					//tobj.background = false;          
-					
+					tobj.background = false;
+					tobj.makeEditable(false);
+					tobj.background = false;          
+
+					if(isPresenter)
+					{
+						tobj.makeEditable(true);
+						tobj.registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
+					}
+
 					wbCanvas.addGraphic(tobj);
 					
 					_annotationsList[objIndex] = tobj;
