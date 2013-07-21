@@ -217,7 +217,7 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
         }
         
     public function registerListeners(textObjGainedFocus:Function, textObjLostFocus:Function, textObjTextListener:Function, textObjDeleteListener:Function):void {                        
-		LogUtil.error("Register listeners for [" + this.id "]");
+		LogUtil.error("Register listeners for [" + this.id + "]");
 
 	  this.addEventListener(FocusEvent.FOCUS_IN, textObjGainedFocus);
       this.addEventListener(FocusEvent.FOCUS_OUT, textObjLostFocus);
@@ -226,7 +226,7 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     }    
     
     public function deregisterListeners(textObjGainedFocus:Function, textObjLostFocus:Function, textObjTextListener:Function, textObjDeleteListener:Function):void {      
-		LogUtil.error("Deregister listeners for [" + this.id "]");
+		LogUtil.error("Deregister listeners for [" + this.id + "]");
       this.removeEventListener(FocusEvent.FOCUS_IN, textObjGainedFocus);
       this.removeEventListener(FocusEvent.FOCUS_OUT, textObjLostFocus);
       this.removeEventListener(TextEvent.TEXT_INPUT, textObjTextListener);
