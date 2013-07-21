@@ -413,8 +413,9 @@ package org.bigbluebutton.modules.whiteboard
     }
   
     private function redrawGraphic(gobj:GraphicObject, objIndex:int):void {
-            var o:Annotation;
-            if (gobj.type != DrawObject.TEXT) {
+			var o:Annotation;
+            if (gobj.type != DrawObject.TEXT) 
+			{
                 wbCanvas.removeGraphic(gobj as DisplayObject);
                 o = whiteboardModel.getAnnotation(gobj.id);
                 
@@ -426,24 +427,35 @@ package org.bigbluebutton.modules.whiteboard
                         _annotationsList[objIndex] = dobj;              
                     }          
                 }
-            } else if(gobj.type == WhiteboardConstants.TYPE_TEXT) {
-                var origTobj:TextObject = gobj as TextObject;                
+            } 
+			else if(gobj.type == WhiteboardConstants.TYPE_TEXT) 
+			{
+				var origTobj:TextObject = gobj as TextObject;                
                 var an:Annotation = whiteboardModel.getAnnotation(origTobj.id);
-                if (an == null) {
+
+				if (an == null) 
+				{
                     LogUtil.error("Text with id [" + origTobj.id + "] is missing.");
-                } else {
-          wbCanvas.removeGraphic(origTobj as DisplayObject);
-//          addNormalText(an);
-          var tobj:TextObject = shapeFactory.redrawTextObject(an, origTobj);
-          tobj.setGraphicID(origTobj.id);
-          tobj.status = origTobj.status;
-          tobj.multiline = true;
-          tobj.wordWrap = true;
-          tobj.background = false;
-          tobj.makeEditable(false);
-          tobj.background = false;          
-          wbCanvas.addGraphic(tobj);
-                    _annotationsList[objIndex] = tobj;
+                } 
+				else 
+				{
+					LogUtil.error("Obj with id [" + objIndex + "] is redraw and make not editable");
+
+					wbCanvas.removeGraphic(origTobj as DisplayObject);
+					//addNormalText(an);
+					var tobj:TextObject = shapeFactory.redrawTextObject(an, origTobj);
+					
+					tobj.setGraphicID(origTobj.id);
+					tobj.status = origTobj.status;
+					tobj.multiline = true;
+					tobj.wordWrap = true;
+					tobj.background = false;
+					tobj.makeEditable(false);
+					tobj.background = false;          
+					
+					wbCanvas.addGraphic(tobj);
+					
+					_annotationsList[objIndex] = tobj;
                 }            
       }
     }
