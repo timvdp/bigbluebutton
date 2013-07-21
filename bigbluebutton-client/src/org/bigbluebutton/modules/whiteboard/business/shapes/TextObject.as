@@ -87,6 +87,9 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
       _textBoxHeight = boxHeight;
       this.textSize = textSize;
       _calcedFontSize = calcedFontSize;
+	  
+	  LogUtil.error("New TextObject [" + text + "]");
+
     }  
     
     public function get id():String {
