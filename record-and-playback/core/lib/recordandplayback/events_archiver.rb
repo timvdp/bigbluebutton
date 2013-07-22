@@ -105,7 +105,7 @@ module BigBlueButton
 						xml.method_missing(key){
 							xml << val
 						}
-					elsif res[MODULE] == "CHAT" && res[EVENTNAME] == "PublicChatEvent" && key == "message"
+					elsif res[MODULE] == "CHAT" && key == "message" # && res[EVENTNAME] == "PublicChatEvent"  
 						xml.method_missing(key){
 							xml.cdata!(val.tr("\u0000-\u001f\u007f\u2028",''))
 						}
