@@ -25,6 +25,10 @@ public class ChatMessageVO {
     // The type of chat (PUBLIC or PRIVATE)
     public String chatType;
     
+    // Same as org.bigbluebutton.modules.chat.ChatConstants -> AS
+    public static final String PUBLIC_CHAT = "PUBLIC_CHAT";
+    public static final String PRIVATE_CHAT = "PRIVATE_CHAT";
+    
     // The sender
     public String fromUserID;    
     public String fromUsername;
