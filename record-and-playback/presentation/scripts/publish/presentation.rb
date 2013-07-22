@@ -656,6 +656,7 @@ def processAllChatMessages
 	# Create chat xml.
 	$chat_doc = "Timestamp, Type, Sender, Recipient, Message\n"
 	$allChat_events.each do |node|
+		$chat_doc = $chat_doc + node[:timestamp] + "\n"
 		if (node[:eventname] == "PublicChatEvent")			
 			$chat_doc = $chat_doc + node[:timestamp] + ", Public, " + node.xpath(".//sender")[0].text() + ", , " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()) + "\n"
 		elsif (node[:eventname] == "PrivateChatEvent")
