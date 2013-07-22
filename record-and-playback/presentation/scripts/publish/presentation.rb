@@ -658,9 +658,9 @@ def processAllChatMessages
 	$chat_doc = "#Timestamp, #Type, #Sender, #Recipient, #Message\n"
 	$allChat_events.each do |node|
 		if (node[:eventname].eql? "PublicChatEvent")			
-			$chat_doc = $chat_doc + DateTime.strptime(node[:timestamp],'%d/%m/%Y %H:%M:%S') + ", Public, " + node.xpath(".//sender")[0].text() + ", , " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()).delete("\n") + "\n"
+			$chat_doc = $chat_doc + DateTime.strptime(node[:timestamp],'%d/%m/%Y %H:%M:%S') + ", Public, " + node.xpath(".//sender")[0].text() + ", , " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()) + "\n"
 		elsif (node[:eventname].eql? "PrivateChatEvent")
-			$chat_doc = $chat_doc + DateTime.strptime(node[:timestamp],'%d/%m/%Y %H:%M:%S') + ", Private, " + node.xpath(".//sender")[0].text() + ", " + node.xpath(".//recipient")[0].text() + ", " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()).delete("\n") + "\n"
+			$chat_doc = $chat_doc + DateTime.strptime(node[:timestamp],'%d/%m/%Y %H:%M:%S') + ", Private, " + node.xpath(".//sender")[0].text() + ", " + node.xpath(".//recipient")[0].text() + ", " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()) + "\n"
 		end
 	end
 end
