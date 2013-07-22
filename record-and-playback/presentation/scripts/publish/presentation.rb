@@ -657,9 +657,9 @@ def processAllChatMessages
 	$chat_doc = "Timestamp, Type, Sender, Recipient, Message\n"
 	$allChat_events.each do |node|
 		$chat_doc = $chat_doc + node[:timestamp] + "\n"
-		if (node[:eventname] == "PublicChatEvent")			
+		if (node[:eventname].eql? "PublicChatEvent")			
 			$chat_doc = $chat_doc + node[:timestamp] + ", Public, " + node.xpath(".//sender")[0].text() + ", , " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()) + "\n"
-		elsif (node[:eventname] == "PrivateChatEvent")
+		elsif (node[:eventname].eql? "PrivateChatEvent")
 			$chat_doc = $chat_doc + node[:timestamp] + ", Private, " + node.xpath(".//sender")[0].text() + ", " + node.xpath(".//recipient")[0].text() + ", " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()) + "\n"
 		end
 	end
@@ -812,7 +812,7 @@ if ($playback == "presentation")
 		$join_time = @doc.xpath("//event[@eventname='ParticipantJoinEvent']")[0][:timestamp].to_f
 		$end_time = @doc.xpath("//event[@eventname='EndAndKickAllEvent']")[0][:timestamp].to_f
 	
-		$allChat_events = @doc.xpath("//event[@eventname='PublicChatEvent' and @eventname='PrivateChatEvent']")
+		$allChat_events = @doc.xpath("//event[@eventname='PublicChatEvent' or @eventname='PrivateChatEvent']")
 		
 		processChatMessages()
 		
