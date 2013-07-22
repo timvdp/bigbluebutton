@@ -651,6 +651,19 @@ def processChatMessages
 	end
 end
 
+def processAllChatMessages
+	BigBlueButton.logger.info("Processing all chat events")
+	# Create chat xml.
+	$chat_doc = "Timestamp, Type, Sender, Recipient, Message\n"
+	$allChat_events.each do |node|
+		if (node[:eventname] == "PublicChatEvent")			
+			$chat_doc = $chat_doc + node[:timestamp] + ", Public, " + node.xpath(".//sender")[0].text() + ", , " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()) + "\n"
+		elsif (node[:eventname] == "PrivateChatEvent")
+			$chat_doc = $chat_doc + node[:timestamp] + ", Private, " + node.xpath(".//sender")[0].text() + ", " + node.xpath(".//recipient")[0].text() + ", " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()) + "\n"
+		end
+	end
+end
+
 $vbox_width = 1600
 $vbox_height = 1200
 $magic_mystery_number = 2
@@ -798,7 +811,11 @@ if ($playback == "presentation")
 		$join_time = @doc.xpath("//event[@eventname='ParticipantJoinEvent']")[0][:timestamp].to_f
 		$end_time = @doc.xpath("//event[@eventname='EndAndKickAllEvent']")[0][:timestamp].to_f
 	
+		$allChat_events = @doc.xpath("//event[@eventname='PublicChatEvent' and @eventname='PrivateChatEvent']")
+		
 		processChatMessages()
+		
+		processAllChatMessages()
 		
 		processShapesAndClears()
 		
@@ -808,6 +825,8 @@ if ($playback == "presentation")
 		
 		# Write slides.xml to file
 		File.open("#{package_dir}/slides_new.xml", 'w') { |f| f.puts $slides_doc.to_xml }
+		# Write slides.xml to file
+		File.open("#{package_dir}/chat_events.txt", 'w') { |f| f.puts $chat_doc }
 		# Write shapes.svg to file
 		File.open("#{package_dir}/#{$shapes_svg_filename}", 'w') { |f| f.puts $shapes_svg.to_xml.gsub(%r"\s*\<g.*/\>", "") } #.gsub(%r"\s*\<g.*\>\s*\</g\>", "") }
 		
