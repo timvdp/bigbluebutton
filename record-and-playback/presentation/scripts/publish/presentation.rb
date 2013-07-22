@@ -653,23 +653,27 @@ def processChatMessages
 end
 
 def processAllChatMessages
-	BigBlueButton.logger.info("Processing all chat events")
-	# Create chat xml.
-	$chat_doc = "#Timestamp, #Type, #Sender, #Recipient, #Message\n"
-	$allChat_events.each do |node|
-		
-		chat_timestamp =  node[:timestamp]
-		chat_message =  BigBlueButton::Events.linkify(node.xpath(".//message")[0].text())
-		chat_sender = node.xpath(".//sender")[0].text()
-		chat_recipient = node.xpath(".//recipient")[0].text()
-		
-		if (node[:eventname].eql? "PublicChatEvent")			
-			$chat_doc = $chat_doc + Time.at(chat_timestamp.to_i).to_datetime + ", Public, " + chat_sender + ", , " + chat_message.delete("\n") + "\n"
-		elsif (node[:eventname].eql? "PrivateChatEvent")
-			$chat_doc = $chat_doc + Time.at(chat_timestamp.to_i).to_datetime  + ", Private, " + chat_sender + ", " + chat_recipient + ", " + chat_message.delete("\n") + "\n"
-		end
-		
-	end
+        BigBlueButton.logger.info("Processing all chat events")
+
+        # This is a csv file, write headers first.
+        $chat_doc = "Timestamp, Type, Sender, Recipient, Message\n"
+
+        $allChat_events.each do |node|
+                chat_timestamp =  node[:timestamp]
+                #chat_date = Time.at(chat_timestamp.to_i).to_datetime  #DateTime.strptime(chat_timestamp,"%s")
+                chat_message =  BigBlueButton::Events.linkify(node.xpath(".//message")[0].text())
+                chat_sender = node.xpath(".//sender")[0].text()
+                chat_start = (chat_timestamp.to_i - $meeting_start.to_i) / 1000
+                chat_time = (chat_start / 3600).to_s + ":" + ((chat_start % 3600) / 60).to_s + ":" + (chat_start % 60).to_s
+
+                if (node[:eventname].eql? "PublicChatEvent")
+                        $chat_doc = $chat_doc + chat_time + ", Public, " + chat_sender + ", , " + chat_message.delete("\n").delete("\t") + "\n"
+                elsif (node[:eventname].eql? "PrivateChatEvent")
+                        chat_recipient = node.xpath(".//recipient")[0].text()
+                        $chat_doc = $chat_doc + chat_time + ", Private, " + chat_sender + ", " + chat_recipient + ", " + chat_message.delete("\n").delete("\t") + "\n"
+                end
+
+        end
 end
 
 $vbox_width = 1600
