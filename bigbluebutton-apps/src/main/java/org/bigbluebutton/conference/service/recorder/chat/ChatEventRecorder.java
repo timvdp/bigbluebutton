@@ -39,10 +39,11 @@ public class ChatEventRecorder implements IChatRoomListener {
 
 	@Override
 	public void newChatMessage(ChatMessageVO chatobj) {
+		log.debug("New " + chatobj.chatType + " message to record");
 
 		if(chatobj.chatType == ChatMessageVO.PRIVATE_CHAT)
 			recorder.record(session, buildPrivateEvent(chatobj));	
-		else if (chatobj.chatType == ChatMessageVO.PUBLIC_CHAT)
+		else //if (chatobj.chatType == ChatMessageVO.PUBLIC_CHAT)
 			recorder.record(session, buildPublicEvent(chatobj));	
 	}
 	
