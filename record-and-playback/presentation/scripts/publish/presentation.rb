@@ -27,6 +27,7 @@ require 'trollop'
 require 'yaml'
 require 'builder'
 require 'fastimage' # require fastimage to get the image size of the slides (gem install fastimage)
+require 'date'
 
 # used to convert the colours to hex
 class String
@@ -654,13 +655,12 @@ end
 def processAllChatMessages
 	BigBlueButton.logger.info("Processing all chat events")
 	# Create chat xml.
-	$chat_doc = "Timestamp, Type, Sender, Recipient, Message\n"
+	$chat_doc = "#Timestamp, #Type, #Sender, #Recipient, #Message\n"
 	$allChat_events.each do |node|
-		$chat_doc = $chat_doc + node[:timestamp] + "\n"
 		if (node[:eventname].eql? "PublicChatEvent")			
-			$chat_doc = $chat_doc + node[:timestamp] + ", Public, " + node.xpath(".//sender")[0].text() + ", , " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()) + "\n"
+			$chat_doc = $chat_doc + DateTime.strptime(node[:timestamp],'%d/%m/%Y %H:%M:%S') + ", Public, " + node.xpath(".//sender")[0].text() + ", , " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()).delete("\n") + "\n"
 		elsif (node[:eventname].eql? "PrivateChatEvent")
-			$chat_doc = $chat_doc + node[:timestamp] + ", Private, " + node.xpath(".//sender")[0].text() + ", " + node.xpath(".//recipient")[0].text() + ", " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()) + "\n"
+			$chat_doc = $chat_doc + DateTime.strptime(node[:timestamp],'%d/%m/%Y %H:%M:%S') + ", Private, " + node.xpath(".//sender")[0].text() + ", " + node.xpath(".//recipient")[0].text() + ", " + BigBlueButton::Events.linkify(node.xpath(".//message")[0].text()).delete("\n") + "\n"
 		end
 	end
 end
