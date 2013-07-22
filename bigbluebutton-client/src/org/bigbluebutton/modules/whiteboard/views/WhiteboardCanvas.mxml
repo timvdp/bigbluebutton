@@ -180,11 +180,11 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			}
 			
 			public function makeTextObjectsEditable(e:MadePresenterEvent):void {
-				displayModel.makeTextObjectsEditable(e);
+//				model.makeTextObjectsEditable(e);
 			}
 			
 			public function makeTextObjectsUneditable(e:MadePresenterEvent):void {
-				displayModel.makeTextObjectsUneditable(e);
+//				model.makeTextObjectsUneditable(e);
 			}
 			
 			private function setWhiteboardVisibility():void {

@@ -136,21 +136,18 @@ package org.bigbluebutton.modules.whiteboard
             addNormalText(o);                            
           break;
         case TextObject.TEXT_UPDATED:
-          if (!isPresenter) 
-		  {
-            modifyText(o);
+          if (!isPresenter) {
+                        modifyText(o);
           }   
           break;
         case TextObject.TEXT_PUBLISHED:
+          modifyText(o);
           // Inform others that we are done with listening for events and that they should re-listen for keyboard events. 
-          modifyText(o, isPresenter );
-		  
-		  if (isPresenter) 
-		  {
-			  bindToKeyboardEvents(true);
-			  wbCanvas.stage.focus = null;
-			  currentlySelectedTextObject = null;			  
-		  }
+          if (isPresenter) {
+            bindToKeyboardEvents(true);
+            wbCanvas.stage.focus = null;
+            currentlySelectedTextObject = null;
+          }
           break;
       }        
     }
@@ -160,73 +157,60 @@ package org.bigbluebutton.modules.whiteboard
     private function addPresenterText(o:Annotation, background:Boolean=false):void {
       if (!isPresenter) return;
             
-		/**
-		* We will not be listening for keyboard events to input texts. Tell others to not listen for these events. For example, the presentation module
-		* listens for Keyboard.ENTER, Keyboard.SPACE to advance the slides. We don't want that while the presenter is typing texts.
-		*/
-		bindToKeyboardEvents(false);
-		  
-		var tobj:TextObject = shapeFactory.makeTextObject(o);
-		tobj.setGraphicID(o.id);
-		tobj.status = o.status;
-		tobj.multiline = true;
-		tobj.wordWrap = true;
-            
-		if (background) 
-		{
-			tobj.makeEditable(true);
-			tobj.border = true;
-			tobj.background = true;
-			tobj.backgroundColor = 0xFFFFFF;                
-		}
+            /**
+            * We will not be listening for keyboard events to input texts. Tell others to not listen for these events. For example, the presentation module
+            * listens for Keyboard.ENTER, Keyboard.SPACE to advance the slides. We don't want that while the presenter is typing texts.
+            */
+            bindToKeyboardEvents(false);
       
-		tobj.registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
-		wbCanvas.addGraphic(tobj);
-		wbCanvas.stage.focus = tobj;
-		_annotationsList.push(tobj);                       
+            var tobj:TextObject = shapeFactory.makeTextObject(o);
+            tobj.setGraphicID(o.id);
+            tobj.status = o.status;
+      tobj.multiline = true;
+      tobj.wordWrap = true;
+            
+      if (background) {
+                tobj.makeEditable(true);
+                tobj.border = true;
+        tobj.background = true;
+        tobj.backgroundColor = 0xFFFFFF;                
+      }
+      
+      tobj.registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
+      wbCanvas.addGraphic(tobj);
+      wbCanvas.stage.focus = tobj;
+            _annotationsList.push(tobj);
+                       
     }
     
     /* adds a new TextObject that is suited for a viewer. For example, it will not
     be made editable and no listeners need to be attached because the viewers
     should not be able to edit/modify the TextObject 
     */
-    private function addNormalText(o:Annotation, editableText:Boolean = false):void {
-    	var tobj:TextObject = shapeFactory.makeTextObject(o);
-		
-		tobj.setGraphicID(o.id);
-		tobj.status = o.status;
-      	tobj.multiline = true;
-      	tobj.wordWrap = true;
-      	tobj.background = false;
-      	tobj.makeEditable(false);
-      	
-		if(editableText)
-		{
-			tobj.makeEditable(true);
-			tobj.registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
-		}
-
-		wbCanvas.addGraphic(tobj);
-    
-		_annotationsList.push(tobj);
+    private function addNormalText(o:Annotation):void {
+            var tobj:TextObject = shapeFactory.makeTextObject(o);
+            tobj.setGraphicID(o.id);
+            tobj.status = o.status;
+      tobj.multiline = true;
+      tobj.wordWrap = true;
+      tobj.background = false;
+      tobj.makeEditable(false);
+      wbCanvas.addGraphic(tobj);
+            _annotationsList.push(tobj);
     }
     
     private function removeText(id:String):void {
-      	var tobjData:Array = getGobjInfoWithID(id);
-      	var removeIndex:int = tobjData[0];
-      	var tobjToRemove:TextObject = tobjData[1] as TextObject;
-      	
-		tobjToRemove.deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);	
-
-		wbCanvas.removeGraphic(tobjToRemove);
-		_annotationsList.splice(removeIndex, 1);
+      var tobjData:Array = getGobjInfoWithID(id);
+      var removeIndex:int = tobjData[0];
+      var tobjToRemove:TextObject = tobjData[1] as TextObject;
+      wbCanvas.removeGraphic(tobjToRemove);
+            _annotationsList.splice(removeIndex, 1);
     }  
     
     /* method to modify a TextObject that is already present on the whiteboard, as opposed to adding a new TextObject to the whiteboard */
-    private function modifyText(o:Annotation, editableText:Boolean = false):void {
-      LogUtil.debug("**** Modify Text *****");
-	  removeText(o.id);
-      addNormalText(o, editableText);
+    private function modifyText(o:Annotation):void {
+      removeText(o.id);
+      addNormalText(o);
     }
     
     /* the following three methods are used to remove any GraphicObjects (and its subclasses) if the id of the object to remove is specified. The latter
@@ -408,30 +392,28 @@ package org.bigbluebutton.modules.whiteboard
         
     /* called when a user is made presenter, automatically make all the textfields currently on the page editable, so that they can edit it. */
     public function makeTextObjectsEditable(e:MadePresenterEvent):void {
-		LogUtil.debug("DisplayModel :: Make Text objects editable");
-		var texts:Array = getAllTexts();
-      for(var i:int = 0; i < texts.length; i++) {
-        (texts[i] as TextObject).makeEditable(true);
-        (texts[i] as TextObject).registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
-      }
+//      var texts:Array = getAllTexts();
+//      for(var i:int = 0; i < texts.length; i++) {
+//        (texts[i] as TextObject).makeEditable(true);
+//        (texts[i] as TextObject).registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextListener, textObjSpecialListener);
+//      }
     }
     
     /* when a user is made viewer, automatically make all the textfields currently on the page uneditable, so that they cannot edit it any
        further and so that only the presenter can edit it.
     */
     public function makeTextObjectsUneditable(e:MadePresenterEvent):void {
-      LogUtil.debug("DisplayModel :: Make Text objects uneditable");
-      var texts:Array = getAllTexts();
-      for(var i:int = 0; i < texts.length; i++) {
-        (texts[i] as TextObject).makeEditable(false);
-        (texts[i] as TextObject).deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
-      }
+      LogUtil.debug("MADE PRESENTER IS PRESENTER FALSE");
+//      var texts:Array = getAllTexts();
+//      for(var i:int = 0; i < texts.length; i++) {
+//        (texts[i] as TextObject).makeEditable(false);
+//        (texts[i] as TextObject).deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextListener, textObjSpecialListener);
+//      }
     }
   
     private function redrawGraphic(gobj:GraphicObject, objIndex:int):void {
-			var o:Annotation;
-            if (gobj.type != DrawObject.TEXT) 
-			{
+            var o:Annotation;
+            if (gobj.type != DrawObject.TEXT) {
                 wbCanvas.removeGraphic(gobj as DisplayObject);
                 o = whiteboardModel.getAnnotation(gobj.id);
                 
@@ -443,40 +425,24 @@ package org.bigbluebutton.modules.whiteboard
                         _annotationsList[objIndex] = dobj;              
                     }          
                 }
-            } 
-			else if(gobj.type == WhiteboardConstants.TYPE_TEXT) 
-			{
-				var origTobj:TextObject = gobj as TextObject;                
+            } else if(gobj.type == WhiteboardConstants.TYPE_TEXT) {
+                var origTobj:TextObject = gobj as TextObject;                
                 var an:Annotation = whiteboardModel.getAnnotation(origTobj.id);
-
-				if (an == null) 
-				{
+                if (an == null) {
                     LogUtil.error("Text with id [" + origTobj.id + "] is missing.");
-                } 
-				else 
-				{
-					LogUtil.error("Obj with id [" + objIndex + "] is redraw and make not editable");
-
-					wbCanvas.removeGraphic(origTobj as DisplayObject);
-					//addNormalText(an);
-					var tobj:TextObject = shapeFactory.redrawTextObject(an, origTobj);
-					
-					tobj.setGraphicID(origTobj.id);
-					tobj.status = origTobj.status;
-					tobj.multiline = true;
-					tobj.wordWrap = true;
-					tobj.background = false;
-					tobj.makeEditable(false);
-					
-					if(isPresenter)
-					{
-						tobj.makeEditable(true);
-						tobj.registerListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
-					}
-
-					wbCanvas.addGraphic(tobj);
-					
-					_annotationsList[objIndex] = tobj;
+                } else {
+          wbCanvas.removeGraphic(origTobj as DisplayObject);
+//          addNormalText(an);
+          var tobj:TextObject = shapeFactory.redrawTextObject(an, origTobj);
+          tobj.setGraphicID(origTobj.id);
+          tobj.status = origTobj.status;
+          tobj.multiline = true;
+          tobj.wordWrap = true;
+          tobj.background = false;
+          tobj.makeEditable(false);
+          tobj.background = false;          
+          wbCanvas.addGraphic(tobj);
+                    _annotationsList[objIndex] = tobj;
                 }            
       }
     }
@@ -497,39 +463,32 @@ package org.bigbluebutton.modules.whiteboard
         var tobj:TextObject = event.target as TextObject;  
         
         // if the enter key is pressed, commit the text
-        if (event.keyCode  == Keyboard.ENTER) 
-		{
-          	wbCanvas.stage.focus = null;
-          	tobj.stage.focus = null;
+        if (event.keyCode  == Keyboard.ENTER) {
+          wbCanvas.stage.focus = null;
+          tobj.stage.focus = null;
                     
-	        // The ENTER/RETURN key has been pressed. Publish the text.                   
-	        sendStatus = TextObject.TEXT_PUBLISHED;
+                    // The ENTER/RETURN key has been pressed. Publish the text.                   
+                    sendStatus = TextObject.TEXT_PUBLISHED;
         }
-		
-		LogUtil.debug("Special listener send html text [" + tobj.htmlText + "]");
-		
         sendTextToServer(sendStatus, tobj);  
-
-		LogUtil.debug("After sendTextToServer [" + tobj.htmlText + "]");
       }         
     }
     
         public function textObjTextChangeListener(event:Event):void {
-			LogUtil.debug("### Text changed ");
-			// The text is being edited. Notify others to update the text.
+            // The text is being edited. Notify others to update the text.
             var sendStatus:String = TextObject.TEXT_UPDATED;
             var tf:TextObject = event.target as TextObject;  
             sendTextToServer(sendStatus, tf);  
         }
             
     public function textObjGainedFocusListener(event:FocusEvent):void {
-     		LogUtil.debug("### GAINED FOCUS ");
+//      LogUtil.debug("### GAINED FOCUS ");
             // The presenter is ready to type in the text. Maintain focus to this textbox until the presenter hits the ENTER/RETURN key.
             maintainFocusToTextBox(event);
     }
     
     public function textObjLostFocusListener(event:FocusEvent):void {
-			LogUtil.debug("### LOST FOCUS ");
+//      LogUtil.debug("### LOST FOCUS ");
             // The presenter is moving the mouse away from the textbox. Perhaps to change the size and color of the text.
             // Maintain focus to this textbox until the presenter hits the ENTER/RETURN key.
             maintainFocusToTextBox(event);
@@ -549,8 +508,6 @@ package org.bigbluebutton.modules.whiteboard
             // The presenter has changed the color or size of the text. Notify others of these change.
       currentlySelectedTextObject.textColor = textColor;
       currentlySelectedTextObject.textSize = textSize;
-	  currentlySelectedTextObject.backgroundColor = backgroundColor;
-	  currentlySelectedTextObject.background = bgColorVisible;
       currentlySelectedTextObject.applyFormatting();
       sendTextToServer(TextObject.TEXT_UPDATED, currentlySelectedTextObject);
     }
@@ -582,10 +539,11 @@ package org.bigbluebutton.modules.whiteboard
       }  
             
             if (status == TextObject.TEXT_PUBLISHED) {
-              	tobj.deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
+              tobj.deregisterListeners(textObjGainedFocusListener, textObjLostFocusListener, textObjTextChangeListener, textObjSpecialListener);
                 var e:GraphicObjectFocusEvent = new GraphicObjectFocusEvent(GraphicObjectFocusEvent.OBJECT_DESELECTED);
                 e.data = tobj;
                 wbCanvas.dispatchEvent(e);   
+                             
             }
 
 //      LogUtil.debug("SENDING TEXT: [" + tobj.textSize + "]");
