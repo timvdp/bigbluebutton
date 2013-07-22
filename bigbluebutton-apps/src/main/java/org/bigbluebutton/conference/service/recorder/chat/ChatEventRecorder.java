@@ -19,10 +19,16 @@
 package org.bigbluebutton.conference.service.recorder.chat;
 
 import org.bigbluebutton.conference.service.chat.ChatMessageVO;
+import org.bigbluebutton.conference.service.chat.ChatRoom;
 import org.bigbluebutton.conference.service.chat.IChatRoomListener;
+import org.bigbluebutton.conference.service.chat.Logger;
 import org.bigbluebutton.conference.service.recorder.RecorderApplication;
+import org.slf4j.Logger;
+import org.red5.logging.Red5LoggerFactory;
 
 public class ChatEventRecorder implements IChatRoomListener {	
+	private static Logger log = Red5LoggerFactory.getLogger( ChatEventRecorder.class, "bigbluebutton" );
+	
 	private final RecorderApplication recorder;
 	private final String session;
 	
