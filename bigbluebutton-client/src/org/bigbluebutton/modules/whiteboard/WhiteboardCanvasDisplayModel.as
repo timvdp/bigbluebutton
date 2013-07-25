@@ -519,7 +519,7 @@ package org.bigbluebutton.modules.whiteboard
 		LogUtil.debug("Mouse over on text id [" + tf.id + "] - num children canvas =" + wbCanvas.numChildren);
 
 		//Draw feedback rectangle
-		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
+		dragTextfeedback.draw(wbCanvas.x, wbCanvas.y, tf.width, tf.height);
 		wbCanvas.rawChildren.addChild(dragTextfeedback);    
 		
 		//Bring on top of text
@@ -542,7 +542,7 @@ package org.bigbluebutton.modules.whiteboard
 		LogUtil.debug("Mouse out on text id [" + tf.id + "]");
 		
 		//Remove feedback rectangle
-		dragTextfeedback.clear();
+		//dragTextfeedback.clear();
 		
 		if(wbCanvas.rawChildren.contains(dragTextfeedback))
 		{
@@ -584,7 +584,7 @@ package org.bigbluebutton.modules.whiteboard
 		currentDragTextField.y = dragTextfeedback.y;
 		
 		//Remove feedback rectangle
-		dragTextfeedback.clear();
+		//dragTextfeedback.clear();
 
 		if(wbCanvas.rawChildren.contains(dragTextfeedback))
 		{
