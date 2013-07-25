@@ -520,11 +520,11 @@ package org.bigbluebutton.modules.whiteboard
 
 		//Draw feedback rectangle
 		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
-		wbCanvas.addRawChild(dragTextfeedback);    
+		wbCanvas.addChild(dragTextfeedback);    
 		
 		//Bring on top of text
 		//wbCanvas.setChildIndex(dragTextfeedback, wbCanvas.numChildren - 1);
-		dragTextfeedback.SetOnTop();
+		//dragTextfeedback.SetOnTop();
 		
 		//Add listener for dragging
 		dragTextfeedback.addEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
@@ -547,7 +547,7 @@ package org.bigbluebutton.modules.whiteboard
 		if(wbCanvas.contains(dragTextfeedback))
 		{
 			LogUtil.debug("Remove dragTextFeedback");			
-			wbCanvas.removeRawChild(dragTextfeedback);			
+			wbCanvas.removeChild(dragTextfeedback);			
 		}
 		
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
@@ -586,6 +586,12 @@ package org.bigbluebutton.modules.whiteboard
 		//Remove feedback rectangle
 		dragTextfeedback.clear();
 
+		if(wbCanvas.contains(dragTextfeedback))
+		{
+			LogUtil.debug("Remove dragTextFeedback");			
+			wbCanvas.removeChild(dragTextfeedback);			
+		}
+		
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
 	}
