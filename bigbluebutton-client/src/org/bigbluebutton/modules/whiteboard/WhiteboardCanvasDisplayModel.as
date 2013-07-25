@@ -520,10 +520,9 @@ package org.bigbluebutton.modules.whiteboard
 
 		//Draw feedback rectangle
 		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
-		//wbCanvas.rawChildren.addChild(dragTextfeedback);    
 		wbCanvas.addRawChild(dragTextfeedback);
 		
-		wbCanvas.setChildOnTop(dragTextfeedback);
+		//wbCanvas.setChildOnTop(dragTextfeedback);
 		//Bring on top of text
 		//wbCanvas.setChildIndex(dragTextfeedback, wbCanvas.numChildren - 1);
 		//dragTextfeedback.SetOnTop();
@@ -534,6 +533,9 @@ package org.bigbluebutton.modules.whiteboard
 		
 		//Save textObject for further use
 		currentDragTextField = tf;
+		
+		LogUtil.debug("End Mouse over on text id [" + tf.id + "] - num children canvas =" + wbCanvas.numChildren);
+
 	}
 	
 	public function textMouseOutListener(event:MouseEvent):void
@@ -544,7 +546,7 @@ package org.bigbluebutton.modules.whiteboard
 		LogUtil.debug("Mouse out on text id [" + tf.id + "]");
 		
 		//Remove feedback rectangle
-		//dragTextfeedback.clear();
+		dragTextfeedback.clear();
 		
 		if(wbCanvas.doesContain(dragTextfeedback))
 		{
