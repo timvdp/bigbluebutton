@@ -78,6 +78,9 @@ package org.bigbluebutton.modules.whiteboard
     private var width:Number;
     private var height:Number;
             
+	private var startDragPosX:Number;
+	private var startDragPosY:Number;
+	
     public function doMouseDown(mouseX:Number, mouseY:Number):void {
       /**
         * Check if the presenter is starting a new text annotation without committing the last one.
@@ -199,7 +202,7 @@ package org.bigbluebutton.modules.whiteboard
             _annotationsList.push(tobj);
 
 		if(isPresenter)
-			tobj.addDragListener();
+			tobj.addDragListener(textMouseDownListener, textMouseUpListener);
 	}
     
     private function removeText(id:String):void {
@@ -507,6 +510,27 @@ package org.bigbluebutton.modules.whiteboard
             wbCanvas.dispatchEvent(e);            
         }
         
+	public function textMouseDownListener(event:MouseEvent):void
+	{
+		LogUtil.debug("**** Text Mouse down on text *****");
+		var sendStatus:String = TextObject.TEXT_UPDATED;
+		var tf:TextObject = event.target as TextObject;  
+		
+		startDragPosX = event.localX;
+		startDragPosY = event.localY;
+		//sendTextToServer(sendStatus, tf);  
+	}
+	
+	public function textMouseUpListener(event:MouseEvent):void
+	{
+		LogUtil.debug("**** Text Mouse up on text *****");
+		var sendStatus:String = TextObject.TEXT_PUBLISHED;
+		var tf:TextObject = event.target as TextObject;  
+		
+		tf.setPosition(event.localX - startDragPosX , event.localY - startDragPosY);
+		sendTextToServer(sendStatus, tf);  
+	}
+	
     public function modifySelectedTextObject(textColor:uint, bgColorVisible:Boolean, backgroundColor:uint, textSize:Number):void {
             // The presenter has changed the color or size of the text. Notify others of these change.
       currentlySelectedTextObject.textColor = textColor;

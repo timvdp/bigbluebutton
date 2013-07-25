@@ -89,6 +89,16 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
       _calcedFontSize = calcedFontSize;
     }  
     
+	public function setPosition(x:Number, x:Number) : void
+	{
+		origX += x;
+		this.x += x;
+		
+		origY += y;
+		this.y += y;
+		
+	}
+	
     public function get id():String {
       return ID;
     }
@@ -230,30 +240,13 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
       this.removeEventListener(KeyboardEvent.KEY_DOWN, textObjDeleteListener);
     }
 	
-	public function addDragListener():void 
+	public function addDragListener(mouseDown:Function, mouseUp:Function):void 
 	{
 		LogUtil.debug("Add mouse down/up listener to text [" + this.ID + "]");
 
 		//this.mouseEnabled = false;
-		this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
-		this.addEventListener(MouseEvent.MOUSE_UP, onStopDrag);
-	}
-	
-	//functions
-	protected function onStartDrag(e:MouseEvent):void {
-		LogUtil.debug("Start drag for [" + this.ID + "]");
-		
-		e.currentTarget.startDrag();
-		e.currentTarget.scaleX = 1.25;
-		e.currentTarget.scaleY = 1.25;
-	}
-	
-	protected function onStopDrag(e:MouseEvent):void {
-		LogUtil.debug("Stop drag for [" + this.ID + "]");
-
-		e.currentTarget.stopDrag();
-		e.currentTarget.scaleX = 1;
-		e.currentTarget.scaleY = 1;	
+		this.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
+		this.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 	}
   }
 }
