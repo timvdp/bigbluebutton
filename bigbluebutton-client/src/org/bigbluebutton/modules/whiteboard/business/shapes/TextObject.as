@@ -234,7 +234,7 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
 	{
 		LogUtil.debug("Add mouse down/up listener to text [" + this.ID + "]");
 
-		this.mouseEnabled = false;
+		//this.mouseEnabled = false;
 		this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
 		this.addEventListener(MouseEvent.MOUSE_UP, onStopDrag);
 	}

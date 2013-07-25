@@ -100,10 +100,14 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
             }
             
 			private function doMouseUp(event:Event):void {
+				LogUtil.debug("Mouse up on canvas");
+
 				model.doMouseUp(this.mouseX, this.mouseY);
 			}
 						
 			private function doMouseDown(event:Event):void {
+				LogUtil.debug("Mouse down on canvas");
+
                 displayModel.doMouseDown(this.mouseX, this.mouseY);
 				model.doMouseDown(this.mouseX, this.mouseY);
 			}
