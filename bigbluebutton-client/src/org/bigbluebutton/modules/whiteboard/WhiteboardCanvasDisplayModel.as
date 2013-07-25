@@ -532,9 +532,6 @@ package org.bigbluebutton.modules.whiteboard
 		
 		//Save textObject for further use
 		currentDragTextField = tf;
-		
-		LogUtil.debug("End Mouse over on text id [" + tf.id + "] - num children canvas =" + wbCanvas.numChildren);
-
 	}
 /*
 	public function textMouseOutListener(event:MouseEvent):void

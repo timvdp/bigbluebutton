@@ -32,9 +32,9 @@ package org.bigbluebutton.modules.whiteboard.views
         public function draw(startX:Number, startY:Number, width:Number, height:Number):void {
             graphics.clear();
             graphics.lineStyle(1, 0x0)
-			//graphics.beginFill(0xFF0000,0.5);
+			graphics.beginFill(0xFF0000,0.5);
             graphics.drawRect(0, 0, width, height);
-			//graphics.endFill();
+			graphics.endFill();
             x = startX;
             y = startY;
         }
@@ -42,12 +42,5 @@ package org.bigbluebutton.modules.whiteboard.views
         public function clear():void {
             graphics.clear();
         }
-		
-		public function SetOnTop(): void
-		{
-			LogUtil.debug("Set on top - num children canvas =" + parent.numChildren);
-
-			//parent.setChildIndex(this, parent.numChildren-1);
-		}
     }
 }
