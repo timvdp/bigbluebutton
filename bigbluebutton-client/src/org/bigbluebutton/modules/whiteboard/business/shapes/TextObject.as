@@ -91,8 +91,8 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     
 	public function setPosition(x:Number, y:Number) : void
 	{
-		this.x = x;
-		this.y = y;
+		this.origX = x;
+		this.origY = y;
 		
 		makeGraphic(_origParentWidth,_origParentHeight);
 	}

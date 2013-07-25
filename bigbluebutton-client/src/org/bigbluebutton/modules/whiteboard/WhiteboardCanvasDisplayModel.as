@@ -81,6 +81,8 @@ package org.bigbluebutton.modules.whiteboard
             
 	private var dragTextfeedback:RectangleFeedbackTextBox = new RectangleFeedbackTextBox();
 	private var currentDragTextField:TextObject;
+	private var previousDragTextOrigX:Number;
+	private var previousDragTextOrigY:Number;
 
     public function doMouseDown(mouseX:Number, mouseY:Number):void {
       /**
@@ -531,6 +533,8 @@ package org.bigbluebutton.modules.whiteboard
 		
 		//Save textObject for further use
 		currentDragTextField = tf;
+		previousDragTextOrigX = tf.getOrigX();
+		previousDragTextOrigY = tf.getOrigY();
 	}
 
 	public function feedbackMouseDownListener(event:MouseEvent):void
@@ -549,7 +553,7 @@ package org.bigbluebutton.modules.whiteboard
 		dragTextfeedback.stopDrag();
 		
 		//Set new position of text
-		currentDragTextField.setPosition(dragTextfeedback.x,dragTextfeedback.y);
+		currentDragTextField.setPosition(previousDragTextOrigX + (dragTextfeedback.x-currentDragTextField.x),previousDragTextOrigY + (dragTextfeedback.y-currentDragTextField.y));
 		
 		//Remove feedback rectangle		
 		if(wbCanvas.doesContain(dragTextfeedback))		
