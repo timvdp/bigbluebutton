@@ -134,7 +134,7 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     }
     
     public function makeGraphic(parentWidth:Number, parentHeight:Number):void {
-		LogUtil.debug("makeGraphic - parentWidth [" + parentWidth + "] - parentHeight [" + parentHeight + "]");
+		LogUtil.debug("makeGraphic  - X [" + this.x + "] - Y [" + this.y + "] - origX [" + origX + "] - origY [" + origY + "]");
 		
 	  this.x = denormalize(origX, parentWidth);
       this.y = denormalize(origY, parentHeight);
