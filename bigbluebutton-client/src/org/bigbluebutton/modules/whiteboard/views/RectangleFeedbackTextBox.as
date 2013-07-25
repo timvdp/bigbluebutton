@@ -34,6 +34,7 @@ package org.bigbluebutton.modules.whiteboard.views
             graphics.lineStyle(1, 0x0)
 			graphics.beginFill(0xFF0000,0.5);
             graphics.drawRect(0, 0, width, height);
+			graphics.endFill();
             x = startX;
             y = startY;
         }
