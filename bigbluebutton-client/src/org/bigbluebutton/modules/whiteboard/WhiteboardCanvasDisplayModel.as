@@ -525,6 +525,8 @@ package org.bigbluebutton.modules.whiteboard
 		//Bring on top of text
 		wbCanvas.setChildIndex(dragTextfeedback, wbCanvas.numChildren - 1);
 		
+		LogUtil.debug("Set child index (" + wbCanvas.numChildren + ") result : " + wbCanvas.getChildIndex(dragTextfeedback));
+		
 		//Add listener for dragging
 		dragTextfeedback.addEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
 		dragTextfeedback.addEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
