@@ -80,6 +80,7 @@ package org.bigbluebutton.modules.whiteboard
     private var height:Number;
             
 	private var dragTextfeedback:RectangleFeedbackTextBox = new RectangleFeedbackTextBox();
+	private var currentDragTextField:TextObject;
 
     public function doMouseDown(mouseX:Number, mouseY:Number):void {
       /**
@@ -519,7 +520,10 @@ package org.bigbluebutton.modules.whiteboard
 
 		//Draw feedback rectangle
 		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
-		wbCanvas.addRawChild(dragTextfeedback);     
+		wbCanvas.addRawChild(dragTextfeedback);    
+		
+		//Save textObject for further use
+		currentDragTextField = tf;
 	}
 	
 	public function textMouseOutListener(event:MouseEvent):void
@@ -537,14 +541,37 @@ package org.bigbluebutton.modules.whiteboard
 			LogUtil.debug("Remove dragTextFeedback");			
 			wbCanvas.removeRawChild(dragTextfeedback);			
 		}
+		
+		//Reset current text obj?
+		//currentDragTextField = null;
+	}
+	
+	public function feedbackMouseDownListener(event:MouseEvent):void
+	{		
+		LogUtil.debug("Feedback mouse down -> start drag");
+		
+		dragTextfeedback.startDrag();   
+	}
+	
+	public function feedbackMouseUpListener(event:MouseEvent):void
+	{
+		LogUtil.debug("Feedback mouse up -> stop drag");
+		
+		dragTextfeedback.stopDrag();
+		
+		currentDragTextField.x = dragTextfeedback.x;
+		currentDragTextField.y = dragTextfeedback.y;
+		
+		//Remove feedback rectangle
+		dragTextfeedback.clear();
 	}
 	
     public function modifySelectedTextObject(textColor:uint, bgColorVisible:Boolean, backgroundColor:uint, textSize:Number):void {
-            // The presenter has changed the color or size of the text. Notify others of these change.
-      currentlySelectedTextObject.textColor = textColor;
-      currentlySelectedTextObject.textSize = textSize;
-      currentlySelectedTextObject.applyFormatting();
-      sendTextToServer(TextObject.TEXT_UPDATED, currentlySelectedTextObject);
+        // The presenter has changed the color or size of the text. Notify others of these change.
+      	currentlySelectedTextObject.textColor = textColor;
+      	currentlySelectedTextObject.textSize = textSize;
+      	currentlySelectedTextObject.applyFormatting();
+      	sendTextToServer(TextObject.TEXT_UPDATED, currentlySelectedTextObject);
     }
   
         /***************************************************************************************************************************************/
