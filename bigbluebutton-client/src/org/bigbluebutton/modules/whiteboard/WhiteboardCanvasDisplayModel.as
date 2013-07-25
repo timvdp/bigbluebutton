@@ -523,7 +523,8 @@ package org.bigbluebutton.modules.whiteboard
 		wbCanvas.addRawChild(dragTextfeedback);    
 		
 		//Bring on top of text
-		wbCanvas.setChildIndex(dragTextfeedback, wbCanvas.numChildren - 1);
+		//wbCanvas.setChildIndex(dragTextfeedback, wbCanvas.numChildren - 1);
+		dragTextfeedback.SetOnTop();
 		
 		LogUtil.debug("Set child index (" + wbCanvas.numChildren + ") result : " + wbCanvas.getChildIndex(dragTextfeedback));
 		

@@ -38,5 +38,10 @@ package org.bigbluebutton.modules.whiteboard.views
         public function clear():void {
             graphics.clear();
         }
+		
+		public function SetOnTop(): void
+		{
+			parent.setChildIndex(this, parent.numChildren-1);
+		}
     }
 }
