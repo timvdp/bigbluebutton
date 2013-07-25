@@ -515,7 +515,7 @@ package org.bigbluebutton.modules.whiteboard
 	{
 		var tf:TextObject = event.target as TextObject;  
 		
-		LogUtil.debug("Mouse over on text id [" + tf.id + "] - X [" + tf.x + "] - Y [" + tf.y + "] - origX [ " + tf.getOrigX() + " - origY [" + tf.getOrigY() + "]");
+		LogUtil.debug("Mouse over on text id [" + tf.id + "] - X [" + tf.x + "] - Y [" + tf.y + "] - origX [" + tf.getOrigX() + "] - origY [" + tf.getOrigY() + "]");
 
 		//Draw feedback rectangle
 		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);

@@ -91,11 +91,10 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     
 	public function setPosition(x:Number, y:Number) : void
 	{
-		origX = x;
 		this.x = x;
-		
-		origY = y;
 		this.y = y;
+		
+		makeGraphic(_origParentWidth,_origParentHeight);
 	}
 	
     public function get id():String {
@@ -135,7 +134,9 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     }
     
     public function makeGraphic(parentWidth:Number, parentHeight:Number):void {
-      this.x = denormalize(origX, parentWidth);
+		LogUtil.debug("makeGraphic - parentWidth [" + parentWidth + "] - parentHeight [" + parentHeight + "]");
+		
+	  this.x = denormalize(origX, parentWidth);
       this.y = denormalize(origY, parentHeight);
 
       var newFontSize:Number = textSize;
@@ -173,7 +174,9 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     }
         
     public function redrawText(origParentWidth:Number, origParentHeight:Number, parentWidth:Number, parentHeight:Number):void {
-      this.x = denormalize(origX, parentWidth);
+		LogUtil.debug("redrawText - origParentWidth [" + origParentWidth + "] - origParentHeight [" + origParentHeight + "] - parentWidth [" + parentWidth + "] - parentHeight [" + parentHeight + "]");
+
+	  this.x = denormalize(origX, parentWidth);
       this.y = denormalize(origY, parentHeight);
       
       var newFontSize:Number = textSize;
