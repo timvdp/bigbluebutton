@@ -89,7 +89,7 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
       _calcedFontSize = calcedFontSize;
     }  
     
-	public function setPosition(x:Number, x:Number) : void
+	public function setPosition(x:Number, y:Number) : void
 	{
 		origX += x;
 		this.x += x;
@@ -240,14 +240,14 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
       this.removeEventListener(KeyboardEvent.KEY_DOWN, textObjDeleteListener);
     }
 	
-	public function addDragListener(mouseDown:Function, mouseUp:Function):void 
+	public function addMouseOverListener(mouseOver:Function, mouseOut:Function):void 
 	{
-		LogUtil.debug("Add mouse down/up listener to text [" + this.ID + "]");
+		LogUtil.debug("Add mouse over/out listener to text [" + this.ID + "]");
 
 		//this.mouseEnabled = false;
 		this.selectable = false;
-		this.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
-		this.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
+		this.addEventListener(MouseEvent.MOUSE_OVER, mouseOver);
+		this.addEventListener(MouseEvent.MOUSE_OUT, mouseOut);
 	}
   }
 }
