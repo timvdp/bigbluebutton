@@ -518,7 +518,7 @@ package org.bigbluebutton.modules.whiteboard
 		LogUtil.debug("Mouse over on text id [" + tf.id + "]");
 
 		//Draw feedback rectangle
-		dragTextfeedback.draw(event.localX, event.localY, tf.width, tf.height);
+		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
 		wbCanvas.addRawChild(dragTextfeedback);     
 	}
 	
@@ -531,7 +531,10 @@ package org.bigbluebutton.modules.whiteboard
 		
 		//Draw feedback rectangle
 		if(wbCanvas.contains(dragTextfeedback))
-			wbCanvas.removeRawChild(dragTextfeedback);
+		{
+			LogUtil.debug("Remove dragTextFeedback");			
+			wbCanvas.removeRawChild(dragTextfeedback);			
+		}
 	}
 	
     public function modifySelectedTextObject(textColor:uint, bgColorVisible:Boolean, backgroundColor:uint, textSize:Number):void {
