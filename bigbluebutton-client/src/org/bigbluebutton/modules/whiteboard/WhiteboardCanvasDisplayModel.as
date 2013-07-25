@@ -549,8 +549,7 @@ package org.bigbluebutton.modules.whiteboard
 		dragTextfeedback.stopDrag();
 		
 		//Set new position of text
-		currentDragTextField.x = dragTextfeedback.x;
-		currentDragTextField.y = dragTextfeedback.y;
+		currentDragTextField.setPosition(dragTextfeedback.x,dragTextfeedback.y);
 		
 		//Remove feedback rectangle		
 		if(wbCanvas.doesContain(dragTextfeedback))		

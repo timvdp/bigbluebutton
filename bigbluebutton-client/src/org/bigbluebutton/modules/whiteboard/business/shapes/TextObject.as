@@ -91,12 +91,11 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     
 	public function setPosition(x:Number, y:Number) : void
 	{
-		origX += x;
-		this.x += x;
+		origX = x;
+		this.x = x;
 		
-		origY += y;
-		this.y += y;
-		
+		origY = y;
+		this.y = y;
 	}
 	
     public function get id():String {
