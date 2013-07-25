@@ -522,6 +522,9 @@ package org.bigbluebutton.modules.whiteboard
 		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
 		wbCanvas.addRawChild(dragTextfeedback);    
 		
+		dragTextfeedback.addEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
+		dragTextfeedback.addEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
+		
 		//Save textObject for further use
 		currentDragTextField = tf;
 	}
@@ -541,6 +544,9 @@ package org.bigbluebutton.modules.whiteboard
 			LogUtil.debug("Remove dragTextFeedback");			
 			wbCanvas.removeRawChild(dragTextfeedback);			
 		}
+		
+		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
+		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
 		
 		//Reset current text obj?
 		//currentDragTextField = null;
@@ -564,6 +570,9 @@ package org.bigbluebutton.modules.whiteboard
 		
 		//Remove feedback rectangle
 		dragTextfeedback.clear();
+
+		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
+		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
 	}
 	
     public function modifySelectedTextObject(textColor:uint, bgColorVisible:Boolean, backgroundColor:uint, textSize:Number):void {
