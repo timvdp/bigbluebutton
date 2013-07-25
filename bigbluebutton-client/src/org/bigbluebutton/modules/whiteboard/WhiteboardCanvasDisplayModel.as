@@ -203,7 +203,7 @@ package org.bigbluebutton.modules.whiteboard
             _annotationsList.push(tobj);
 
 		if(isPresenter)
-			tobj.addMouseOverListener(textMouseOverListener, textMouseOutListener);
+			tobj.addMouseOverListener(textMouseOverListener, textMouseOutListener, textMouseDownListener);
 	}
     
     private function removeText(id:String):void {
@@ -550,6 +550,15 @@ package org.bigbluebutton.modules.whiteboard
 		
 		//Reset current text obj?
 		//currentDragTextField = null;
+	}
+	
+	public function textMouseDownListener(event:MouseEvent):void
+	{
+		var sendStatus:String = TextObject.TEXT_UPDATED;
+		var tf:TextObject = event.target as TextObject;  
+		
+		LogUtil.debug("Mouse down on text id [" + tf.id + "]");
+		
 	}
 	
 	public function feedbackMouseDownListener(event:MouseEvent):void
