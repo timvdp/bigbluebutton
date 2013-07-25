@@ -203,7 +203,7 @@ package org.bigbluebutton.modules.whiteboard
             _annotationsList.push(tobj);
 
 		if(isPresenter)
-			tobj.addMouseOverListener(textMouseOverListener, textMouseOutListener, textMouseDownListener);
+			tobj.addMouseOverListener(textMouseOverListener /*, textMouseOutListener, textMouseDownListener*/);
 	}
     
     private function removeText(id:String):void {
@@ -522,14 +522,13 @@ package org.bigbluebutton.modules.whiteboard
 		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
 		wbCanvas.addRawChild(dragTextfeedback);
 		
-		//wbCanvas.setChildOnTop(dragTextfeedback);
 		//Bring on top of text
-		//wbCanvas.setChildIndex(dragTextfeedback, wbCanvas.numChildren - 1);
-		//dragTextfeedback.SetOnTop();
+		wbCanvas.setChildOnTop(dragTextfeedback);
 		
 		//Add listener for dragging
 		dragTextfeedback.addEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
 		dragTextfeedback.addEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
+		dragTextfeedback.addEventListener(MouseEvent.MOUSE_OUT, feedbackMouseOutListener);
 		
 		//Save textObject for further use
 		currentDragTextField = tf;
@@ -537,7 +536,7 @@ package org.bigbluebutton.modules.whiteboard
 		LogUtil.debug("End Mouse over on text id [" + tf.id + "] - num children canvas =" + wbCanvas.numChildren);
 
 	}
-	
+/*
 	public function textMouseOutListener(event:MouseEvent):void
 	{
 		var sendStatus:String = TextObject.TEXT_UPDATED;
@@ -570,7 +569,7 @@ package org.bigbluebutton.modules.whiteboard
 		
 		//dragTextfeedback.startDrag(); 
 	}
-	
+*/	
 	public function feedbackMouseDownListener(event:MouseEvent):void
 	{		
 		LogUtil.debug("Feedback mouse down -> start drag");
@@ -584,12 +583,11 @@ package org.bigbluebutton.modules.whiteboard
 		
 		dragTextfeedback.stopDrag();
 		
+		//Set new position of text
 		currentDragTextField.x = dragTextfeedback.x;
 		currentDragTextField.y = dragTextfeedback.y;
 		
-		//Remove feedback rectangle
-		//dragTextfeedback.clear();
-
+		//Remove feedback rectangle		
 		if(wbCanvas.doesContain(dragTextfeedback))
 		{
 			LogUtil.debug("Remove dragTextFeedback");			
@@ -597,6 +595,24 @@ package org.bigbluebutton.modules.whiteboard
 		}
 		
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
+		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
+		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
+	}
+	
+	public function feedbackMouseOutListener(event:MouseEvent):void
+	{
+		LogUtil.debug("Feedback mouse out -> remove rectangle and listeners");
+				
+		//Remove feedback rectangle (and listeners)
+		
+		if(wbCanvas.doesContain(dragTextfeedback))
+		{
+			LogUtil.debug("Remove dragTextFeedback");			
+			wbCanvas.removeRawChild(dragTextfeedback);			
+		}
+		
+		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
+		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
 	}
 	

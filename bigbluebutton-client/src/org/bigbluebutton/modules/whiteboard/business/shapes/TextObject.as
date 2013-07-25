@@ -240,14 +240,16 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
       this.removeEventListener(KeyboardEvent.KEY_DOWN, textObjDeleteListener);
     }
 	
-	public function addMouseOverListener(mouseOver:Function, mouseOut:Function, mouseDown:Function = null):void 
+	public function addMouseOverListener(mouseOver:Function, mouseOut:Function = null, mouseDown:Function = null):void 
 	{
 		LogUtil.debug("Add mouse over/out listener to text [" + this.ID + "]");
 
 		//this.mouseEnabled = false;
 		this.selectable = false;
 		this.addEventListener(MouseEvent.MOUSE_OVER, mouseOver);
-		this.addEventListener(MouseEvent.MOUSE_OUT, mouseOut);
+		
+		if(mouseOut != null)
+			this.addEventListener(MouseEvent.MOUSE_OUT, mouseOut);
 		
 		if(mouseDown != null)
 			this.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
