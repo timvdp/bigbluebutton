@@ -515,7 +515,7 @@ package org.bigbluebutton.modules.whiteboard
 	{
 		var tf:TextObject = event.target as TextObject;  
 		
-		LogUtil.debug("Mouse over on text id [" + tf.id + "] - num children canvas =" + wbCanvas.numChildren);
+		LogUtil.debug("Mouse over on text id [" + tf.id + "] - X [" + tf.x + "] - Y [" + tf.y + "] - origX [ " + tf.getOrigX() + " - origY [" + tf.getOrigY() + "]");
 
 		//Draw feedback rectangle
 		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
@@ -542,7 +542,7 @@ package org.bigbluebutton.modules.whiteboard
 	
 	public function feedbackMouseUpListener(event:MouseEvent):void
 	{
-		LogUtil.debug("Feedback mouse up -> stop drag");
+		LogUtil.debug("Feedback mouse up -> stop drag - X [" + dragTextfeedback.x + "] - Y [" + dragTextfeedback.y + "]");
 		
 		var sendStatus:String = TextObject.TEXT_PUBLISHED;
 			
