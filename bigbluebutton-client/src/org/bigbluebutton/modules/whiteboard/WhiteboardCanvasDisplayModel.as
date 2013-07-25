@@ -522,6 +522,10 @@ package org.bigbluebutton.modules.whiteboard
 		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
 		wbCanvas.addRawChild(dragTextfeedback);    
 		
+		//Bring on top of text
+		wbCanvas.setChildIndex(dragTextfeedback, wbCanvas.numChildren - 1);
+		
+		//Add listener for dragging
 		dragTextfeedback.addEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
 		dragTextfeedback.addEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
 		
