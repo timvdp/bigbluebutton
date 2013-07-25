@@ -521,7 +521,6 @@ package org.bigbluebutton.modules.whiteboard
 		//Draw feedback rectangle
 		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
 		wbCanvas.addRawChild(dragTextfeedback);    
-		wbCanvas.stage.focus = dragTextfeedback;
 		
 		//Bring on top of text
 		//wbCanvas.setChildIndex(dragTextfeedback, wbCanvas.numChildren - 1);
@@ -565,6 +564,7 @@ package org.bigbluebutton.modules.whiteboard
 		
 		LogUtil.debug("Mouse down on text id [" + tf.id + "]");
 		
+		dragTextfeedback.startDrag(); 
 	}
 	
 	public function feedbackMouseDownListener(event:MouseEvent):void
