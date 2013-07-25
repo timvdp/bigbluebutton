@@ -529,7 +529,9 @@ package org.bigbluebutton.modules.whiteboard
 		
 		LogUtil.debug("Mouse out on text id [" + tf.id + "]");
 		
-		//Draw feedback rectangle
+		//Remove feedback rectangle
+		dragTextfeedback.clear();
+		
 		if(wbCanvas.contains(dragTextfeedback))
 		{
 			LogUtil.debug("Remove dragTextFeedback");			
