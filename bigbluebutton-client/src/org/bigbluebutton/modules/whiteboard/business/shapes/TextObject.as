@@ -229,5 +229,31 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
       this.removeEventListener(TextEvent.TEXT_INPUT, textObjTextListener);
       this.removeEventListener(KeyboardEvent.KEY_DOWN, textObjDeleteListener);
     }
+	
+	public function addDragListener():void 
+	{
+		LogUtil.debug("Add mouse down/up listener to text [" + this.ID + "]");
+
+		this.mouseEnabled = false;
+		this.addEventListener(MouseEvent.MOUSE_DOWN, onStartDrag);
+		this.addEventListener(MouseEvent.MOUSE_UP, onStopDrag);
+	}
+	
+	//functions
+	protected function onStartDrag(e:MouseEvent):void {
+		LogUtil.debug("Start drag for [" + this.ID + "]");
+		
+		e.currentTarget.startDrag();
+		e.currentTarget.scaleX = 1.25;
+		e.currentTarget.scaleY = 1.25;
+	}
+	
+	protected function onStopDrag(e:MouseEvent):void {
+		LogUtil.debug("Stop drag for [" + this.ID + "]");
+
+		e.currentTarget.stopDrag();
+		e.currentTarget.scaleX = 1;
+		e.currentTarget.scaleY = 1;	
+	}
   }
 }

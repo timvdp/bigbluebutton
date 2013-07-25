@@ -197,7 +197,10 @@ package org.bigbluebutton.modules.whiteboard
       tobj.makeEditable(false);
       wbCanvas.addGraphic(tobj);
             _annotationsList.push(tobj);
-    }
+
+		if(isPresenter)
+			tobj.addDragListener();
+	}
     
     private function removeText(id:String):void {
       var tobjData:Array = getGobjInfoWithID(id);
