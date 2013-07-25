@@ -513,7 +513,6 @@ package org.bigbluebutton.modules.whiteboard
         
 	public function textMouseOverListener(event:MouseEvent):void
 	{
-		var sendStatus:String = TextObject.TEXT_UPDATED;
 		var tf:TextObject = event.target as TextObject;  
 		
 		LogUtil.debug("Mouse over on text id [" + tf.id + "] - num children canvas =" + wbCanvas.numChildren);
@@ -533,40 +532,7 @@ package org.bigbluebutton.modules.whiteboard
 		//Save textObject for further use
 		currentDragTextField = tf;
 	}
-/*
-	public function textMouseOutListener(event:MouseEvent):void
-	{
-		var sendStatus:String = TextObject.TEXT_UPDATED;
-		var tf:TextObject = event.target as TextObject;  
-		
-		LogUtil.debug("Mouse out on text id [" + tf.id + "]");
-		
-		//Remove feedback rectangle
-		dragTextfeedback.clear();
-		
-		if(wbCanvas.doesContain(dragTextfeedback))
-		{
-			LogUtil.debug("Remove dragTextFeedback");			
-			wbCanvas.removeRawChild(dragTextfeedback);			
-		}
-		
-		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
-		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
-		
-		//Reset current text obj?
-		//currentDragTextField = null;
-	}
-	
-	public function textMouseDownListener(event:MouseEvent):void
-	{
-		var sendStatus:String = TextObject.TEXT_UPDATED;
-		var tf:TextObject = event.target as TextObject;  
-		
-		LogUtil.debug("Mouse down on text id [" + tf.id + "]");
-		
-		//dragTextfeedback.startDrag(); 
-	}
-*/	
+
 	public function feedbackMouseDownListener(event:MouseEvent):void
 	{		
 		LogUtil.debug("Feedback mouse down -> start drag");
@@ -578,6 +544,8 @@ package org.bigbluebutton.modules.whiteboard
 	{
 		LogUtil.debug("Feedback mouse up -> stop drag");
 		
+		var sendStatus:String = TextObject.TEXT_PUBLISHED;
+			
 		dragTextfeedback.stopDrag();
 		
 		//Set new position of text
@@ -585,15 +553,15 @@ package org.bigbluebutton.modules.whiteboard
 		currentDragTextField.y = dragTextfeedback.y;
 		
 		//Remove feedback rectangle		
-		if(wbCanvas.doesContain(dragTextfeedback))
-		{
-			LogUtil.debug("Remove dragTextFeedback");			
+		if(wbCanvas.doesContain(dragTextfeedback))		
 			wbCanvas.removeRawChild(dragTextfeedback);			
-		}
 		
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
+		
+		//Notify server of new position
+		sendTextToServer(sendStatus , currentDragTextField);
 	}
 	
 	public function feedbackMouseOutListener(event:MouseEvent):void
@@ -601,12 +569,8 @@ package org.bigbluebutton.modules.whiteboard
 		LogUtil.debug("Feedback mouse out -> remove rectangle and listeners");
 				
 		//Remove feedback rectangle (and listeners)
-		
 		if(wbCanvas.doesContain(dragTextfeedback))
-		{
-			LogUtil.debug("Remove dragTextFeedback");			
 			wbCanvas.removeRawChild(dragTextfeedback);			
-		}
 		
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
