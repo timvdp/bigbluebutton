@@ -95,8 +95,8 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
 		this.x = x;
 		this.y = y;
 		
-		origX = denormalize(x, _origParentWidth);
-		origY = denormalize(y, _origParentWidth);
+		origX = normalize(x, _origParentWidth);
+		origY = normalize(y, _origParentWidth);
 		
 		//makeGraphic(_origParentWidth,_origParentHeight);
 	}
