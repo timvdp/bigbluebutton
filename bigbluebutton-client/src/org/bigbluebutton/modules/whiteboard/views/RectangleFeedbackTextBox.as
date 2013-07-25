@@ -45,7 +45,7 @@ package org.bigbluebutton.modules.whiteboard.views
 		{
 			LogUtil.debug("Set on top - num children canvas =" + parent.numChildren);
 
-			parent.setChildIndex(this, parent.numChildren-1);
+			//parent.setChildIndex(this, parent.numChildren-1);
 		}
     }
 }
