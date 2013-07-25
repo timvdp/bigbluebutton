@@ -516,7 +516,7 @@ package org.bigbluebutton.modules.whiteboard
 		var sendStatus:String = TextObject.TEXT_UPDATED;
 		var tf:TextObject = event.target as TextObject;  
 		
-		LogUtil.debug("Mouse over on text id [" + tf.id + "]");
+		LogUtil.debug("Mouse over on text id [" + tf.id + "] - num children canvas =" + wbCanvas.numChildren);
 
 		//Draw feedback rectangle
 		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
@@ -525,8 +525,6 @@ package org.bigbluebutton.modules.whiteboard
 		//Bring on top of text
 		//wbCanvas.setChildIndex(dragTextfeedback, wbCanvas.numChildren - 1);
 		dragTextfeedback.SetOnTop();
-		
-		LogUtil.debug("Set child index (" + wbCanvas.numChildren + ") result : " + wbCanvas.getChildIndex(dragTextfeedback));
 		
 		//Add listener for dragging
 		dragTextfeedback.addEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);

@@ -20,6 +20,8 @@ package org.bigbluebutton.modules.whiteboard.views
 {
     import flash.display.Sprite;
     
+    import org.bigbluebutton.common.LogUtil;
+    
     public class RectangleFeedbackTextBox extends Sprite
     {
         public function RectangleFeedbackTextBox()
@@ -41,6 +43,8 @@ package org.bigbluebutton.modules.whiteboard.views
 		
 		public function SetOnTop(): void
 		{
+			LogUtil.debug("Set on top - num children canvas =" + parent.numChildren);
+
 			parent.setChildIndex(this, parent.numChildren-1);
 		}
     }
