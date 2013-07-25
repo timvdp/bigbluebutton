@@ -245,6 +245,11 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 				return bbbCanvas.doesContain(child);
 			}
 			
+			public 	function setChildOnTop(child:DisplayObject):void
+			{
+				return bbbCanvas.setChildOnTop(child);
+			}
+			
 			public function acceptOverlayCanvas(overlay:IBbbCanvas):void {
 //				LogUtil.debug("WhiteboardCanvas::acceptOverlayCanvas()");
 //				LogUtil.debug("OVERLAYING PRESENTATION CANVAS");

@@ -443,6 +443,10 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 				return this.whiteboardCanvasHolder.rawChildren.contains(child);
 			}
 			
+			public function setChildOnTop(child:DisplayObject):void{
+				this.whiteboardCanvasHolder.rawChildren.setChildIndex(child, this.whiteboardCanvasHolder.rawChildren.numChildren -1);
+			}
+			
 			public function acceptOverlayCanvas(overlay:IBbbCanvas):void{
 				whiteboardCanvas = overlay;
 				var c:Canvas = overlay as Canvas;

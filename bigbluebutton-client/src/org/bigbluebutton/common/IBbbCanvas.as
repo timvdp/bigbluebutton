@@ -35,5 +35,6 @@ package org.bigbluebutton.common
 		function moveCanvas(x:Number, y:Number):void;
 		function zoomCanvas(width:Number, height:Number):void;
 		function showCanvas(show:Boolean):void;
+		function setChildOnTop(child:DisplayObject):void;
 	}
 }
