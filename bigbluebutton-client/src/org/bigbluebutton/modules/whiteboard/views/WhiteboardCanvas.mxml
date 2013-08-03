@@ -191,6 +191,14 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 //				model.makeTextObjectsUneditable(e);
 			}
 			
+			public function makeTextObjectsMovable(e:MadePresenterEvent):void {
+				displayModel.makeTextObjectsMovable(e);
+			}
+			
+			public function makeTextObjectsUnmovable(e:MadePresenterEvent):void {
+				displayModel.makeTextObjectsUnmovable(e);
+			}
+			
 			private function setWhiteboardVisibility():void {
                 if (this.whiteboardEnabled && this.showWhiteboard) {
                     this.visible = true;

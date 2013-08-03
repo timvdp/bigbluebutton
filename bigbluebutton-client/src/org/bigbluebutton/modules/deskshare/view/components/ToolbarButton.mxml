@@ -48,7 +48,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			import org.bigbluebutton.util.i18n.ResourceUtil;
 			
 			private var images:Images = new Images();
-			private var options:DeskshareOptions;
+			private var options:DeskshareOptions = new DeskshareOptions();
 			
 			[Bindable] public var deskShareIcon:Class = images.deskShareIcon;
 

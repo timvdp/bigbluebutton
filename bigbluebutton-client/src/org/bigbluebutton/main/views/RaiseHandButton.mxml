@@ -59,7 +59,7 @@ $Id: $
 			import org.bigbluebutton.modules.users.model.UsersOptions;
 			import org.bigbluebutton.util.i18n.ResourceUtil;
 			
-			private var options:UsersOptions;
+			private var options:UsersOptions = new UsersOptions();
 			
 			[Bindable]
 			private var images:Images = new Images();

@@ -413,7 +413,6 @@ package org.bigbluebutton.modules.whiteboard
        further and so that only the presenter can edit it.
     */
     public function makeTextObjectsUneditable(e:MadePresenterEvent):void {
-      LogUtil.debug("MADE PRESENTER IS PRESENTER FALSE");
 //      var texts:Array = getAllTexts();
 //      for(var i:int = 0; i < texts.length; i++) {
 //        (texts[i] as TextObject).makeEditable(false);
@@ -421,6 +420,19 @@ package org.bigbluebutton.modules.whiteboard
 //      }
     }
   
+	public function makeTextObjectsMovable(e:MadePresenterEvent):void {
+		LogUtil.debug("Make text objects movable");
+		var texts:Array = getAllTexts();
+		for(var i:int = 0; i < texts.length; i++) {
+			(texts[i] as TextObject).addMouseOverListener(textMouseOverListener /*, textMouseOutListener, textMouseDownListener*/);
+		}		
+	}
+	
+	public function makeTextObjectsUnmovable(e:MadePresenterEvent):void {
+		LogUtil.debug("Make text objects movable");
+		
+	}
+	
 	private function redrawGraphic(gobj:GraphicObject, objIndex:int):void {
 		
 		var o:Annotation;
@@ -457,8 +469,8 @@ package org.bigbluebutton.modules.whiteboard
 				wbCanvas.addGraphic(tobj);
 				_annotationsList[objIndex] = tobj;
 				
-				if(isPresenter)
-					tobj.addMouseOverListener(textMouseOverListener /*, textMouseOutListener, textMouseDownListener*/);
+				//if(isPresenter)
+				//	tobj.addMouseOverListener(textMouseOverListener /*, textMouseOutListener, textMouseDownListener*/);
 				
 			}            
 		}

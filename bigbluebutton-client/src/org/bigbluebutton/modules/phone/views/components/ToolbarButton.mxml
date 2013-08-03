@@ -62,7 +62,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			
 			[Bindable] public var phoneIcon:Class = images.headsetDefaultIcon;
 			
-			private var options:PhoneOptions;
+			private var options:PhoneOptions = new PhoneOptions();
 			
 			private function startPhone():void {
 				// Disable the button right away to prevent the user from clicking
