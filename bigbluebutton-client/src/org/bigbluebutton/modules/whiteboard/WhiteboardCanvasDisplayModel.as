@@ -536,6 +536,10 @@ package org.bigbluebutton.modules.whiteboard
         
 	public function textMouseOverListener(event:MouseEvent):void
 	{
+		//If already dragging, do nothing 
+		if(dragTextfeedback.isDragging)
+			return;
+		
 		var tf:TextObject = event.target as TextObject;  
 		
 		LogUtil.debug("Mouse over on text id [" + tf.id + "] - X [" + tf.x + "] - Y [" + tf.y + "] - origX [" + tf.getOrigX() + "] - origY [" + tf.getOrigY() + "]");
@@ -563,7 +567,7 @@ package org.bigbluebutton.modules.whiteboard
 	{		
 		var bounds:Rectangle = wbCanvas.getBounds(wbCanvas);
 		
-		LogUtil.debug("Feedback mouse down -> start drag : " + bounds);
+		LogUtil.debug("Feedback mouse down -> start drag : " + bounds + " width=" + wbCanvas.width + " height=" + wbCanvas.height);
 		
 		dragTextfeedback.startDrag(/*false, wbCanvas.getBounds(wbCanvas)*/);;   
 	}
