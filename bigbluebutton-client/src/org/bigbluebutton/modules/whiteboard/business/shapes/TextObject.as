@@ -89,14 +89,14 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
       _calcedFontSize = calcedFontSize;
     }  
     
-	public function setPosition(x:Number, y:Number) : void
+	public function setPosition(x:Number, y:Number, parentWidth:Number, parentHeight:Number) : void
 	{
 		
 		this.x = x;
 		this.y = y;
 		
-		origX = normalize(x, _origParentWidth);
-		origY = normalize(y, _origParentHeight);
+		origX = normalize(x, parentWidth);
+		origY = normalize(y, parentHeight);
 		
 		//makeGraphic(_origParentWidth,_origParentHeight);
 	}
@@ -140,27 +140,27 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     public function makeGraphic(parentWidth:Number, parentHeight:Number):void {
 		LogUtil.debug("makeGraphic before - X [" + this.x + "] - Y [" + this.y + "] - origX [" + origX + "] - origY [" + origY + "] - parentWidth [" + parentWidth + "] - parentHeight [" + parentHeight + "]");
 		
-	  this.x = denormalize(origX, parentWidth);
-      this.y = denormalize(origY, parentHeight);
-
-	  LogUtil.debug("makeGraphic after - X [" + this.x + "] - Y [" + this.y + "] - origX [" + origX + "] - origY [" + origY + "]");
-      var newFontSize:Number = textSize;
-            
-      if (_origParentHeight == 0 && _origParentWidth == 0) {
-        newFontSize = textSize;
-        _origParentHeight = parentHeight;
-        _origParentWidth = parentWidth;               
-      } else {
-        newFontSize = (parentHeight/_origParentHeight) * textSize;
-      }            
-      
-      newFontSize = denormalize(_calcedFontSize, parentHeight);
-      this.antiAliasType = AntiAliasType.ADVANCED;
-      applyTextFormat(newFontSize);
- 
-      this.width = denormalize(_textBoxWidth, parentWidth);
-      this.height = denormalize(_textBoxHeight, parentHeight);
-    }  
+		this.x = denormalize(origX, parentWidth);
+		this.y = denormalize(origY, parentHeight);
+		
+		LogUtil.debug("makeGraphic after - X [" + this.x + "] - Y [" + this.y + "] - origX [" + origX + "] - origY [" + origY + "]");
+		var newFontSize:Number = textSize;
+		
+		if (_origParentHeight == 0 && _origParentWidth == 0) {
+			newFontSize = textSize;
+			_origParentHeight = parentHeight;
+			_origParentWidth = parentWidth;               
+		} else {
+			newFontSize = (parentHeight/_origParentHeight) * textSize;
+		}            
+		
+		newFontSize = denormalize(_calcedFontSize, parentHeight);
+		this.antiAliasType = AntiAliasType.ADVANCED;
+		applyTextFormat(newFontSize);
+		
+		this.width = denormalize(_textBoxWidth, parentWidth);
+		this.height = denormalize(_textBoxHeight, parentHeight);
+	}  
 
     public function get textBoxWidth():Number {
       return _textBoxWidth;

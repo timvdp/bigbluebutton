@@ -564,11 +564,9 @@ package org.bigbluebutton.modules.whiteboard
 
 	public function feedbackMouseDownListener(event:MouseEvent):void
 	{		
-		var bounds:Rectangle = new Rectangle(0,0,wbCanvas.width, wbCanvas.height); //wbCanvas.getBounds(wbCanvas);
+		LogUtil.debug("Feedback mouse down -> start drag : width=" + wbCanvas.width + " height=" + wbCanvas.height);
 		
-		//LogUtil.debug("Feedback mouse down -> start drag : " + bounds + " width=" + wbCanvas.width + " height=" + wbCanvas.height);
-		
-		dragTextfeedback.startDrag(false, bounds);
+		dragTextfeedback.startDrag(false, new Rectangle(0,0,wbCanvas.width, wbCanvas.height));
 	}
 	
 	public function feedbackMouseUpListener(event:MouseEvent):void
@@ -581,7 +579,7 @@ package org.bigbluebutton.modules.whiteboard
 		
 		//Set new position of text
 		//currentDragTextField.setPosition(previousDragTextOrigX + (dragTextfeedback.x-currentDragTextField.x),previousDragTextOrigY + (dragTextfeedback.y-currentDragTextField.y));
-		currentDragTextField.setPosition(dragTextfeedback.x, dragTextfeedback.y);
+		currentDragTextField.setPosition(dragTextfeedback.x, dragTextfeedback.y, width, height);
 		
 		//Remove feedback rectangle		
 		if(wbCanvas.doesContain(dragTextfeedback))		
