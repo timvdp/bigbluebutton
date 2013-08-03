@@ -580,7 +580,11 @@ package org.bigbluebutton.modules.whiteboard
 	public function feedbackMouseOutListener(event:MouseEvent):void
 	{
 		LogUtil.debug("Feedback mouse out -> remove rectangle and listeners");
-				
+		
+		//If still dragging, do nothing (fast mouse move or out of boundaries)
+		if(dragTextfeedback.isDragging)
+			return;
+		
 		//Remove feedback rectangle (and listeners)
 		if(wbCanvas.doesContain(dragTextfeedback))
 			wbCanvas.removeRawChild(dragTextfeedback);			
