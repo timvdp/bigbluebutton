@@ -22,9 +22,9 @@ package org.bigbluebutton.modules.whiteboard.views
     
     import org.bigbluebutton.common.LogUtil;
     
-    public class RectangleFeedbackTextBox extends Sprite
+    public class RectangleMoveTextBox extends Sprite
     {
-        public function RectangleFeedbackTextBox()
+        public function RectangleMoveTextBox()
         {
             super();
         }
@@ -32,8 +32,10 @@ package org.bigbluebutton.modules.whiteboard.views
         public function draw(startX:Number, startY:Number, width:Number, height:Number):void {
             graphics.clear();
             graphics.lineStyle(1, 0x0)
-			graphics.drawRect(0, 0, width, height);
-			x = startX;
+			graphics.beginFill(0xFF0000,0.25);
+            graphics.drawRect(0, 0, width, height);
+			graphics.endFill();
+            x = startX;
             y = startY;
         }
         

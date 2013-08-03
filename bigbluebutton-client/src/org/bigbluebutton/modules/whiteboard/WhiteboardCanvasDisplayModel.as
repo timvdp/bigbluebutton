@@ -63,6 +63,7 @@ package org.bigbluebutton.modules.whiteboard
   import org.bigbluebutton.modules.whiteboard.models.Annotation;
   import org.bigbluebutton.modules.whiteboard.models.WhiteboardModel;
   import org.bigbluebutton.modules.whiteboard.views.RectangleFeedbackTextBox;
+  import org.bigbluebutton.modules.whiteboard.views.RectangleMoveTextBox;
   import org.bigbluebutton.modules.whiteboard.views.WhiteboardCanvas;
   
     /**
@@ -79,7 +80,7 @@ package org.bigbluebutton.modules.whiteboard
     private var width:Number;
     private var height:Number;
             
-	private var dragTextfeedback:RectangleFeedbackTextBox = new RectangleFeedbackTextBox();
+	private var dragTextfeedback:RectangleMoveTextBox = new RectangleMoveTextBox();
 	private var currentDragTextField:TextObject;
 	private var previousDragTextOrigX:Number;
 	private var previousDragTextOrigY:Number;
@@ -421,6 +422,7 @@ package org.bigbluebutton.modules.whiteboard
     }
   
     private function redrawGraphic(gobj:GraphicObject, objIndex:int):void {
+	
             var o:Annotation;
             if (gobj.type != DrawObject.TEXT) {
                 wbCanvas.removeGraphic(gobj as DisplayObject);
@@ -440,7 +442,9 @@ package org.bigbluebutton.modules.whiteboard
                 if (an == null) {
                     LogUtil.error("Text with id [" + origTobj.id + "] is missing.");
                 } else {
-          wbCanvas.removeGraphic(origTobj as DisplayObject);
+					LogUtil.debug("REDRAW TEXT " + origTobj.id);
+
+					wbCanvas.removeGraphic(origTobj as DisplayObject);
 //          addNormalText(an);
           var tobj:TextObject = shapeFactory.redrawTextObject(an, origTobj);
           tobj.setGraphicID(origTobj.id);
@@ -530,6 +534,7 @@ package org.bigbluebutton.modules.whiteboard
 		dragTextfeedback.addEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
 		dragTextfeedback.addEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
 		dragTextfeedback.addEventListener(MouseEvent.MOUSE_OUT, feedbackMouseOutListener);
+		dragTextfeedback.addEventListener(MouseEvent.MOUSE_MOVE, feedbackMouseMoveListener);
 		
 		//Save textObject for further use
 		currentDragTextField = tf;
@@ -579,6 +584,12 @@ package org.bigbluebutton.modules.whiteboard
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
+	}
+	
+	public function feedbackMouseMoveListener(event:MouseEvent):void
+	{
+		LogUtil.debug("Feedback mouse move -> remove rectangle and listeners");
+		
 	}
 	
     public function modifySelectedTextObject(textColor:uint, bgColorVisible:Boolean, backgroundColor:uint, textSize:Number):void {
