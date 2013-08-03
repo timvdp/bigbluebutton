@@ -470,9 +470,8 @@ package org.bigbluebutton.modules.whiteboard
 				wbCanvas.addGraphic(tobj);
 				_annotationsList[objIndex] = tobj;
 				
-				//if(isPresenter)
-				//	tobj.addMouseOverListener(textMouseOverListener /*, textMouseOutListener, textMouseDownListener*/);
-				
+				if(isPresenter)
+					tobj.addMouseOverListener(textMouseOverListener /*, textMouseOutListener, textMouseDownListener*/);
 			}            
 		}
 	}
@@ -565,11 +564,11 @@ package org.bigbluebutton.modules.whiteboard
 
 	public function feedbackMouseDownListener(event:MouseEvent):void
 	{		
-		var bounds:Rectangle = wbCanvas.getBounds(wbCanvas);
+		var bounds:Rectangle = new Rectangle(0,0,wbCanvas.width, wbCanvas.height); //wbCanvas.getBounds(wbCanvas);
 		
-		LogUtil.debug("Feedback mouse down -> start drag : " + bounds + " width=" + wbCanvas.width + " height=" + wbCanvas.height);
+		//LogUtil.debug("Feedback mouse down -> start drag : " + bounds + " width=" + wbCanvas.width + " height=" + wbCanvas.height);
 		
-		dragTextfeedback.startDrag(/*false, wbCanvas.getBounds(wbCanvas)*/);;   
+		dragTextfeedback.startDrag(false, bounds);
 	}
 	
 	public function feedbackMouseUpListener(event:MouseEvent):void
