@@ -19,11 +19,14 @@
 package org.bigbluebutton.modules.whiteboard.views
 {
     import flash.display.Sprite;
+    import flash.geom.Rectangle;
     
     import org.bigbluebutton.common.LogUtil;
     
     public class RectangleMoveTextBox extends Sprite
     {
+		public var isDragging:Boolean = false;
+		
         public function RectangleMoveTextBox()
         {
             super();
@@ -42,5 +45,18 @@ package org.bigbluebutton.modules.whiteboard.views
         public function clear():void {
             graphics.clear();
         }
+		
+		override public function startDrag(lockCenter:Boolean=false, bounds:Rectangle=null):void
+		{
+			super.startDrag(lockCenter, bounds);
+			isDragging = true;
+		}
+		
+		override public function stopDrag():void
+		{
+			super.stopDrag();
+			isDragging = false;
+		}
+		
     }
 }

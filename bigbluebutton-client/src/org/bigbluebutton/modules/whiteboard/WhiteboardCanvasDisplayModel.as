@@ -421,44 +421,48 @@ package org.bigbluebutton.modules.whiteboard
 //      }
     }
   
-    private function redrawGraphic(gobj:GraphicObject, objIndex:int):void {
-	
-            var o:Annotation;
-            if (gobj.type != DrawObject.TEXT) {
-                wbCanvas.removeGraphic(gobj as DisplayObject);
-                o = whiteboardModel.getAnnotation(gobj.id);
-                
-                if (o != null) {
-                    var dobj:DrawObject = shapeFactory.makeDrawObject(o, whiteboardModel);  
-                    if (dobj != null) {
-                        dobj.draw(o, shapeFactory.parentWidth, shapeFactory.parentHeight);
-                        wbCanvas.addGraphic(dobj);
-                        _annotationsList[objIndex] = dobj;              
-                    }          
-                }
-            } else if(gobj.type == WhiteboardConstants.TYPE_TEXT) {
-                var origTobj:TextObject = gobj as TextObject;                
-                var an:Annotation = whiteboardModel.getAnnotation(origTobj.id);
-                if (an == null) {
-                    LogUtil.error("Text with id [" + origTobj.id + "] is missing.");
-                } else {
-					LogUtil.debug("REDRAW TEXT " + origTobj.id);
-
-					wbCanvas.removeGraphic(origTobj as DisplayObject);
-//          addNormalText(an);
-          var tobj:TextObject = shapeFactory.redrawTextObject(an, origTobj);
-          tobj.setGraphicID(origTobj.id);
-          tobj.status = origTobj.status;
-          tobj.multiline = true;
-          tobj.wordWrap = true;
-          tobj.background = false;
-          tobj.makeEditable(false);
-          tobj.background = false;          
-          wbCanvas.addGraphic(tobj);
-                    _annotationsList[objIndex] = tobj;
-                }            
-      }
-    }
+	private function redrawGraphic(gobj:GraphicObject, objIndex:int):void {
+		
+		var o:Annotation;
+		if (gobj.type != DrawObject.TEXT) {
+			wbCanvas.removeGraphic(gobj as DisplayObject);
+			o = whiteboardModel.getAnnotation(gobj.id);
+			
+			if (o != null) {
+				var dobj:DrawObject = shapeFactory.makeDrawObject(o, whiteboardModel);  
+				if (dobj != null) {
+					dobj.draw(o, shapeFactory.parentWidth, shapeFactory.parentHeight);
+					wbCanvas.addGraphic(dobj);
+					_annotationsList[objIndex] = dobj;              
+				}          
+			}
+		} else if(gobj.type == WhiteboardConstants.TYPE_TEXT) {
+			var origTobj:TextObject = gobj as TextObject;                
+			var an:Annotation = whiteboardModel.getAnnotation(origTobj.id);
+			if (an == null) {
+				LogUtil.error("Text with id [" + origTobj.id + "] is missing.");
+			} else {
+				//LogUtil.debug("REDRAW TEXT " + origTobj.id);
+				
+				wbCanvas.removeGraphic(origTobj as DisplayObject);
+				//          addNormalText(an);
+				var tobj:TextObject = shapeFactory.redrawTextObject(an, origTobj);
+				tobj.setGraphicID(origTobj.id);
+				tobj.status = origTobj.status;
+				tobj.multiline = true;
+				tobj.wordWrap = true;
+				tobj.background = false;
+				tobj.makeEditable(false);
+				tobj.background = false;          
+				wbCanvas.addGraphic(tobj);
+				_annotationsList[objIndex] = tobj;
+				
+				if(isPresenter)
+					tobj.addMouseOverListener(textMouseOverListener /*, textMouseOutListener, textMouseDownListener*/);
+				
+			}            
+		}
+	}
         
     /**************************************************************************************************************************************
         * The following methods handles the presenter typing text into the textbox. The challenge here is how to maintain focus
@@ -546,7 +550,7 @@ package org.bigbluebutton.modules.whiteboard
 	{		
 		LogUtil.debug("Feedback mouse down -> start drag");
 		
-		dragTextfeedback.startDrag();   
+		dragTextfeedback.startDrag(false, wbCanvas.getBounds(wbCanvas));;   
 	}
 	
 	public function feedbackMouseUpListener(event:MouseEvent):void
@@ -588,7 +592,7 @@ package org.bigbluebutton.modules.whiteboard
 	
 	public function feedbackMouseMoveListener(event:MouseEvent):void
 	{
-		LogUtil.debug("Feedback mouse move -> remove rectangle and listeners");
+		//LogUtil.debug("Feedback mouse move -> remove rectangle and listeners");
 		
 	}
 	
