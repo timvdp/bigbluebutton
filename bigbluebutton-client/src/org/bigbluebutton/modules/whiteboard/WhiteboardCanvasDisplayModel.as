@@ -27,6 +27,7 @@ package org.bigbluebutton.modules.whiteboard
   import flash.events.MouseEvent;
   import flash.events.TextEvent;
   import flash.geom.Point;
+  import flash.geom.Rectangle;
   import flash.text.TextField;
   import flash.text.TextFieldAutoSize;
   import flash.text.TextFieldType;
@@ -560,9 +561,11 @@ package org.bigbluebutton.modules.whiteboard
 
 	public function feedbackMouseDownListener(event:MouseEvent):void
 	{		
-		LogUtil.debug("Feedback mouse down -> start drag");
+		var bounds:Rectangle = wbCanvas.getBounds(wbCanvas);
 		
-		dragTextfeedback.startDrag(false, wbCanvas.getBounds(wbCanvas));;   
+		LogUtil.debug("Feedback mouse down -> start drag : " + bounds);
+		
+		dragTextfeedback.startDrag(/*false, wbCanvas.getBounds(wbCanvas)*/);;   
 	}
 	
 	public function feedbackMouseUpListener(event:MouseEvent):void
