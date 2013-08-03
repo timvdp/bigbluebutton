@@ -57,22 +57,6 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
     <MethodInvoker generator="{UsersProxy}" method="kickUser" arguments="{event}" />
   </EventHandlers>
 
-	<EventHandlers type="{MadePresenterEvent.SWITCH_TO_PRESENTER_MODE}">
-		<MethodInvoker generator="{UsersManager}" method="handleMadePresenterEvent" arguments="{event}"/>
-	</EventHandlers>
-	
-	<EventHandlers type="{MadePresenterEvent.SWITCH_TO_VIEWER_MODE}">
-		<MethodInvoker generator="{UsersManager}" method="handleMadeViewerEvent" arguments="{event}"/>
-	</EventHandlers>
-	
-	<EventHandlers type="{LowerHandEvent.LOWER_HAND_EVENT}" >
-		<MethodInvoker generator="{UsersManager}" method="handleLowerHandEvent" arguments="{event}" />
-	</EventHandlers>
-	
-	<EventHandlers type="{RaiseHandEvent.RAISE_HAND}" >
-		<MethodInvoker generator="{UsersManager}" method="handleRaiseHandEvent" arguments="{event}" />
-	</EventHandlers>
-	
 	<EventHandlers type="{VoiceConfEvent.EJECT_USER}" >
 		<MethodInvoker generator="{UsersProxy}" method="ejectUser" arguments="{event}" />
 	</EventHandlers>

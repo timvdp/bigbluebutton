@@ -37,6 +37,7 @@ $Id: $
 	<mate:Listener type="{RaiseHandEvent.RAISE_HAND}" method="raiseHandEventHandler" />
 	<mate:Listener type="{MadePresenterEvent.SWITCH_TO_PRESENTER_MODE}" method="madePresenterEventHandler" />
 	<mate:Listener type="{MadePresenterEvent.SWITCH_TO_VIEWER_MODE}" method="madePresenterEventHandler" />
+	<mate:Listener type="{StartUsersModuleEvent.START_USERS_MODULE}" method="moduleStarted" />
 				   
 	<mx:Script>
 		<![CDATA[
@@ -56,19 +57,30 @@ $Id: $
 			import org.bigbluebutton.main.events.ShortcutEvent;
 			import org.bigbluebutton.main.model.users.events.LowerHandEvent;
 			import org.bigbluebutton.main.model.users.events.RaiseHandEvent;
+			import org.bigbluebutton.modules.users.events.StartUsersModuleEvent;
 			import org.bigbluebutton.modules.users.model.UsersOptions;
 			import org.bigbluebutton.util.i18n.ResourceUtil;
 			
-			private var options:UsersOptions = new UsersOptions();
+			private var options:UsersOptions;
 			
 			[Bindable]
 			private var images:Images = new Images();
 				
 			private var handRaised:Boolean = false;
 			private var raiseHandRolled:Boolean = false;
+
+			private var isModuleStarted:Boolean = false;
 		
 			private function onCreationComplete():void 
 			{
+				updateRaiseHandBtn();
+			}
+			
+			public function moduleStarted(event:StartUsersModuleEvent):void
+			{
+				LogUtil.debug("Users module started event catch in RaiseHandButton");
+				isModuleStarted = true;
+				options = new UsersOptions();
 				updateRaiseHandBtn();
 			}
 			
@@ -77,16 +89,21 @@ $Id: $
 				updateRaiseHandBtn();
 			}
 			
+			private function setButtonVisible(isVisible:Boolean):void
+			{
+				this.visible = (isVisible && isModuleStarted);
+			}
+			
 			private function updateRaiseHandBtn():void 
 			{
 				if (UserManager.getInstance().getConference().amIPresenter || 
 					UserManager.getInstance().getConference().amIModerator()) 
 				{
-					this.visible = false;
+					setButtonVisible(false);
 				} 
 				else 
 				{
-					this.visible = true;
+					setButtonVisible(true);
 					
 					if (raiseHandRolled) 
 					{

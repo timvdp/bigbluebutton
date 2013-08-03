@@ -37,11 +37,9 @@ package org.bigbluebutton.modules.users.managers
 	{		
 		private var dispatcher:Dispatcher;
 		private var usersWindow:UsersWindow;
-		private var toolbarButtonManager:ToolbarButtonManager;
 		
 		public function UsersManager(){
 			dispatcher = new Dispatcher();
-			toolbarButtonManager = new ToolbarButtonManager();		
 		}
 		
 		public function moduleStarted(event:StartUsersModuleEvent):void{
@@ -59,43 +57,6 @@ package org.bigbluebutton.modules.users.managers
 			var event:CloseWindowEvent = new CloseWindowEvent(CloseWindowEvent.CLOSE_WINDOW_EVENT);
 			event.window = usersWindow;
 			dispatcher.dispatchEvent(event);
-		}
-		
-		public function handleMadePresenterEvent(e:MadePresenterEvent):void {
-			LogUtil.debug("UsersManager :: Got MadePresenterEvent ");
-
-			toolbarButtonManager.removeToolbarButton();
-		}
-		
-		public function handleMadeViewerEvent(e:MadePresenterEvent):void{
-			LogUtil.debug("UsersManager :: Got MadeViewerEvent ");
-			
-			//if(option.showButton)
-			{
-				toolbarButtonManager.addToolbarButton();
-			}
-		}
-
-		public function handleLowerHandEvent(e:LowerHandEvent):void{
-			
-			var myUserId:String = UserManager.getInstance().getConference().getMyUserId();
-			
-			LogUtil.debug("UsersManager :: Got LowerHandEvent (UserId=" + e.userid + ", MyUserId="+ myUserId + ")");
-			
-			if(e.userid == myUserId)
-			{
-				toolbarButtonManager.lowerHand();
-			}
-		}
-		
-		public function handleRaiseHandEvent(e:RaiseHandEvent):void{
-			
-			LogUtil.debug("UsersManager :: Got RaiseHandEvent");
-			
-			if(e.raised)
-				toolbarButtonManager.raiseHand();
-			else
-				toolbarButtonManager.lowerHand();
 		}
 	}
 }
