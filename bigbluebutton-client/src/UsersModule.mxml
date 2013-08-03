@@ -34,7 +34,7 @@
 			import org.bigbluebutton.common.events.ToolbarButtonEvent;
 			import org.bigbluebutton.modules.users.events.StartUsersModuleEvent;
 			import org.bigbluebutton.modules.users.events.StopUsersModuleEvent;
-			import org.bigbluebutton.modules.users.views.ToolbarButton;
+
 			
 			private var _moduleName:String = "Users Module";
 			private var _attributes:Object;
