@@ -442,7 +442,7 @@ package org.bigbluebutton.modules.whiteboard
 			if (an == null) {
 				LogUtil.error("Text with id [" + origTobj.id + "] is missing.");
 			} else {
-				//LogUtil.debug("REDRAW TEXT " + origTobj.id);
+				LogUtil.debug("REDRAW TEXT " + origTobj.id + " IsPresenter=" + isPresenter);
 				
 				wbCanvas.removeGraphic(origTobj as DisplayObject);
 				//          addNormalText(an);
