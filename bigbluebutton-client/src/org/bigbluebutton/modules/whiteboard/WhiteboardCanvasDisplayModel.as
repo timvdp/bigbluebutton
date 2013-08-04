@@ -578,7 +578,6 @@ package org.bigbluebutton.modules.whiteboard
 		dragTextfeedback.stopDrag();
 		
 		//Set new position of text
-		//currentDragTextField.setPosition(previousDragTextOrigX + (dragTextfeedback.x-currentDragTextField.x),previousDragTextOrigY + (dragTextfeedback.y-currentDragTextField.y));
 		currentDragTextField.setPosition(dragTextfeedback.x, dragTextfeedback.y, width, height);
 		
 		//Remove feedback rectangle		
@@ -588,6 +587,9 @@ package org.bigbluebutton.modules.whiteboard
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
+		
+		//Set font size (in case canvas is zoomed)
+		currentDragTextField.textSize = currentDragTextField.getCurrentFontSize();
 		
 		//Notify server of new position
 		sendTextToServer(sendStatus , currentDragTextField);

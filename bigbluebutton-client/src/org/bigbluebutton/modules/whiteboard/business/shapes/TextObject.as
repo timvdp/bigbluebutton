@@ -73,8 +73,9 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     private var _origParentWidth:Number = 0;
     private var _origParentHeight:Number = 0;
     public var fontStyle:String = "arial";
-    private var _calcedFontSize:Number;
-    
+	private var _calcedFontSize:Number;
+	private var _currentFontSize:Number;
+	   
     public function TextObject(text:String, textColor:uint, x:Number, y:Number, boxWidth:Number, 
                                boxHeight:Number, textSize:Number, calcedFontSize:Number) {
       this.text = text;
@@ -88,6 +89,11 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
       this.textSize = textSize;
       _calcedFontSize = calcedFontSize;
     }  
+	
+	public function getCurrentFontSize():Number
+	{
+		return _currentFontSize;
+	}
     
 	public function setPosition(x:Number, y:Number, parentWidth:Number, parentHeight:Number) : void
 	{
@@ -130,6 +136,8 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     }
     
     private function applyTextFormat(size:Number):void {
+		_currentFontSize = size;
+		
       var tf:TextFormat = new TextFormat();
       tf.size = size;
       tf.font = "arial";
