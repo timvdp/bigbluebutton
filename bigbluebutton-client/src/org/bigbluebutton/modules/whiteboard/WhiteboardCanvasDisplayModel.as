@@ -582,10 +582,7 @@ package org.bigbluebutton.modules.whiteboard
 		var sendStatus:String = TextObject.TEXT_PUBLISHED;
 			
 		dragTextfeedback.stopDrag();
-		
-		//Set new position of text
-		currentDragTextField.setPosition(dragTextfeedback.x, dragTextfeedback.y, width, height);
-		
+				
 		//Remove cursor
 		wbCanvas.removeCursor();
 		
@@ -600,6 +597,9 @@ package org.bigbluebutton.modules.whiteboard
 		//Set font size (in case canvas is zoomed)
 		currentDragTextField.textSize = currentDragTextField.getCurrentFontSize();
 		
+		//Set new position of text
+		currentDragTextField.setPosition(dragTextfeedback.x, dragTextfeedback.y, width, height);
+
 		//Notify server of new position
 		sendTextToServer(sendStatus , currentDragTextField);
 	}
@@ -626,8 +626,10 @@ package org.bigbluebutton.modules.whiteboard
 	
 	public function feedbackMouseMoveListener(event:MouseEvent):void
 	{
-		//LogUtil.debug("Feedback mouse move -> remove rectangle and listeners");
-		
+		LogUtil.debug("Feedback mouse move -> remove rectangle and listeners");
+
+		//Set new position of text
+		currentDragTextField.setPosition(dragTextfeedback.x, dragTextfeedback.y, width, height);
 	}
 	
     public function modifySelectedTextObject(textColor:uint, bgColorVisible:Boolean, backgroundColor:uint, textSize:Number):void {
