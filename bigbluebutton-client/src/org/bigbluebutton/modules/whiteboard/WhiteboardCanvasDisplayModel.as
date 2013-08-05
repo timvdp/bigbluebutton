@@ -391,15 +391,18 @@ package org.bigbluebutton.modules.whiteboard
             }
         }
     
-    public function zoomCanvas(width:Number, height:Number):void{
-      shapeFactory.setParentDim(width, height);  
-      this.width = width;
-      this.height = height;
-
-            for (var i:int = 0; i < this._annotationsList.length; i++){
-                redrawGraphic(this._annotationsList[i] as GraphicObject, i);
-            }      
-    }
+	public function zoomCanvas(width:Number, height:Number):void{
+		if(dragTextfeedback.isDragging)
+			dragTextfeedback.stopDrag();
+		
+		shapeFactory.setParentDim(width, height);  
+		this.width = width;
+		this.height = height;
+		
+		for (var i:int = 0; i < this._annotationsList.length; i++){
+			redrawGraphic(this._annotationsList[i] as GraphicObject, i);
+		}      
+	}
         
     /* called when a user is made presenter, automatically make all the textfields currently on the page editable, so that they can edit it. */
     public function makeTextObjectsEditable(e:MadePresenterEvent):void {
