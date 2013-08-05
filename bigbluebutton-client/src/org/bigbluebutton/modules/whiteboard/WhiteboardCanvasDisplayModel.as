@@ -627,6 +627,7 @@ package org.bigbluebutton.modules.whiteboard
 	public function feedbackMouseMoveListener(event:MouseEvent):void
 	{
 		//LogUtil.debug("Feedback mouse move -> remove rectangle and listeners");
+		var sendStatus:String = TextObject.TEXT_PUBLISHED;
 
 		//Set new position of text
 		currentDragTextField.setPosition(dragTextfeedback.x, dragTextfeedback.y, width, height);
