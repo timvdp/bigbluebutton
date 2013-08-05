@@ -49,7 +49,7 @@ package org.bigbluebutton.modules.users.model
 				baseTabIndex = vxml.@baseTabIndex;
 			}
 			if (vxml.@allowKickUser != undefined) {
-				allowKickUser = vxml.@allowKickUser;
+				allowKickUser = (vxml.@allowKickUser.toString().toUpperCase() == "TRUE") ? true : false;
 			}
 			if (vxml.@disableButtonRollOver != undefined) {
 				disableButtonRollOver = vxml.@disableButtonRollOver;
