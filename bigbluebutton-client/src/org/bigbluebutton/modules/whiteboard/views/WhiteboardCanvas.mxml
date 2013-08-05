@@ -216,6 +216,8 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			}
 			
 			public function setCursor(toolType:String):void {
+				LogUtil.debug("Change cursor to [" + toolType + "]");
+				
 				if(toolType == DrawObject.ELLIPSE) {
 					CursorManager.setCursor(ellipse_icon);
 				} else if(toolType == DrawObject.RECTANGLE) {
@@ -239,7 +241,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 				} 
 			}
 			
-			private function removeCursor():void {
+			public function removeCursor():void {
 				CursorManager.removeCursor(CursorManager.currentCursorID);
 			}
 			

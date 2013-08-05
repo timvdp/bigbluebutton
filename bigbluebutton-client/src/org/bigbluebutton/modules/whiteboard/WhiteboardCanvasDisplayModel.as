@@ -586,8 +586,8 @@ package org.bigbluebutton.modules.whiteboard
 		//Set new position of text
 		currentDragTextField.setPosition(dragTextfeedback.x, dragTextfeedback.y, width, height);
 		
-		//set cursor
-		wbCanvas.setCursorPencil();
+		//Remove cursor
+		wbCanvas.removeCursor();
 		
 		//Remove feedback rectangle		
 		if(wbCanvas.doesContain(dragTextfeedback))		
@@ -612,8 +612,8 @@ package org.bigbluebutton.modules.whiteboard
 		if(dragTextfeedback.isDragging)
 			return;
 		
-		//set cursor
-		wbCanvas.setCursorPencil();
+		//Remove cursor
+		wbCanvas.removeCursor();
 
 		//Remove feedback rectangle (and listeners)
 		if(wbCanvas.doesContain(dragTextfeedback))
