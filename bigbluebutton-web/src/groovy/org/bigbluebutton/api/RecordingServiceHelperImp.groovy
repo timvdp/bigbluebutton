@@ -97,6 +97,7 @@ public class RecordingServiceHelperImp implements RecordingServiceHelper {
 		r.setEndTime(rec.end_time.text());
 		r.setPlaybackFormat(rec.playback.format.text());
 		r.setPlaybackLink(rec.playback.link.text());
+		r.setChatContentLink(rec.chatContent.link.text());
 		
 		Map<String, String> meta = new HashMap<String, String>();		
 		rec.meta.children().each { anode ->

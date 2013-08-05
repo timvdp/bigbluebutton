@@ -586,96 +586,6 @@ class ApiController {
   }
 
   /*****************************************
-   * GETMEETINGCHAT API
-   *****************************************/
-  def getMeetingChat = {
-    String API_CALL = "getMeetingChat"
-    log.debug CONTROLLER_NAME + "#${API_CALL}"
-    
-  	// BEGIN - backward compatibility
-  	if (StringUtils.isEmpty(params.checksum)) {
-  		invalid("checksumError", "You did not pass the checksum security check")
-  		return
-  	}
-
-  	if (StringUtils.isEmpty(params.meetingID)) {
-  		invalid("missingParamMeetingID", "You must specify a meeting ID for the meeting.");
-  		return
-  	}
-  	
-  	if (StringUtils.isEmpty(params.password)) {
-  		invalid("invalidPassword","You must supply the moderator password for this call.");
-  		return
-  	}
-  	
-  	if (! paramsProcessorUtil.isChecksumSame(API_CALL, params.checksum, request.getQueryString())) {
-  		invalid("checksumError", "You did not pass the checksum security check")
-  		return
-  	}
-  	// END - backward compatibility
-	
-    ApiErrors errors = new ApiErrors()
-        
-    // Do we have a checksum? If none, complain.
-    if (StringUtils.isEmpty(params.checksum)) {
-      errors.missingParamError("checksum");
-    }
-
-    // Do we have a meeting id? If none, complain.
-    String externalMeetingId = params.meetingID
-    if (StringUtils.isEmpty(externalMeetingId)) {
-      errors.missingParamError("meetingID");
-    }
-
-    // Do we have a password? If not, complain.
-    String modPW = params.password
-    if (StringUtils.isEmpty(modPW)) {
-      errors.missingParamError("password");
-    }
-
-    if (errors.hasErrors()) {
-    	respondWithErrors(errors)
-    	return
-    }
-    
-    // Do we agree on the checksum? If not, complain.		
-    if (! paramsProcessorUtil.isChecksumSame(API_CALL, params.checksum, request.getQueryString())) {
-      	errors.checksumError()
-    	respondWithErrors(errors)
-    	return
-    }
-    
-    // Everything is good so far. Translate the external meeting id to an internal meeting id. If
-    // we can't find the meeting, complain.					        
-    String internalMeetingId = paramsProcessorUtil.convertToInternalMeetingId(externalMeetingId);
-    log.info("Retrieving meeting ${internalMeetingId}")		
-    Meeting meeting = meetingService.getMeeting(internalMeetingId);
-      if (meeting == null) {
-  		// BEGIN - backward compatibility
-  		invalid("notFound", "We could not find a meeting with that meeting ID");
-  		return;
-  		// END - backward compatibility
-  		
-      errors.invalidMeetingIdError();
-      respondWithErrors(errors)
-      return;
-    }
-    
-    if (meeting.getModeratorPassword().equals(modPW) == false) {
-		// BEGIN - backward compatibility
-		invalid("invalidPassword","You must supply the moderator password for this call."); 
-		return;
-		// END - backward compatibility
-		
-	   errors.invalidPasswordError();
-	   respondWithErrors(errors)
-	   return;
-    }
-    
-    respondWithConferenceDetails(meeting, null, null, null);
-  }
-
-  /*****************************************
    * GETMEETINGINFO API
    *****************************************/
   def getMeetingInfo = {
@@ -1258,7 +1168,7 @@ class ApiController {
 						  }
 					  }
                   }
-                  
+				  chatContent(r.getChatContentLink())
                 }
               }
             }

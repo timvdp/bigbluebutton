@@ -35,6 +35,7 @@ public class Recording {
 	private String endTime;
 	private Map<String, String> metadata = new HashMap<String, String>();
 	private ArrayList<Playback> playbacks=new ArrayList<Playback>();
+	private String chatContentLink;
 	
 	//TODO: 
 	private String state;
@@ -48,6 +49,14 @@ public class Recording {
 	
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public String getChatContentLink() {
+		return chatContentLink;
+	}
+	
+	public void setChatContentLink(String chatContentLink) {
+		this.chatContentLink = chatContentLink;
 	}
 	
 	public String getState() {

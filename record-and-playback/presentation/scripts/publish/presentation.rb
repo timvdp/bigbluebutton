@@ -783,6 +783,10 @@ if ($playback == "presentation")
 			# Date Format for recordings: Thu Mar 04 14:05:56 UTC 2010
 			b.start_time(BigBlueButton::Events.first_event_timestamp("#{$process_dir}/events.xml"))
 			b.end_time(BigBlueButton::Events.last_event_timestamp("#{$process_dir}/events.xml"))
+			b.chatContent {
+				b.format("CSV")
+				b.link("http://#{playback_host}/presentation/#{$meeting_id}/chat_events.txt")
+			}
 			b.playback {
 				b.format("presentation")
 				b.link("http://#{playback_host}/playback/presentation/playback.html?meetingId=#{$meeting_id}")
