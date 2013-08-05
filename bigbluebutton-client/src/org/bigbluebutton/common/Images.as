@@ -21,7 +21,10 @@ package org.bigbluebutton.common
 	[Bindable]
 	public class Images
 	{
-	
+
+		[Embed(source="assets/images/move_cursor.png")]
+		public var move_icon:Class;
+
 	[Embed(source="assets/images/users_settings.png")]
 	public var users_settings:Class;
 	

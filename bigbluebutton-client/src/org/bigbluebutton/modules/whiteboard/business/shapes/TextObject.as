@@ -50,7 +50,8 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     public static const TEXT_UPDATED:String = "textEdited";
     public static const TEXT_PUBLISHED:String = "textPublished";
     
-    public static const TEXT_TOOL:String = "textTool";
+	public static const TEXT_TOOL:String = "textTool";
+	public static const TEXT_MOVE_TOOL:String = "textMoveTool";
     
     /**
      * Status = [CREATED, UPDATED, PUBLISHED]

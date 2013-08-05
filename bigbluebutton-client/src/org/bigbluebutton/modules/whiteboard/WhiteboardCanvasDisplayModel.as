@@ -546,6 +546,9 @@ package org.bigbluebutton.modules.whiteboard
 		
 		LogUtil.debug("Mouse over on text id [" + tf.id + "] - X [" + tf.x + "] - Y [" + tf.y + "] - origX [" + tf.getOrigX() + "] - origY [" + tf.getOrigY() + "]");
 
+		//set cursor
+		wbCanvas.setCursor(TextObject.TEXT_MOVE_TOOL);
+
 		//Draw feedback rectangle
 		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
 		wbCanvas.addRawChild(dragTextfeedback);
@@ -582,7 +585,10 @@ package org.bigbluebutton.modules.whiteboard
 		
 		//Set new position of text
 		currentDragTextField.setPosition(dragTextfeedback.x, dragTextfeedback.y, width, height);
-
+		
+		//set cursor
+		wbCanvas.setCursorPencil();
+		
 		//Remove feedback rectangle		
 		if(wbCanvas.doesContain(dragTextfeedback))		
 			wbCanvas.removeRawChild(dragTextfeedback);			
@@ -606,6 +612,9 @@ package org.bigbluebutton.modules.whiteboard
 		if(dragTextfeedback.isDragging)
 			return;
 		
+		//set cursor
+		wbCanvas.setCursorPencil();
+
 		//Remove feedback rectangle (and listeners)
 		if(wbCanvas.doesContain(dragTextfeedback))
 			wbCanvas.removeRawChild(dragTextfeedback);			
