@@ -30,6 +30,8 @@ package org.bigbluebutton.modules.whiteboard.views
         public function RectangleMoveTextBox()
         {
             super();
+			useHandCursor = true;
+			buttonMode = true;
         }
         
         public function draw(startX:Number, startY:Number, width:Number, height:Number):void {
