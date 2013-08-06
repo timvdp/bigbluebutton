@@ -544,22 +544,25 @@ package org.bigbluebutton.modules.whiteboard
 		
 		LogUtil.debug("Mouse over on text id [" + tf.id + "] - X [" + tf.x + "] - Y [" + tf.y + "] - origX [" + tf.getOrigX() + "] - origY [" + tf.getOrigY() + "]");
 
-		//Draw feedback rectangle
-		dragTextfeedback.draw(tf.x-1, tf.y-1, tf.width+2, tf.height+2); 
-		wbCanvas.addRawChild(dragTextfeedback);
-		
-		//Bring on top of text
-		wbCanvas.setChildOnTop(dragTextfeedback);
-		
-		//Add listener for dragging
-		dragTextfeedback.addEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
-		dragTextfeedback.addEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
-		dragTextfeedback.addEventListener(MouseEvent.MOUSE_OUT, feedbackMouseOutListener);
-		dragTextfeedback.addEventListener(MouseEvent.MOUSE_MOVE, feedbackMouseMoveListener);
-
 		//set cursor
-		wbCanvas.setCursor(TextObject.TEXT_MOVE_TOOL);
+		if(!dragTextfeedback.isActive)
+		{
+			wbCanvas.setCursor(TextObject.TEXT_MOVE_TOOL);
 
+			//Draw feedback rectangle
+			dragTextfeedback.draw(tf.x-1, tf.y-1, tf.width+2, tf.height+2); 
+			wbCanvas.addRawChild(dragTextfeedback);
+			
+			//Bring on top of text
+			wbCanvas.setChildOnTop(dragTextfeedback);
+			
+			//Add listener for dragging
+			dragTextfeedback.addEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
+			dragTextfeedback.addEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
+			dragTextfeedback.addEventListener(MouseEvent.MOUSE_OUT, feedbackMouseOutListener);
+			dragTextfeedback.addEventListener(MouseEvent.MOUSE_MOVE, feedbackMouseMoveListener);
+		}
+		
 		//Save textObject for further use
 		currentDragTextField = tf;
 	}
@@ -602,16 +605,19 @@ package org.bigbluebutton.modules.whiteboard
 		if(dragTextfeedback.isDragging)
 			return;
 		
+
 		//Remove feedback rectangle (and listeners)
 		if(wbCanvas.doesContain(dragTextfeedback))
-			wbCanvas.removeRawChild(dragTextfeedback);			
-		
-		//Remove cursor
-		wbCanvas.removeCursor();
+		{
+			wbCanvas.removeRawChild(dragTextfeedback);					
 
-		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
-		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
-		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
+			//Remove cursor
+			wbCanvas.removeCursor();
+	
+			dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
+			dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
+			dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
+		}		
 	}
 	
 	public function feedbackMouseMoveListener(event:MouseEvent):void

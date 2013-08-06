@@ -26,6 +26,7 @@ package org.bigbluebutton.modules.whiteboard.views
     public class RectangleMoveTextBox extends Sprite
     {
 		public var isDragging:Boolean = false;
+		public var isActive:Boolean = false;
 		
         public function RectangleMoveTextBox()
         {
@@ -42,11 +43,15 @@ package org.bigbluebutton.modules.whiteboard.views
 			graphics.endFill();
             x = startX;
             y = startY;
+			
+			isActive = true;
         }
         
         public function clear():void {
             graphics.clear();
-        }
+        
+			isActive = false;
+		}
 		
 		override public function startDrag(lockCenter:Boolean=false, bounds:Rectangle=null):void
 		{
