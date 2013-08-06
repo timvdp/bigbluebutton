@@ -83,8 +83,6 @@ package org.bigbluebutton.modules.whiteboard
             
 	private var dragTextfeedback:RectangleMoveTextBox = new RectangleMoveTextBox();
 	private var currentDragTextField:TextObject;
-	private var previousDragTextOrigX:Number;
-	private var previousDragTextOrigY:Number;
 
     public function doMouseDown(mouseX:Number, mouseY:Number):void {
       /**
@@ -547,7 +545,7 @@ package org.bigbluebutton.modules.whiteboard
 		LogUtil.debug("Mouse over on text id [" + tf.id + "] - X [" + tf.x + "] - Y [" + tf.y + "] - origX [" + tf.getOrigX() + "] - origY [" + tf.getOrigY() + "]");
 
 		//Draw feedback rectangle
-		dragTextfeedback.draw(tf.x-1, tf.y-1, tf.width+1, tf.height+1); 
+		dragTextfeedback.draw(tf.x-1, tf.y-1, tf.width+2, tf.height+2); 
 		wbCanvas.addRawChild(dragTextfeedback);
 		
 		//Bring on top of text
@@ -564,8 +562,6 @@ package org.bigbluebutton.modules.whiteboard
 
 		//Save textObject for further use
 		currentDragTextField = tf;
-		previousDragTextOrigX = tf.getOrigX();
-		previousDragTextOrigY = tf.getOrigY();
 	}
 
 	public function feedbackMouseDownListener(event:MouseEvent):void
@@ -586,9 +582,6 @@ package org.bigbluebutton.modules.whiteboard
 		//Remove feedback rectangle		
 		if(wbCanvas.doesContain(dragTextfeedback))		
 			wbCanvas.removeRawChild(dragTextfeedback);			
-		
-		//Remove cursor
-		//wbCanvas.removeCursor();
 
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
@@ -597,9 +590,6 @@ package org.bigbluebutton.modules.whiteboard
 		//Set font size (in case canvas is zoomed)
 		currentDragTextField.textSize = currentDragTextField.getCurrentFontSize();
 		
-		//Set new position of text
-		currentDragTextField.setPosition(dragTextfeedback.x, dragTextfeedback.y, width, height);
-
 		//Notify server of new position
 		sendTextToServer(sendStatus , currentDragTextField);
 	}
