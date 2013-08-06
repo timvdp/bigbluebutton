@@ -147,12 +147,9 @@ package org.bigbluebutton.modules.whiteboard.business.shapes
     }
     
     public function makeGraphic(parentWidth:Number, parentHeight:Number):void {
-		LogUtil.debug("makeGraphic before - X [" + this.x + "] - Y [" + this.y + "] - origX [" + origX + "] - origY [" + origY + "] - parentWidth [" + parentWidth + "] - parentHeight [" + parentHeight + "]");
-		
 		this.x = denormalize(origX, parentWidth);
 		this.y = denormalize(origY, parentHeight);
-		
-		LogUtil.debug("makeGraphic after - X [" + this.x + "] - Y [" + this.y + "] - origX [" + origX + "] - origY [" + origY + "]");
+
 		var newFontSize:Number = textSize;
 		
 		if (_origParentHeight == 0 && _origParentWidth == 0) {
