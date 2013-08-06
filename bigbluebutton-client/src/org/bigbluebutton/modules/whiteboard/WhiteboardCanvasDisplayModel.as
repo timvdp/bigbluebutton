@@ -547,7 +547,7 @@ package org.bigbluebutton.modules.whiteboard
 		LogUtil.debug("Mouse over on text id [" + tf.id + "] - X [" + tf.x + "] - Y [" + tf.y + "] - origX [" + tf.getOrigX() + "] - origY [" + tf.getOrigY() + "]");
 
 		//Draw feedback rectangle
-		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height);
+		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height); 
 		wbCanvas.addRawChild(dragTextfeedback);
 		
 		//Bring on top of text
