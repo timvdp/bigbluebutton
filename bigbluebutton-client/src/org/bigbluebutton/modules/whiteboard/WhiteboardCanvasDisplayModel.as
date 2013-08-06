@@ -588,7 +588,7 @@ package org.bigbluebutton.modules.whiteboard
 			wbCanvas.removeRawChild(dragTextfeedback);			
 		
 		//Remove cursor
-		wbCanvas.removeCursor();
+		//wbCanvas.removeCursor();
 
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
 		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
