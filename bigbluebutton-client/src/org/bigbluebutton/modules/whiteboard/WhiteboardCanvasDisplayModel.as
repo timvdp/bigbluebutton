@@ -547,7 +547,7 @@ package org.bigbluebutton.modules.whiteboard
 		LogUtil.debug("Mouse over on text id [" + tf.id + "] - X [" + tf.x + "] - Y [" + tf.y + "] - origX [" + tf.getOrigX() + "] - origY [" + tf.getOrigY() + "]");
 
 		//Draw feedback rectangle
-		dragTextfeedback.draw(tf.x, tf.y, tf.width, tf.height); 
+		dragTextfeedback.draw(tf.x-1, tf.y-1, tf.width+1, tf.height+1); 
 		wbCanvas.addRawChild(dragTextfeedback);
 		
 		//Bring on top of text
@@ -627,7 +627,7 @@ package org.bigbluebutton.modules.whiteboard
 	public function feedbackMouseMoveListener(event:MouseEvent):void
 	{
 		//Set new position of text
-		currentDragTextField.setPosition(dragTextfeedback.x, dragTextfeedback.y, width, height);
+		currentDragTextField.setPosition(dragTextfeedback.x+1, dragTextfeedback.y+1, width, height);
 	}
 	
     public function modifySelectedTextObject(textColor:uint, bgColorVisible:Boolean, backgroundColor:uint, textSize:Number):void {
