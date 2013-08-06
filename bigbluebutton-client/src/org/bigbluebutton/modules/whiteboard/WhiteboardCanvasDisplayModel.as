@@ -581,14 +581,20 @@ package org.bigbluebutton.modules.whiteboard
 		var sendStatus:String = TextObject.TEXT_PUBLISHED;
 			
 		dragTextfeedback.stopDrag();
-						
-		//Remove feedback rectangle		
-		if(wbCanvas.doesContain(dragTextfeedback))		
-			wbCanvas.removeRawChild(dragTextfeedback);			
-
-		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
-		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
-		dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
+				
+		//Remove feedback rectangle (and listeners)
+		if(wbCanvas.doesContain(dragTextfeedback))
+		{
+			wbCanvas.removeRawChild(dragTextfeedback);					
+			dragTextfeedback.clear();
+			
+			//Remove cursor
+			wbCanvas.removeCursor();
+			
+			dragTextfeedback.removeEventListener(MouseEvent.MOUSE_DOWN, feedbackMouseDownListener);
+			dragTextfeedback.removeEventListener(MouseEvent.MOUSE_OUT, feedbackMouseDownListener);
+			dragTextfeedback.removeEventListener(MouseEvent.MOUSE_UP, feedbackMouseUpListener);
+		}	
 		
 		//Set font size (in case canvas is zoomed)
 		currentDragTextField.textSize = currentDragTextField.getCurrentFontSize();
@@ -605,12 +611,12 @@ package org.bigbluebutton.modules.whiteboard
 		if(dragTextfeedback.isDragging)
 			return;
 		
-
 		//Remove feedback rectangle (and listeners)
 		if(wbCanvas.doesContain(dragTextfeedback))
 		{
 			wbCanvas.removeRawChild(dragTextfeedback);					
-
+			dragTextfeedback.clear();
+			
 			//Remove cursor
 			wbCanvas.removeCursor();
 	
