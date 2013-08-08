@@ -562,6 +562,11 @@ package org.bigbluebutton.modules.whiteboard
 			dragTextfeedback.addEventListener(MouseEvent.MOUSE_OUT, feedbackMouseOutListener);
 			dragTextfeedback.addEventListener(MouseEvent.MOUSE_MOVE, feedbackMouseMoveListener);
 		}
+		else
+		{
+			//Bring on top of text
+			wbCanvas.setChildOnTop(dragTextfeedback);
+		}
 		
 		//Save textObject for further use
 		currentDragTextField = tf;
