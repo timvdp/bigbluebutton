@@ -112,7 +112,7 @@ package org.bigbluebutton.main.model.users
 			verifyMedia();
 		}
 		
-		[Bindable] public var voiceLocked:Boolean = false;
+		[Bindable] public var voiceLocked:Boolean = true;
 		[Bindable] public var status:String = "";
 		[Bindable] public var customdata:Object = {};
 		
