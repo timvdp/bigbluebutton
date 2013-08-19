@@ -48,7 +48,7 @@
     <extension name="bbb_conferences">
       <condition field="destination_number" expression="^(\d{5})$">
           <action application="answer"/>
-          <action application="conference" data="$1@wideband"/>
+          <action application="conference" data="$1@wideband+flags{mute}"/>
           <!-- <action application="conference" data="$1@wideband"/> -->
       </condition>
     </extension>
