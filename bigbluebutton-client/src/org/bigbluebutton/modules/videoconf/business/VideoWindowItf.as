@@ -273,7 +273,7 @@ package org.bigbluebutton.modules.videoconf.business
 		
 		protected function showButtons(event:MouseEvent = null):void {
 			if (_controlButtonsEnabled && controlButtons.visible == false && this.width > controlButtons.width) {
-				controlButtons.visible = true;
+				//controlButtons.visible = true;
 				updateButtonsPosition();
 			}
 		}
