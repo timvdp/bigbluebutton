@@ -32,7 +32,13 @@ package org.bigbluebutton.modules.users.model
 		public var baseTabIndex:int = 301;
 		
 		[Bindable]
-		public var allowKickUser:Boolean = false;
+		public var allowKickUser:Boolean = true;
+		
+		[Bindable]
+		public var enableRaiseHand:Boolean = true;
+
+		[Bindable]
+		public var enableSettingsButton:Boolean = true;
 
 		[Bindable]
 		public var disableButtonRollOver:Boolean = true;
@@ -53,6 +59,12 @@ package org.bigbluebutton.modules.users.model
 			}
 			if (vxml.@disableButtonRollOver != undefined) {
 				disableButtonRollOver = vxml.@disableButtonRollOver;
+			}
+			if (vxml.@enableRaiseHand != undefined) {
+				enableRaiseHand = (vxml.@enableRaiseHand.toString().toUpperCase() == "TRUE") ? true : false;
+			}
+			if (vxml.@enableSettingsButton != undefined) {
+				enableSettingsButton = (vxml.@enableSettingsButton.toString().toUpperCase() == "TRUE") ? true : false;
 			}
 		}
 

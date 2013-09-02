@@ -230,7 +230,7 @@ package org.bigbluebutton.modules.videoconf.maps
     private function openViewWindowFor(userID:String):void {
 		LogUtil.debug("VideoEventMapDelegate:: openViewWindowFor:: Opening VIEW window for [" + userID + "] [" + UsersUtil.getUserName(userID) + "] [IsPresenter=" + (UsersUtil.getPresenterUserID() == userID) + "]");
 
-	  if (options.moderatorViewAllOnly && !UsersUtil.amIModerator() && (UsersUtil.getPresenterUserID() != userID))
+	  if (options.moderatorViewAllOnly && !UsersUtil.amIModerator() && (UsersUtil.getPresenterUserID() != userID) && (UsersUtil.getUser(userID).role != Role.MODERATOR))
 	  {
 		  LogUtil.debug("VideoEventMapDelegate::  openViewWindowFor:: video window ignored");
 		  return;
