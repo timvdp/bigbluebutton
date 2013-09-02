@@ -382,7 +382,7 @@ package org.bigbluebutton.modules.videoconf.maps
 			{
 				var u:String = uids.getItemAt(i) as String;
 				
-				if(webcamWindows.hasWindow(u) && (UsersUtil.getPresenterUserID() != u) && !UsersUtil.isMe(u))
+				if(webcamWindows.hasWindow(u) && (UsersUtil.getPresenterUserID() != u) && !UsersUtil.isMe(u) && (UsersUtil.getUser(u).role != Role.MODERATOR))
 					closeWindow(u);				 
 			}
 		}
@@ -406,7 +406,7 @@ package org.bigbluebutton.modules.videoconf.maps
 			{
 				var u:String = uids.getItemAt(i) as String;
 				
-				if(webcamWindows.hasWindow(u) && (UsersUtil.getPresenterUserID() != u) && !UsersUtil.isMe(u))
+				if(webcamWindows.hasWindow(u) && (UsersUtil.getPresenterUserID() != u) && !UsersUtil.isMe(u) && (UsersUtil.getUser(u).role != Role.MODERATOR))
 					closeWindow(u);				 
 			}
 
